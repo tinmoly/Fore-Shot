@@ -373,7 +373,7 @@ function renderHistory(){
 
    const row=document.createElement("div")
    row.innerHTML = '<strong>'+d+' yd:</strong> '+st.made+'/'+tot+' ('+p+'%) — Target '+PGA_PROXIMITY[d]+' ft'+
-    '<br><span class="subtle">Misses — Short Left:'+missDir.shortLeft+' Long Right:'+missDir.longRight+' Long Left:'+missDir.longLeft+' Short Right:'+missDir.shortRight+' | Best streak: '+(s.bestStreaks?.[d]||0)+'</span>'
+    '<br><span class="subtle">Misses — L-Right: '+missDir.longRight+' | L-Left: '+missDir.longLeft+' | S-Right: '+missDir.shortRight+' | S-Left: '+missDir.shortLeft+' | Best streak: '+(s.bestStreaks?.[d]||0)+'</span>'
 
    acc.appendChild(row)
   })
