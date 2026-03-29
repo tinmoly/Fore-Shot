@@ -171,7 +171,6 @@ function updateStats(){
  $("percent").textContent=pct
 
  const s=streaks[currentDistance]||0
-
  let fireCount=0
  if(s>=10) fireCount=5
  else if(s>=7) fireCount=4
@@ -193,12 +192,9 @@ function recordMade(){
  streaks[currentDistance]++
  if(streaks[currentDistance]>bestStreaks[currentDistance]) bestStreaks[currentDistance]=streaks[currentDistance]
  shotHistory.push({type:"made",distance:currentDistance})
-
- // flash green
  document.body.classList.remove('flash-red')
  document.body.classList.add('flash-green')
  setTimeout(()=>document.body.classList.remove('flash-green'),150)
-
  saveStats();saveStreaks();updateStats()
 }
 
@@ -208,12 +204,9 @@ function recordMissed(dir){
  st.missDir[dir]++
  streaks[currentDistance]=0
  shotHistory.push({type:"missed",distance:currentDistance,dir})
-
- // flash red
  document.body.classList.remove('flash-green')
  document.body.classList.add('flash-red')
  setTimeout(()=>document.body.classList.remove('flash-red'),150)
-
  saveStats();saveStreaks();updateStats()
 }
 
@@ -222,7 +215,6 @@ function newSession(){
  Object.values(stats).forEach(d=>{totalMade+=d.made||0;totalMissed+=d.missed||0})
  const totalShots=totalMade+totalMissed
  const pct=totalShots?Math.round(totalMade/totalShots*100):0
-
  sessions.push({date:new Date().toISOString(),stats:JSON.parse(JSON.stringify(stats)),bestStreaks:JSON.parse(JSON.stringify(bestStreaks)),summary:{made:totalMade,missed:totalMissed,total:totalShots,pct:pct}})
  saveSessions()
  stats=defaultStats();streaks={};DISTANCES.forEach(d=>streaks[d]=0);bestStreaks=defaultBestStreaks();shotHistory=[]
@@ -245,102 +237,150 @@ function handleHistoryAction(){
 }
 
 function exportHistoryCSV(){
- let csv="Session,Date,Yardage,Made,Missed,Make %,Target ft,S-Left,S-Right,L-Left,L-Right,Best Streak\n"
+ let csv="Session,Date,Yardage,Made,Missed,Make %,Target ft,S-Left,S-Right,L-Left,L-Right,Best Streak\n";
+
+ let grandMade=0;
+ let grandMissed=0;
+ let grandMiss={shortLeft:0,shortRight:0,longLeft:0,longRight:0};
 
  sessions.forEach(function(s,idx){
-  const date=new Date(s.date).toLocaleDateString()
+  const date=new Date(s.date).toLocaleDateString();
+
+  let sessionMade=0;
+  let sessionMissed=0;
+  let sessionMiss={shortLeft:0,shortRight:0,longLeft:0,longRight:0};
 
   DISTANCES.forEach(function(d){
-   const st=s.stats && s.stats[d]
-   if(!st) return
+   const st=s.stats && s.stats[d];
+   if(!st) return;
 
-   const made=st.made||0
-   const missed=st.missed||0
-   const total=made+missed
-   if(!total) return
+   const made=st.made||0;
+   const missed=st.missed||0;
+   const total=made+missed;
+   if(!total) return;
 
-   const pct=Math.round(made/total*100)
-   const m=st.missDir||{shortLeft:0,longRight:0,longLeft:0,shortRight:0}
+   sessionMade+=made;
+   sessionMissed+=missed;
+
+   const pct=Math.round(made/total*100);
+   const m=st.missDir||{shortLeft:0,longRight:0,longLeft:0,shortRight:0};
+
+   sessionMiss.shortLeft+=m.shortLeft||0;
+   sessionMiss.shortRight+=m.shortRight||0;
+   sessionMiss.longLeft+=m.longLeft||0;
+   sessionMiss.longRight+=m.longRight||0;
 
    csv += (idx+1)+","+date+","+d+","+made+","+missed+","+pct+","+PGA_PROXIMITY[d]+","+
-          m.shortLeft+","+m.shortRight+","+m.longLeft+","+m.longRight+","+(s.bestStreaks && s.bestStreaks[d]||0)+"\n"
-  })
- })
+          m.shortLeft+","+m.shortRight+","+m.longLeft+","+m.longRight+","+((s.bestStreaks && s.bestStreaks[d])||0)+"\n";
+  });
 
- const blob=new Blob([csv],{type:'text/csv'})
- const url=URL.createObjectURL(blob)
- const a=document.createElement('a')
- a.href=url
- a.download='foreshot-history.csv'
- a.click()
- URL.revokeObjectURL(url)
+  grandMade+=sessionMade;
+  grandMissed+=sessionMissed;
+  grandMiss.shortLeft+=sessionMiss.shortLeft;
+  grandMiss.shortRight+=sessionMiss.shortRight;
+  grandMiss.longLeft+=sessionMiss.longLeft;
+  grandMiss.longRight+=sessionMiss.longRight;
+
+  const totalShots=sessionMade+sessionMissed;
+  const totalPct=totalShots?Math.round(sessionMade/totalShots*100):0;
+  const totalMiss=sessionMiss.shortLeft+sessionMiss.shortRight+sessionMiss.longLeft+sessionMiss.longRight;
+
+  const slPct=totalMiss?Math.round(sessionMiss.shortLeft/totalMiss*100):0;
+  const srPct=totalMiss?Math.round(sessionMiss.shortRight/totalMiss*100):0;
+  const llPct=totalMiss?Math.round(sessionMiss.longLeft/totalMiss*100):0;
+  const lrPct=totalMiss?Math.round(sessionMiss.longRight/totalMiss*100):0;
+
+  csv += (idx+1)+","+date+",TOTAL,"+sessionMade+","+sessionMissed+","+totalPct+",,"+
+         slPct+"%"+","+srPct+"%"+","+llPct+"%"+","+lrPct+"%"+",\n";
+
+  csv += "\n";
+ });
+
+ const gShots=grandMade+grandMissed;
+ const gPct=gShots?Math.round(grandMade/gShots*100):0;
+ const gMissTotal=grandMiss.shortLeft+grandMiss.shortRight+grandMiss.longLeft+grandMiss.longRight;
+
+ const gSL=gMissTotal?Math.round(grandMiss.shortLeft/gMissTotal*100):0;
+ const gSR=gMissTotal?Math.round(grandMiss.shortRight/gMissTotal*100):0;
+ const gLL=gMissTotal?Math.round(grandMiss.longLeft/gMissTotal*100):0;
+ const gLR=gMissTotal?Math.round(grandMiss.longRight/gMissTotal*100):0;
+
+ csv += "GRAND TOTAL,,ALL,"+grandMade+","+grandMissed+","+gPct+",,"+
+        gSL+"%"+","+gSR+"%"+","+gLL+"%"+","+gLR+"%"+",\n";
+
+ const blob=new Blob([csv],{type:'text/csv'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;
+ a.download='foreshot-history.csv';
+ a.click();
+ URL.revokeObjectURL(url);
 }
 
 function deleteSession(index){
- if(!confirm("Delete this session?")) return
- sessions.splice(index,1)
- saveSessions()
- renderHistory()
+ if(!confirm("Delete this session?")) return;
+ sessions.splice(index,1);
+ saveSessions();
+ renderHistory();
 }
 
 function renderHistory(){
- const h=$("history")
- h.innerHTML=""
-
+ const h=$("history");
+ h.innerHTML="";
  if(!sessions.length){h.innerHTML='<p style="opacity:.8">No sessions yet.</p>';return}
 
  sessions.slice().reverse().forEach(function(s,i){
-  const idx=sessions.length-1-i
-  const wrap=document.createElement("div")
-  wrap.className="history-wrapper"
+  const idx=sessions.length-1-i;
+  const wrap=document.createElement("div");
+  wrap.className="history-wrapper";
 
-  const card=document.createElement("div")
-  card.className="history-card"
+  const card=document.createElement("div");
+  card.className="history-card";
 
-  const acc=document.createElement("div")
-  acc.className="accordion"
+  const acc=document.createElement("div");
+  acc.className="accordion";
 
-  card.innerHTML='<strong>Session '+(idx+1)+'</strong><br>'+new Date(s.date).toLocaleDateString()+' - '+s.summary.pct+'% ('+s.summary.total+' shots)'
-  card.onclick=function(){acc.style.display=acc.style.display==='block'?'none':'block'}
+  card.innerHTML='<strong>Session '+(idx+1)+'</strong><br>'+new Date(s.date).toLocaleDateString()+' - '+s.summary.pct+'% ('+s.summary.total+' shots)';
+  card.onclick=function(){acc.style.display=acc.style.display==='block'?'none':'block'};
 
   DISTANCES.forEach(function(d){
-   const st=s.stats && s.stats[d]
-   if(!st) return
+   const st=s.stats && s.stats[d];
+   if(!st) return;
 
-   const tot=(st.made||0)+(st.missed||0)
-   if(!tot) return
+   const tot=(st.made||0)+(st.missed||0);
+   if(!tot) return;
 
-   const missDir=st.missDir||{shortLeft:0,longRight:0,longLeft:0,shortRight:0}
-   const p=Math.round(st.made/tot*100)
+   const missDir=st.missDir||{shortLeft:0,longRight:0,longLeft:0,shortRight:0};
+   const p=Math.round(st.made/tot*100);
 
-   const row=document.createElement("div")
+   const row=document.createElement("div");
    row.innerHTML='<strong>'+d+' yd:</strong> '+st.made+'/'+tot+' ('+p+'%) - Target '+PGA_PROXIMITY[d]+' ft'+
-    '<br><span class="subtle">Misses - L-Left: '+missDir.longLeft+' | L-Right: '+missDir.longRight+' | S-Left: '+missDir.shortLeft+' | S-Right: '+missDir.shortRight+' | Best streak: '+(s.bestStreaks && s.bestStreaks[d]||0)+'</span>'
+    '<br><span class="subtle">Misses - L-Left: '+missDir.longLeft+' | L-Right: '+missDir.longRight+' | S-Left: '+missDir.shortLeft+' | S-Right: '+missDir.shortRight+' | Best streak: '+((s.bestStreaks && s.bestStreaks[d])||0)+'</span>';
 
-   acc.appendChild(row)
-  })
+   acc.appendChild(row);
+  });
 
-  const delBtn=document.createElement("button")
-  delBtn.innerHTML='<span style="font-size:18px;vertical-align:middle">🗑️</span> Delete Session'
-  delBtn.onclick=function(e){e.stopPropagation();deleteSession(idx)}
-  delBtn.style='display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;cursor:pointer;'
+  const delBtn=document.createElement("button");
+  delBtn.innerHTML='<span style="font-size:18px;vertical-align:middle">🗑️</span> Delete Session';
+  delBtn.onclick=function(e){e.stopPropagation();deleteSession(idx)};
+  delBtn.style='display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;cursor:pointer;';
 
-  acc.appendChild(delBtn)
+  acc.appendChild(delBtn);
 
-  wrap.appendChild(card)
-  wrap.appendChild(acc)
-  h.appendChild(wrap)
- })
+  wrap.appendChild(card);
+  wrap.appendChild(acc);
+  h.appendChild(wrap);
+ });
 }
 
 function initApp(){
- stats=ensureStatsShape(loadStats())
- streaks=loadStreaks()
- bestStreaks=defaultBestStreaks()
- sessions=loadSessions()
- buildDistanceRow()
- updateStats()
- renderHistory()
+ stats=ensureStatsShape(loadStats());
+ streaks=loadStreaks();
+ bestStreaks=defaultBestStreaks();
+ sessions=loadSessions();
+ buildDistanceRow();
+ updateStats();
+ renderHistory();
 }
 
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initApp)}else{initApp()}
