@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fore!Shot Practice App — Wedge</title>
+<title>Fore!Shot Practice App - Wedge</title>
 
 <style>
 body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0b3d2e;color:#fff;margin:0;padding:20px}
@@ -20,11 +20,11 @@ h1,h3{text-align:center;margin-bottom:10px}
 .distance-btn{background:#1c7c5b;border:none;padding:10px 20px;border-radius:999px;font-weight:800;color:#fff;cursor:pointer;white-space:nowrap;font-size:24px}
 .distance-btn.active{background:#2ecc71;color:#000}
 
-.putt-ring{width:285px;height:285px;border-radius:50%;position:relative;margin:10px auto;transform:rotate(45deg)}
+.shot-ring{width:285px;height:285px;border-radius:50%;position:relative;margin:10px auto;transform:rotate(45deg)}
 
-.putt-ring::before,.putt-ring::after{content:"";position:absolute;background:#000;opacity:.9;pointer-events:none;z-index:4}
-.putt-ring::before{width:2px;height:100%;left:50%;top:0;transform:translateX(-50%) rotate(45deg)}
-.putt-ring::after{width:2px;height:100%;left:50%;top:0;transform:translateX(-50%) rotate(-45deg)}
+.shot-ring::before,.shot-ring::after{content:"";position:absolute;background:#000;opacity:.9;pointer-events:none;z-index:4}
+.shot-ring::before{width:2px;height:100%;left:50%;top:0;transform:translateX(-50%) rotate(45deg)}
+.shot-ring::after{width:2px;height:100%;left:50%;top:0;transform:translateX(-50%) rotate(-45deg)}
 
 .miss-wedge{position:absolute;inset:0;border-radius:50%;background:#E34234;cursor:pointer;-webkit-mask:radial-gradient(circle at center, transparent 0 55px, black 56px);mask:radial-gradient(circle at center, transparent 0 55px, black 56px)}
 .miss-wedge:hover{filter:brightness(1.1)}
@@ -49,9 +49,6 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 .history-wrapper{margin-bottom:10px}
 .accordion{display:none;margin-top:8px;padding:10px;background:#0e4f3a;border-radius:10px}
 .subtle{opacity:.75;font-size:14px;margin-left:6px}
-
-.logo-wrap{text-align:center;margin-bottom:10px}
-.app-logo{max-width:240px;width:100%;height:auto}
 </style>
 </head>
 
@@ -59,46 +56,42 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 
 <div class="card">
 
-<div class="logo-wrap">
-<img src="foreputt-logo.png" alt="Fore!Putt Logo" class="app-logo" />
-</div>
-
-<h1 id="distanceTitle">20 Yard Pitch</h1>
+<h1 id="distanceTitle">30 Yard Pitch</h1>
 <div id="distanceRow" class="distance-row"></div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
-<div class="putt-ring">
+<div class="shot-ring">
 
-<div class="miss-wedge miss-topright" onclick="recordMissed('longRight')"><span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:20px">Long<br>Right</span></div>
-<div class="miss-wedge miss-bottomleft" onclick="recordMissed('shortLeft')"><span style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:20px">Short<br>Left</span></div>
-<div class="miss-wedge miss-topleft" onclick="recordMissed('longLeft')"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(-90deg);font-weight:800;color:#000;font-size:20px">Long<br>Left</span></div>
-<div class="miss-wedge miss-bottomright" onclick="recordMissed('shortRight')"><span style="position:absolute;right:10px;top:50%;transform:translateY(-50%) rotate(270deg);font-weight:800;color:#000;font-size:20px">Short<br>Right</span></div>
+<div class="miss-wedge miss-topright" onclick="recordMissed('longRight')"><span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Long<br>Right</span></div>
+<div class="miss-wedge miss-bottomleft" onclick="recordMissed('shortLeft')"><span style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Short<br>Left</span></div>
+<div class="miss-wedge miss-topleft" onclick="recordMissed('longLeft')"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(-90deg);font-weight:800;color:#000;font-size:24px">Long<br>Left</span></div>
+<div class="miss-wedge miss-bottomright" onclick="recordMissed('shortRight')"><span style="position:absolute;right:10px;top:50%;transform:translateY(-50%) rotate(270deg);font-weight:800;color:#000;font-size:24px">Short<br>Right</span></div>
 
-<div class="made-inner" onclick="event.stopPropagation();recordMade();">✅<br>Made</div>
+<div class="made-inner" onclick="event.stopPropagation();recordMade();">Made</div>
 
 </div>
 </div>
 
 <div class="stats">
-<p>Made: <span id="made">0</span> | Missed: <span id="missed">0</span></p>
-<p>⛳ Make %: <span id="percent">0</span>%</p>
-<p><span id="streakLabel">Streak</span>: <span id="streak">0</span></p>
+<p>✅ Made: <span id="made">0</span> | ⛔ Missed: <span id="missed">0</span></p>
+<p>📊 Make %: <span id="percent">0</span>%</p>
+<p><span id="streakLabel">🔥 Streak</span>: <span id="streak">0</span></p>
 </div>
 
 <div id="targetBadge" class="badge"></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
-<button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄 New Session</button>
-<button onclick="undoPutt()" style="flex:1;background:#8a8a8a;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #666,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">↩️ Undo Last Shot</button>
+<button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄️ New Session</button>
+<button onclick="undoShot()" style="flex:1;background:#8a8a8a;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #666,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">↩️ Undo Last Shot</button>
 </div>
 
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
-<h3 style="margin:0">Session History</h3>
+<h3 style="margin:0">📜 Session History</h3>
 <select id="historyAction" onchange="handleHistoryAction()" style="background:#1c7c5b;color:#fff;border:none;border-radius:8px;padding:6px 8px;font-weight:700">
 <option value="">Actions</option>
-<option value="export">Export All History</option>
-<option value="delete">Clear All History</option>
+<option value="export">📤 Export All History</option>
+<option value="delete">❌ Clear All History</option>
 </select>
 </div>
 
@@ -108,19 +101,19 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 
 <script>
 
-const DISTANCES=[20,25,30,35,40,45,50,55,60,65,70,75,80]
-const PGA_PROXIMITY={20:9,25:12,30:15,35:18,40:21,45:24,50:27,55:30,60:33,65:36,70:39,75:42,80:45}
+const DISTANCES=[30,35,40,45,50,55,60,65,70,75,80]
+const PGA_PROXIMITY={30:15,35:18,40:21,45:24,50:27,55:30,60:33,65:36,70:39,75:42,80:45}
 
-let currentDistance=20
+let currentDistance=30
 let stats
 let streaks
 let bestStreaks
 let sessions
-let puttHistory=[]
+let shotHistory=[]
 
 const $=(id)=>{
  const el=document.getElementById(id)
- if(!el)throw new Error(`Missing DOM element: ${id}`)
+ if(!el)throw new Error("Missing DOM element: "+id)
  return el
 }
 
@@ -129,10 +122,6 @@ function ensureStatsShape(obj){
  DISTANCES.forEach(d=>{
   if(!obj[d]){
    obj[d]={made:0,missed:0,missDir:{shortLeft:0,longRight:0,longLeft:0,shortRight:0}}
-  } else {
-   if(obj[d].made==null) obj[d].made=0
-   if(obj[d].missed==null) obj[d].missed=0
-   if(!obj[d].missDir) obj[d].missDir={shortLeft:0,longRight:0,longLeft:0,shortRight:0}
   }
  })
  return obj
@@ -140,32 +129,18 @@ function ensureStatsShape(obj){
 
 function defaultStats(){ return ensureStatsShape({}) }
 
-function loadStats(){
- try{
-  const s=JSON.parse(localStorage.getItem("puttingStats"))
-  return ensureStatsShape(s)
- }catch{
-  return defaultStats()
- }
-}
-function saveStats(){localStorage.setItem("puttingStats",JSON.stringify(stats))}
+function loadStats(){try{return ensureStatsShape(JSON.parse(localStorage.getItem("shootingStats")))}catch{return defaultStats()}}
+function saveStats(){localStorage.setItem("shootingStats",JSON.stringify(stats))}
 
-function loadStreaks(){
- let s={}
- try{ s=JSON.parse(localStorage.getItem("puttingStreaks"))||{} }catch{}
- DISTANCES.forEach(d=>{ if(s[d]==null) s[d]=0 })
- return s
-}
-function saveStreaks(){localStorage.setItem("puttingStreaks",JSON.stringify(streaks))}
+function loadStreaks(){let s={};try{s=JSON.parse(localStorage.getItem("shootingStreaks"))||{}}catch{};DISTANCES.forEach(d=>{if(s[d]==null)s[d]=0});return s}
+function saveStreaks(){localStorage.setItem("shootingStreaks",JSON.stringify(streaks))}
 
 function defaultBestStreaks(){let o={};DISTANCES.forEach(d=>o[d]=0);return o}
-
-function loadSessions(){try{return JSON.parse(localStorage.getItem("puttingSessions"))||[]}catch{return[]}}
-function saveSessions(){localStorage.setItem("puttingSessions",JSON.stringify(sessions))}
+function loadSessions(){try{return JSON.parse(localStorage.getItem("shootingSessions"))||[]}catch{return[]}}
+function saveSessions(){localStorage.setItem("shootingSessions",JSON.stringify(sessions))}
 
 function buildDistanceRow(){
- const r=$("distanceRow")
- r.innerHTML=""
+ const r=$("distanceRow");r.innerHTML=""
  DISTANCES.forEach(d=>{
   const b=document.createElement("button")
   b.className="distance-btn"+(d===currentDistance?" active":"")
@@ -177,7 +152,6 @@ function buildDistanceRow(){
 
 function setDistance(d){
  currentDistance=d
- stats=ensureStatsShape(stats)
  streaks[d]=0
  saveStreaks()
  $("distanceTitle").textContent=d+" Yard Pitch"
@@ -186,7 +160,6 @@ function setDistance(d){
 }
 
 function updateStats(){
- stats=ensureStatsShape(stats)
  const st=stats[currentDistance]
  const made=st.made||0
  const missed=st.missed||0
@@ -198,133 +171,97 @@ function updateStats(){
  $("percent").textContent=pct
 
  const s=streaks[currentDistance]||0
- $("streak").textContent=s
- $("streakLabel").textContent=(getStreakEmojis(s)+" Streak").trim()
 
- const target=PGA_PROXIMITY[currentDistance]
- const badge=$("targetBadge")
- badge.className="badge"
- badge.innerHTML="🎯 Target Proximity: "+target+" ft"
+ let fireCount=0
+ if(s>=10) fireCount=5
+ else if(s>=7) fireCount=4
+ else if(s>=5) fireCount=3
+ else if(s>=3) fireCount=2
+ else if(s>=1) fireCount=1
+
+ let fires=""
+ for(let i=0;i<fireCount;i++){fires+="🔥"}
+
+ $("streak").textContent=s
+ $("streakLabel").textContent=fires+" Streak"
+
+ $("targetBadge").innerHTML="🎯 Target: "+PGA_PROXIMITY[currentDistance]+" ft"
 }
 
 function recordMade(){
- withTapLock(()=>{
-  stats=ensureStatsShape(stats)
-  stats[currentDistance].made++
-  streaks[currentDistance]++
-
-  if(streaks[currentDistance]>bestStreaks[currentDistance]){
-   bestStreaks[currentDistance]=streaks[currentDistance]
-  }
-
-  puttHistory.push({type:"made",distance:currentDistance})
-
-  flash("flash-green")
-  haptic(20)
-
-  saveStats()
-  saveStreaks()
-  updateStats()
- })
+ stats[currentDistance].made++
+ streaks[currentDistance]++
+ if(streaks[currentDistance]>bestStreaks[currentDistance]) bestStreaks[currentDistance]=streaks[currentDistance]
+ shotHistory.push({type:"made",distance:currentDistance})
+ saveStats();saveStreaks();updateStats()
 }
 
 function recordMissed(dir){
- withTapLock(()=>{
-  stats=ensureStatsShape(stats)
-  const st=stats[currentDistance]
-
-  st.missed++
-
-  if(dir && st.missDir && dir in st.missDir){
-   st.missDir[dir]++
-  }
-
-  streaks[currentDistance]=0
-
-  puttHistory.push({type:"missed",distance:currentDistance,dir})
-
-  flash("flash-red")
-  haptic([10,40])
-
-  saveStats()
-  saveStreaks()
-  updateStats()
- })
+ const st=stats[currentDistance]
+ st.missed++
+ st.missDir[dir]++
+ streaks[currentDistance]=0
+ shotHistory.push({type:"missed",distance:currentDistance,dir})
+ saveStats();saveStreaks();updateStats()
 }
 
 function newSession(){
- if(!confirm("Start a new session?"))return
-
  let totalMade=0,totalMissed=0
+ Object.values(stats).forEach(d=>{totalMade+=d.made||0;totalMissed+=d.missed||0})
+ const totalShots=totalMade+totalMissed
+ const pct=totalShots?Math.round(totalMade/totalShots*100):0
 
- Object.values(stats).forEach(d=>{
-  totalMade+=d.made||0
-  totalMissed+=d.missed||0
- })
-
- const totalPutts=totalMade+totalMissed
- const overallPct=totalPutts?Math.round(totalMade/totalPutts*100):0
-
- sessions.push({
-  date:new Date().toISOString(),
-  stats:JSON.parse(JSON.stringify(stats)),
-  bestStreaks:JSON.parse(JSON.stringify(bestStreaks)),
-  summary:{made:totalMade,missed:totalMissed,total:totalPutts,pct:overallPct}
- })
-
+ sessions.push({date:new Date().toISOString(),stats:JSON.parse(JSON.stringify(stats)),bestStreaks:JSON.parse(JSON.stringify(bestStreaks)),summary:{made:totalMade,missed:totalMissed,total:totalShots,pct:pct}})
  saveSessions()
-
- stats=defaultStats()
- streaks={}
- DISTANCES.forEach(d=>streaks[d]=0)
- saveStreaks()
-
- bestStreaks=defaultBestStreaks()
- puttHistory=[]
-
- updateStats()
- renderHistory()
+ stats=defaultStats();streaks={};DISTANCES.forEach(d=>streaks[d]=0);bestStreaks=defaultBestStreaks();shotHistory=[]
+ updateStats();renderHistory()
 }
 
-function undoPutt(){
- if(!puttHistory.length)return
-
- const last=puttHistory.pop()
- currentDistance=last.distance
-
- stats=ensureStatsShape(stats)
- const st=stats[currentDistance]
-
- if(last.type==="made" && st.made>0){
-  st.made--
-  if(streaks[currentDistance]>0)streaks[currentDistance]--
- }
-
- if(last.type==="missed" && st.missed>0){
-  st.missed--
-  if(last.dir && st.missDir && st.missDir[last.dir]>0){
-   st.missDir[last.dir]--
-  }
- }
-
- saveStats()
- saveStreaks()
- updateStats()
+function undoShot(){
+ if(!shotHistory.length)return
+ const last=shotHistory.pop()
+ const st=stats[last.distance]
+ if(last.type==="made" && st.made>0) st.made--
+ if(last.type==="missed" && st.missed>0) st.missed--
+ saveStats();saveStreaks();updateStats()
 }
 
 function handleHistoryAction(){
- const sel=$("historyAction")
- const v=sel.value
- sel.value=""
+ const sel=$("historyAction");const v=sel.value;sel.value=""
+ if(v==="delete"){if(confirm("Delete all session history?")){sessions=[];saveSessions();renderHistory()}}
+ if(v==="export"){exportHistoryCSV()}
+}
 
- if(v==="delete"){
-  if(!confirm("Delete all session history?"))return
-  sessions=[]
-  saveSessions()
-  renderHistory()
- }
+function exportHistoryCSV(){
+ let csv="Session,Date,Yardage,Made,Missed,Make %,Target ft,S-Left,S-Right,L-Left,L-Right,Best Streak\n"
 
- if(v==="export"){ return }
+ sessions.forEach(function(s,idx){
+  const date=new Date(s.date).toLocaleDateString()
+
+  DISTANCES.forEach(function(d){
+   const st=s.stats && s.stats[d]
+   if(!st) return
+
+   const made=st.made||0
+   const missed=st.missed||0
+   const total=made+missed
+   if(!total) return
+
+   const pct=Math.round(made/total*100)
+   const m=st.missDir||{shortLeft:0,longRight:0,longLeft:0,shortRight:0}
+
+   csv += (idx+1)+","+date+","+d+","+made+","+missed+","+pct+","+PGA_PROXIMITY[d]+","+
+          m.shortLeft+","+m.shortRight+","+m.longLeft+","+m.longRight+","+(s.bestStreaks && s.bestStreaks[d]||0)+"\n"
+  })
+ })
+
+ const blob=new Blob([csv],{type:'text/csv'})
+ const url=URL.createObjectURL(blob)
+ const a=document.createElement('a')
+ a.href=url
+ a.download='foreshot-history.csv'
+ a.click()
+ URL.revokeObjectURL(url)
 }
 
 function deleteSession(index){
@@ -338,15 +275,10 @@ function renderHistory(){
  const h=$("history")
  h.innerHTML=""
 
- if(!sessions.length){
-  h.innerHTML='<p style="opacity:.8">No sessions yet.</p>'
-  return
- }
+ if(!sessions.length){h.innerHTML='<p style="opacity:.8">No sessions yet.</p>';return}
 
- sessions.slice().reverse().forEach((s,i)=>{
-
+ sessions.slice().reverse().forEach(function(s,i){
   const idx=sessions.length-1-i
-
   const wrap=document.createElement("div")
   wrap.className="history-wrapper"
 
@@ -356,13 +288,11 @@ function renderHistory(){
   const acc=document.createElement("div")
   acc.className="accordion"
 
-  card.innerHTML = '<strong>Session '+(idx+1)+'</strong><br>' +
-   new Date(s.date).toLocaleDateString() + ' • ' + s.summary.pct + '% (' + s.summary.total + ' shots)'
+  card.innerHTML='<strong>Session '+(idx+1)+'</strong><br>'+new Date(s.date).toLocaleDateString()+' - '+s.summary.pct+'% ('+s.summary.total+' shots)'
+  card.onclick=function(){acc.style.display=acc.style.display==='block'?'none':'block'}
 
-  card.onclick=()=>{acc.style.display=acc.style.display==='block'?'none':'block'}
-
-  DISTANCES.forEach(d=>{
-   const st=s.stats?.[d]
+  DISTANCES.forEach(function(d){
+   const st=s.stats && s.stats[d]
    if(!st) return
 
    const tot=(st.made||0)+(st.missed||0)
@@ -372,16 +302,16 @@ function renderHistory(){
    const p=Math.round(st.made/tot*100)
 
    const row=document.createElement("div")
-   row.innerHTML = '<strong>'+d+' yd:</strong> '+st.made+'/'+tot+' ('+p+'%) — Target '+PGA_PROXIMITY[d]+' ft'+
-    '<br><span class="subtle">Misses — L-Right: '+missDir.longRight+' | L-Left: '+missDir.longLeft+' | S-Right: '+missDir.shortRight+' | S-Left: '+missDir.shortLeft+' | Best streak: '+(s.bestStreaks?.[d]||0)+'</span>'
+   row.innerHTML='<strong>'+d+' yd:</strong> '+st.made+'/'+tot+' ('+p+'%) - Target '+PGA_PROXIMITY[d]+' ft'+
+    '<br><span class="subtle">Misses - L-Left: '+missDir.longLeft+' | L-Right: '+missDir.longRight+' | S-Left: '+missDir.shortLeft+' | S-Right: '+missDir.shortRight+' | Best streak: '+(s.bestStreaks && s.bestStreaks[d]||0)+'</span>'
 
    acc.appendChild(row)
   })
 
   const delBtn=document.createElement("button")
-  delBtn.innerHTML='🗑️ Delete Session'
-  delBtn.onclick=(e)=>{e.stopPropagation();deleteSession(idx)}
-  delBtn.style='display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #a83228,0 14px 22px rgba(0,0,0,.45);cursor:pointer;'
+  delBtn.innerHTML='<span style="font-size:18px;vertical-align:middle">🗑️</span> Delete Session'
+  delBtn.onclick=function(e){e.stopPropagation();deleteSession(idx)}
+  delBtn.style='display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;cursor:pointer;'
 
   acc.appendChild(delBtn)
 
@@ -401,18 +331,7 @@ function initApp(){
  renderHistory()
 }
 
-let tapLocked=false
-const TAP_DELAY=300
-function withTapLock(fn){if(tapLocked)return;tapLocked=true;fn();setTimeout(()=>tapLocked=false,TAP_DELAY)}
-function flash(cls){document.body.classList.add(cls);setTimeout(()=>document.body.classList.remove(cls),150)}
-function haptic(ms){if(navigator.vibrate)navigator.vibrate(ms)}
-function getStreakEmojis(v){if(v>=10)return"🔥🔥🔥🔥🔥";if(v>=7)return"🔥🔥🔥🔥";if(v>=5)return"🔥🔥🔥";if(v>=3)return"🔥🔥";if(v>=1)return"🔥";return""}
-
-if(document.readyState==='loading'){
- document.addEventListener('DOMContentLoaded',initApp)
-}else{
- initApp()
-}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initApp)}else{initApp()}
 
 </script>
 
