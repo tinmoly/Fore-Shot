@@ -225,8 +225,19 @@ function undoShot(){
  if(!shotHistory.length)return
  const last=shotHistory.pop()
  const st=stats[last.distance]
- if(last.type==="made" && st.made>0) st.made--
- if(last.type==="missed" && st.missed>0) st.missed--
+
+ if(last.type==="made" && st.made>0){
+  st.made--
+  // reduce streak if last shot was made
+  if(streaks[last.distance]>0) streaks[last.distance]--
+ }
+
+ if(last.type==="missed" && st.missed>0){
+  st.missed--
+  // NOTE: we cannot perfectly restore previous streak without full history,
+  // so we leave streak as-is (already reset on miss)
+ }
+
  saveStats();saveStreaks();updateStats()
 }
 
