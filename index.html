@@ -298,7 +298,7 @@ function updateStats(){
 
  $("streak").textContent=s
  $("streakLabel").textContent=fires+" Streak"
- $("targetBadge").innerHTML=currentClub+" target: "+PGA_PROXIMITY[currentDistance]+" ft | Up and Down: "+formatPercent(UP_AND_DOWN[currentDistance])+"%"
+ $("targetBadge").innerHTML=currentClub+" target: "+PGA_PROXIMITY[currentDistance]+" ft<br>Up and Down: "+formatPercent(UP_AND_DOWN[currentDistance])+"%"
 }
 
 function recordMade(){
@@ -551,7 +551,8 @@ function renderHistory(){
     const pct=Math.round(st.made/tot*100)
 
     const row=document.createElement("div")
-    row.innerHTML='<strong>'+club+' - '+d+' yd:</strong> '+st.made+'/'+tot+' ('+pct+'%) - Target '+PGA_PROXIMITY[d]+' ft - Up and Down '+formatPercent(UP_AND_DOWN[d])+'%'+
+    row.innerHTML='<strong>'+club+' - '+d+' yd:</strong> '+st.made+'/'+tot+' ('+pct+'%) - Target '+PGA_PROXIMITY[d]+' ft'+
+     '<br><span class="subtle">Up and Down: '+formatPercent(UP_AND_DOWN[d])+'%</span>'+
      '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
     acc.appendChild(row)
    })
