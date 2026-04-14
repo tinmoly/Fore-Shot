@@ -441,7 +441,15 @@ function handleHistoryAction(){
  if(v==="delete"){
   if(confirm("Delete all session history?")){
    sessions=[]
+   stats=defaultStats()
+   streaks=defaultCounters()
+   bestStreaks=defaultCounters()
+   shotHistory=[]
+   saveStats()
+   saveStreaks()
+   saveBestStreaks()
    saveSessions()
+   updateStats()
    renderHistory()
   }
  }
