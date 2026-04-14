@@ -104,6 +104,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 const CLUBS=["PW","UW","48°","52°","54°","56°","58°","60°","62°"]
 const DISTANCES=[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
 const PGA_PROXIMITY={10:6,15:8,20:10,25:12,30:15,35:18,40:21,45:24,50:27,55:30,60:33,65:36,70:39,75:42,80:45}
+const UP_AND_DOWN={10:67,15:60,20:53,25:46,30:40,35:35,40:30,45:27,50:25,55:23,60:20,65:18,70:16,75:14,80:12}
 const DEFAULT_CLUB="PW"
 
 let currentClub=DEFAULT_CLUB
@@ -227,6 +228,7 @@ function saveSessions(){localStorage.setItem("shootingSessions",JSON.stringify(s
 function getCurrentStats(){return stats[currentClub][currentDistance]}
 function getCurrentStreak(){return streaks[currentClub][currentDistance]||0}
 function getCurrentBestStreak(){return bestStreaks[currentClub][currentDistance]||0}
+function formatPercent(value){return Number.isInteger(value)?value.toString():value.toFixed(1)}
 
 function setTitle(){
  $("distanceTitle").textContent=currentClub+" - "+currentDistance+" Yard Pitch"
@@ -296,7 +298,7 @@ function updateStats(){
 
  $("streak").textContent=s
  $("streakLabel").textContent=fires+" Streak"
- $("targetBadge").innerHTML=currentClub+" target: "+PGA_PROXIMITY[currentDistance]+" ft"
+ $("targetBadge").innerHTML=currentClub+" target: "+PGA_PROXIMITY[currentDistance]+" ft | Up and Down: "+formatPercent(UP_AND_DOWN[currentDistance])+"%"
 }
 
 function recordMade(){
@@ -421,7 +423,7 @@ function handleHistoryAction(){
 }
 
 function exportHistoryCSV(){
- let csv="Session,Date,Club,Yardage,Made,Missed,Make %,Target ft,S-Left,S-Right,L-Left,L-Right,Best Streak\n"
+ let csv="Session,Date,Club,Yardage,Made,Missed,Make %,Target ft,Up and Down %,S-Left,S-Right,L-Left,L-Right,Best Streak\n"
 
  let grandMade=0
  let grandMissed=0
@@ -455,7 +457,7 @@ function exportHistoryCSV(){
     sessionMiss.longLeft+=missDir.longLeft||0
     sessionMiss.longRight+=missDir.longRight||0
 
-    csv += (idx+1)+","+date+","+club+","+d+","+made+","+missed+","+pct+","+PGA_PROXIMITY[d]+","+
+    csv += (idx+1)+","+date+","+club+","+d+","+made+","+missed+","+pct+","+PGA_PROXIMITY[d]+","+formatPercent(UP_AND_DOWN[d])+"%,"+
            (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
            ((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
    })
@@ -470,7 +472,7 @@ function exportHistoryCSV(){
   const llPct=totalMiss?Math.round(sessionMiss.longLeft/totalMiss*100):0
   const lrPct=totalMiss?Math.round(sessionMiss.longRight/totalMiss*100):0
 
-  csv += (idx+1)+","+date+",ALL,TOTAL,"+sessionMade+","+sessionMissed+","+totalPct+",,"+
+  csv += (idx+1)+","+date+",ALL,TOTAL,"+sessionMade+","+sessionMissed+","+totalPct+",,,"+
          fmt(sessionMiss.shortLeft,slPct)+","+
          fmt(sessionMiss.shortRight,srPct)+","+
          fmt(sessionMiss.longLeft,llPct)+","+
@@ -493,7 +495,7 @@ function exportHistoryCSV(){
  const gLLPct=gMissTotal?Math.round(grandMiss.longLeft/gMissTotal*100):0
  const gLRPct=gMissTotal?Math.round(grandMiss.longRight/gMissTotal*100):0
 
- csv += "GRAND TOTAL,,ALL,ALL,"+grandMade+","+grandMissed+","+gPct+",,"+
+ csv += "GRAND TOTAL,,ALL,ALL,"+grandMade+","+grandMissed+","+gPct+",,,"+
         fmt(grandMiss.shortLeft,gSLPct)+","+
         fmt(grandMiss.shortRight,gSRPct)+","+
         fmt(grandMiss.longLeft,gLLPct)+","+
@@ -549,7 +551,7 @@ function renderHistory(){
     const pct=Math.round(st.made/tot*100)
 
     const row=document.createElement("div")
-    row.innerHTML='<strong>'+club+' - '+d+' yd:</strong> '+st.made+'/'+tot+' ('+pct+'%) - Target '+PGA_PROXIMITY[d]+' ft'+
+    row.innerHTML='<strong>'+club+' - '+d+' yd:</strong> '+st.made+'/'+tot+' ('+pct+'%) - Target '+PGA_PROXIMITY[d]+' ft - Up and Down '+formatPercent(UP_AND_DOWN[d])+'%'+
      '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
     acc.appendChild(row)
    })
