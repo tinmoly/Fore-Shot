@@ -492,24 +492,23 @@ function exportHistoryCSV(){
 
   const totalShots=sessionMade+sessionMissed
   const totalPct=totalShots?Math.round(sessionMade/totalShots*100):0
-  const totalMiss=sessionMiss.shortLeft+sessionMiss.shortRight+sessionMiss.longLeft+sessionMiss.longRight
-
-  const slPct=totalMiss?Math.round(sessionMiss.shortLeft/totalMiss*100):0
-  const srPct=totalMiss?Math.round(sessionMiss.shortRight/totalMiss*100):0
-  const llPct=totalMiss?Math.round(sessionMiss.longLeft/totalMiss*100):0
-  const lrPct=totalMiss?Math.round(sessionMiss.longRight/totalMiss*100):0
-
   const sessionDuffs=Object.values(s.stats||{}).reduce(function(total, clubStats){
    return total+DISTANCES.reduce(function(sum,d){
     return sum+(((clubStats||{})[d]||{}).duffs||0)
    },0)
   },0)
+  const totalMiss=sessionMissed
+  const slPct=totalMiss?Math.round(sessionMiss.shortLeft/totalMiss*100):0
+  const srPct=totalMiss?Math.round(sessionMiss.shortRight/totalMiss*100):0
+  const llPct=totalMiss?Math.round(sessionMiss.longLeft/totalMiss*100):0
+  const lrPct=totalMiss?Math.round(sessionMiss.longRight/totalMiss*100):0
+  const duffPct=totalMiss?Math.round(sessionDuffs/totalMiss*100):0
 
   csv += (idx+1)+","+date+",ALL,TOTAL,,"+sessionMade+","+sessionMissed+","+totalPct+",,"+
          fmt(sessionMiss.shortLeft,slPct)+","+
          fmt(sessionMiss.shortRight,srPct)+","+
          fmt(sessionMiss.longLeft,llPct)+","+
-         fmt(sessionMiss.longRight,lrPct)+","+sessionDuffs+",\n"
+         fmt(sessionMiss.longRight,lrPct)+","+fmt(sessionDuffs,duffPct)+",\n"
 
   grandMade+=sessionMade
   grandMissed+=sessionMissed
@@ -521,13 +520,6 @@ function exportHistoryCSV(){
 
  const gShots=grandMade+grandMissed
  const gPct=gShots?Math.round(grandMade/gShots*100):0
- const gMissTotal=grandMiss.shortLeft+grandMiss.shortRight+grandMiss.longLeft+grandMiss.longRight
-
- const gSLPct=gMissTotal?Math.round(grandMiss.shortLeft/gMissTotal*100):0
- const gSRPct=gMissTotal?Math.round(grandMiss.shortRight/gMissTotal*100):0
- const gLLPct=gMissTotal?Math.round(grandMiss.longLeft/gMissTotal*100):0
- const gLRPct=gMissTotal?Math.round(grandMiss.longRight/gMissTotal*100):0
-
  const grandDuffs=sessions.reduce(function(total,s){
   return total+Object.values(s.stats||{}).reduce(function(clubTotal, clubStats){
    return clubTotal+DISTANCES.reduce(function(sum,d){
@@ -535,12 +527,18 @@ function exportHistoryCSV(){
    },0)
   },0)
  },0)
+ const gMissTotal=grandMissed
+ const gSLPct=gMissTotal?Math.round(grandMiss.shortLeft/gMissTotal*100):0
+ const gSRPct=gMissTotal?Math.round(grandMiss.shortRight/gMissTotal*100):0
+ const gLLPct=gMissTotal?Math.round(grandMiss.longLeft/gMissTotal*100):0
+ const gLRPct=gMissTotal?Math.round(grandMiss.longRight/gMissTotal*100):0
+ const gDuffPct=gMissTotal?Math.round(grandDuffs/gMissTotal*100):0
 
  csv += "GRAND TOTAL,,ALL,ALL,,"+grandMade+","+grandMissed+","+gPct+",,"+
         fmt(grandMiss.shortLeft,gSLPct)+","+
         fmt(grandMiss.shortRight,gSRPct)+","+
         fmt(grandMiss.longLeft,gLLPct)+","+
-        fmt(grandMiss.longRight,gLRPct)+","+grandDuffs+",\n"
+        fmt(grandMiss.longRight,gLRPct)+","+fmt(grandDuffs,gDuffPct)+",\n"
 
  const blob=new Blob([csv],{type:'text/csv'})
  const url=URL.createObjectURL(blob)
@@ -590,9 +588,10 @@ function renderHistory(){
 
     const missDir=st.missDir||createMissDir()
     const pct=Math.round(st.made/tot*100)
+    const earnedStar=pct>UP_AND_DOWN[d]?" *":""
 
     const row=document.createElement("div")
-    row.innerHTML='<strong>'+club+' - '+d+' yd:</strong> '+st.made+'/'+tot+' ('+pct+'%) - Target '+PGA_PROXIMITY[d]+' ft'+
+    row.innerHTML='<strong>'+club+' - '+d+' yd:</strong> '+st.made+'/'+tot+' ('+pct+'%) - Target '+PGA_PROXIMITY[d]+' ft'+earnedStar+
      '<br><span class="subtle">Up and Down: '+formatPercent(UP_AND_DOWN[d])+'%</span>'+
      '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+'</span>'+
      '<br><span class="subtle">Duffs: '+(st.duffs||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
