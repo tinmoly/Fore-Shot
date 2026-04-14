@@ -43,7 +43,11 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 .stats{text-align:center;font-size:18px;margin-top:20px}
 .stats p{margin:6px 0}
 
-.badge{margin-top:10px;padding:10px;border-radius:10px;text-align:center;background:#0e4f3a;font-size:20px;font-weight:800}
+.badge{margin-top:10px;padding:10px;border-radius:10px;background:#0e4f3a;font-size:20px;font-weight:800}
+.badge-content{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}
+.badge-copy{grid-column:2;text-align:center}
+.badge-spacer{grid-column:1}
+.duff-btn{grid-column:3;justify-self:end;background:#f4a261;color:#000;border:none;border-radius:12px;padding:10px 14px;font-size:18px;font-weight:800;box-shadow:0 5px 0 #c57f3d,0 10px 18px rgba(0,0,0,.25);cursor:pointer;white-space:nowrap}
 
 .history-card{padding:10px;background:#1c7c5b;border-radius:10px;cursor:pointer}
 .history-wrapper{margin-bottom:10px}
@@ -77,7 +81,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 <div class="stats">
 <p>Made: <span id="made">0</span> | Missed: <span id="missed">0</span></p>
 <p>Make %: <span id="percent">0</span>%</p>
-<p><span id="streakLabel">Streak</span>: <span id="streak">0</span></p>
+<p><span id="streakLabel">Streak</span>: <span id="streak">0</span> | Duffs: <span id="duffs">0</span></p>
 </div>
 
 <div id="targetBadge" class="badge"></div>
@@ -126,7 +130,7 @@ function createMissDir(){
 }
 
 function createStatBucket(){
- return {made:0,missed:0,missDir:createMissDir()}
+ return {made:0,missed:0,duffs:0,missDir:createMissDir()}
 }
 
 function createDistanceMap(factory){
@@ -172,6 +176,7 @@ function ensureStatsShape(obj){
    map[club][d]={
     made:Number(bucket.made)||0,
     missed:Number(bucket.missed)||0,
+    duffs:Number(bucket.duffs)||0,
     missDir:{
      shortLeft:Number(bucket.missDir && bucket.missDir.shortLeft)||0,
      shortRight:Number(bucket.missDir && bucket.missDir.shortRight)||0,
@@ -278,12 +283,14 @@ function updateStats(){
  const st=getCurrentStats()
  const made=st.made||0
  const missed=st.missed||0
+ const duffs=st.duffs||0
  const total=made+missed
  const pct=total?Math.round(made/total*100):0
 
  $("made").textContent=made
  $("missed").textContent=missed
  $("percent").textContent=pct
+ $("duffs").textContent=duffs
 
  const s=getCurrentStreak()
  let fireCount=0
@@ -298,7 +305,7 @@ function updateStats(){
 
  $("streak").textContent=s
  $("streakLabel").textContent=fires+" Streak"
- $("targetBadge").innerHTML=currentClub+" target: "+PGA_PROXIMITY[currentDistance]+" ft<br>Up and Down: "+formatPercent(UP_AND_DOWN[currentDistance])+"%"
+ $("targetBadge").innerHTML='<div class="badge-content"><div class="badge-spacer"></div><div class="badge-copy">'+currentClub+' target: '+PGA_PROXIMITY[currentDistance]+' ft<br>Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div><button class="duff-btn" onclick="recordDuff()">Duff</button></div>'
 }
 
 function recordMade(){
@@ -322,6 +329,20 @@ function recordMissed(dir){
  st.missDir[dir]++
  streaks[currentClub][currentDistance]=0
  shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir})
+ document.body.classList.remove('flash-green')
+ document.body.classList.add('flash-red')
+ setTimeout(()=>document.body.classList.remove('flash-red'),150)
+ saveStats()
+ saveStreaks()
+ updateStats()
+}
+
+function recordDuff(){
+ const st=getCurrentStats()
+ st.missed++
+ st.duffs++
+ streaks[currentClub][currentDistance]=0
+ shotHistory.push({type:"duff",club:currentClub,distance:currentDistance})
  document.body.classList.remove('flash-green')
  document.body.classList.add('flash-red')
  setTimeout(()=>document.body.classList.remove('flash-red'),150)
@@ -401,6 +422,11 @@ function undoShot(){
   if(last.dir && st.missDir[last.dir]>0) st.missDir[last.dir]--
  }
 
+ if(last.type==="duff" && st.missed>0){
+  st.missed--
+  if(st.duffs>0) st.duffs--
+ }
+
  recomputeHistoryFor(last.club,last.distance)
  saveStats()
  saveStreaks()
@@ -423,7 +449,7 @@ function handleHistoryAction(){
 }
 
 function exportHistoryCSV(){
- let csv="Session,Date,Club,Yardage,Made,Missed,Make %,Target ft,Up and Down %,S-Left,S-Right,L-Left,L-Right,Best Streak\n"
+ let csv="Session,Date,Club,Yardage,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Best Streak\n"
 
  let grandMade=0
  let grandMissed=0
@@ -444,6 +470,7 @@ function exportHistoryCSV(){
 
     const made=st.made||0
     const missed=st.missed||0
+    const duffs=st.duffs||0
     const total=made+missed
     if(!total) return
 
@@ -457,9 +484,9 @@ function exportHistoryCSV(){
     sessionMiss.longLeft+=missDir.longLeft||0
     sessionMiss.longRight+=missDir.longRight||0
 
-    csv += (idx+1)+","+date+","+club+","+d+","+made+","+missed+","+pct+","+PGA_PROXIMITY[d]+","+formatPercent(UP_AND_DOWN[d])+"%,"+
+    csv += (idx+1)+","+date+","+club+","+d+","+PGA_PROXIMITY[d]+","+made+","+missed+","+pct+","+formatPercent(UP_AND_DOWN[d])+"%,"+
            (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
-           ((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
+           duffs+","+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
    })
   })
 
@@ -472,11 +499,17 @@ function exportHistoryCSV(){
   const llPct=totalMiss?Math.round(sessionMiss.longLeft/totalMiss*100):0
   const lrPct=totalMiss?Math.round(sessionMiss.longRight/totalMiss*100):0
 
-  csv += (idx+1)+","+date+",ALL,TOTAL,"+sessionMade+","+sessionMissed+","+totalPct+",,,"+
+  const sessionDuffs=Object.values(s.stats||{}).reduce(function(total, clubStats){
+   return total+DISTANCES.reduce(function(sum,d){
+    return sum+(((clubStats||{})[d]||{}).duffs||0)
+   },0)
+  },0)
+
+  csv += (idx+1)+","+date+",ALL,TOTAL,,"+sessionMade+","+sessionMissed+","+totalPct+",,"+
          fmt(sessionMiss.shortLeft,slPct)+","+
          fmt(sessionMiss.shortRight,srPct)+","+
          fmt(sessionMiss.longLeft,llPct)+","+
-         fmt(sessionMiss.longRight,lrPct)+",\n"
+         fmt(sessionMiss.longRight,lrPct)+","+sessionDuffs+",\n"
 
   grandMade+=sessionMade
   grandMissed+=sessionMissed
@@ -495,11 +528,19 @@ function exportHistoryCSV(){
  const gLLPct=gMissTotal?Math.round(grandMiss.longLeft/gMissTotal*100):0
  const gLRPct=gMissTotal?Math.round(grandMiss.longRight/gMissTotal*100):0
 
- csv += "GRAND TOTAL,,ALL,ALL,"+grandMade+","+grandMissed+","+gPct+",,,"+
+ const grandDuffs=sessions.reduce(function(total,s){
+  return total+Object.values(s.stats||{}).reduce(function(clubTotal, clubStats){
+   return clubTotal+DISTANCES.reduce(function(sum,d){
+    return sum+(((clubStats||{})[d]||{}).duffs||0)
+   },0)
+  },0)
+ },0)
+
+ csv += "GRAND TOTAL,,ALL,ALL,,"+grandMade+","+grandMissed+","+gPct+",,"+
         fmt(grandMiss.shortLeft,gSLPct)+","+
         fmt(grandMiss.shortRight,gSRPct)+","+
         fmt(grandMiss.longLeft,gLLPct)+","+
-        fmt(grandMiss.longRight,gLRPct)+",\n"
+        fmt(grandMiss.longRight,gLRPct)+","+grandDuffs+",\n"
 
  const blob=new Blob([csv],{type:'text/csv'})
  const url=URL.createObjectURL(blob)
@@ -553,7 +594,8 @@ function renderHistory(){
     const row=document.createElement("div")
     row.innerHTML='<strong>'+club+' - '+d+' yd:</strong> '+st.made+'/'+tot+' ('+pct+'%) - Target '+PGA_PROXIMITY[d]+' ft'+
      '<br><span class="subtle">Up and Down: '+formatPercent(UP_AND_DOWN[d])+'%</span>'+
-     '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
+     '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+'</span>'+
+     '<br><span class="subtle">Duffs: '+(st.duffs||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
     acc.appendChild(row)
    })
   })
