@@ -81,7 +81,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 
 <div class="stats">
 <p>Made: <span id="made">0</span> | Missed: <span id="missed">0</span></p>
-<p>Make %: <span id="percent">0</span>%</p> | Streak: <span id="streak">0</span> <span id="streakLabel"> </span>
+<p>Make %: <span id="percent">0</span>% | Streak: <span id="streak">0</span> <span id="streakLabel"> </span></p>
 <p>Duffs: <span id="duffs">0</span> | Skulls: <span id="skulls">0</span></p>
 </div>
 
@@ -313,7 +313,7 @@ function updateStats(){
  for(let i=0;i<fireCount;i++){fires+="*"}
 
  $("streak").textContent=s
- $("streakLabel").textContent=fires+" Streak"
+ $("streakLabel").textContent=fires+""
  $("targetBadge").innerHTML='<div class="badge-content">'+currentClub+' Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
 }
 
