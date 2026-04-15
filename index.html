@@ -80,8 +80,8 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 
 <div class="mishit-row">
-<button class="mishit-btn duff-btn" onclick="recordDuff()">💩Duff</button>
-<button class="mishit-btn skull-btn" onclick="recordSkull()">💀Skull</button>
+<button class="mishit-btn duff-btn" onclick="recordDuff()">💩 Duff</button>
+<button class="mishit-btn skull-btn" onclick="recordSkull()">💀 Skull</button>
 </div>
 
 <div class="stats">
@@ -90,7 +90,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge"><div class="badge-content">🎯PW Target: 15 ft<br>⛳Up and Down: 40%</div></div>
+<div id="targetBadge" class="badge"></div><div class="badge-content"></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
 <button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄️New Session</button>
@@ -316,7 +316,7 @@ function updateStats(){
 
  $("streak").textContent=s
  $("streakLabel").textContent=fires+""
- $("targetBadge").innerHTML='<div class="badge-content">'+currentClub+' Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
+ $("targetBadge").innerHTML='<div class="badge-content">'+currentClub+'🎯 Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>⛳ Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
 }
 
 function recordMade(){
