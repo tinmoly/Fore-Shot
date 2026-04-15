@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0058)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v4.7.html -->
+<!-- saved from url=(0056)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v5.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,9 +61,9 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 
 <div class="card">
 
-<h1 id="distanceTitle">PW - 30 Yard Pitch</h1>
+<h1 id="distanceTitle">PW - 15 Yard Pitch</h1>
 <div id="clubRow" class="pill-row"><button class="pill-btn active">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">52°</button><button class="pill-btn">54°</button><button class="pill-btn">56°</button><button class="pill-btn">58°</button><button class="pill-btn">60°</button><button class="pill-btn">62°</button></div>
-<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn active">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
+<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn active">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
@@ -79,18 +79,18 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 </div>
 
-<div class="stats">
-<p>Made: <span id="made">0</span> | Missed: <span id="missed">0</span></p>
-<p>Make %: <span id="percent">0</span>% | Streak: <span id="streak">0</span> <span id="streakLabel"> </span></p>
-<p>Duffs: <span id="duffs">0</span> | Skulls: <span id="skulls">0</span></p>
-</div>
-
 <div class="mishit-row">
 <button class="mishit-btn duff-btn" onclick="recordDuff()">Duff</button>
 <button class="mishit-btn skull-btn" onclick="recordSkull()">Skull</button>
 </div>
 
-<div id="targetBadge" class="badge"><div class="badge-content">PW Target: 15 ft<br>Up and Down: 40%</div></div>
+<div class="stats">
+<p>Made: <span id="made">0</span> | Missed: <span id="missed">0</span></p>
+<p>Make %: <span id="percent">0</span>% | Streak: <span id="streak">0</span> <span id="streakLabel"></span></p>
+<p>Duffs: <span id="duffs">0</span> | Skulls: <span id="skulls">0</span></p>
+</div>
+
+<div id="targetBadge" class="badge"><div class="badge-content">PW Target: 8 ft<br>Up and Down: 60%</div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
 <button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">New Session</button>
@@ -106,7 +106,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </select>
 </div>
 
-<div id="history"><div class="history-wrapper"><div class="history-card"><strong>Session 2</strong><br>4/14/2026 - 100% (7 shots)</div><div class="accordion" style="display: block;"><div><strong>PW - 30 yd:</strong> 7/7 (100%) - 15ft *<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 7</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 24px; font-weight: 800; border: none; border-radius: 12px; cursor: pointer;">Delete Session</button></div></div><div class="history-wrapper"><div class="history-card"><strong>Session 1</strong><br>4/14/2026 - 40% (25 shots)</div><div class="accordion"><div><strong>PW - 30 yd:</strong> 10/25 (40%) - 15ft<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 3 | L-Right: 4 | S-Left: 2 | S-Right: 1</span><br><span class="subtle">Duffs: 3 | Skulls: 2 | Best streak: 10</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 24px; font-weight: 800; border: none; border-radius: 12px; cursor: pointer;">Delete Session</button></div></div></div>
+<div id="history"><p style="opacity:.8">No sessions yet.</p></div>
 
 </div>
 
@@ -467,9 +467,17 @@ function handleHistoryAction(){
  const v=sel.value
  sel.value=""
  if(v==="delete"){
-  if(confirm("Delete all session history?")){
+  if(confirm("Delete all session history and reset all stats?")){
    sessions=[]
+   stats=defaultStats()
+   streaks=defaultCounters()
+   bestStreaks=defaultCounters()
+   shotHistory=[]
    saveSessions()
+   saveStats()
+   saveStreaks()
+   saveBestStreaks()
+   updateStats()
    renderHistory()
   }
  }
@@ -669,6 +677,7 @@ function initApp(){
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initApp)}else{initApp()}
 
 </script>
+
 
 
 
