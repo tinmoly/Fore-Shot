@@ -61,9 +61,9 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 
 <div class="card">
 
-<h1 id="distanceTitle">PW - 15 Yard Pitch</h1>
+<h1 id="distanceTitle">PW - 30 Yard Pitch</h1>
 <div id="clubRow" class="pill-row"><button class="pill-btn active">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">52°</button><button class="pill-btn">54°</button><button class="pill-btn">56°</button><button class="pill-btn">58°</button><button class="pill-btn">60°</button><button class="pill-btn">62°</button></div>
-<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn active">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
+<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn active">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
@@ -87,10 +87,10 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 <div class="stats">
 <p>Made: <span id="made">0</span> | Missed: <span id="missed">0</span></p>
 <p>Make %: <span id="percent">0</span>% | Streak: <span id="streak">0</span> <span id="streakLabel"></span></p>
-<p>Duffs: <span id="duffs">0</span> | Skulls: <span id="skulls">0</span></p>
+<p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge"><div class="badge-content">PW Target: 8 ft<br>Up and Down: 60%</div></div>
+<div id="targetBadge" class="badge"><div class="badge-content">PW Target: 15 ft<br>Up and Down: 40%</div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
 <button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">New Session</button>
@@ -299,7 +299,9 @@ function updateStats(){
  $("missed").textContent=missed
  $("percent").textContent=pct
  $("duffs").textContent=duffs
+ $("duffMarks").textContent=duffs?" "+"-".repeat(duffs):""
  $("skulls").textContent=skulls
+ $("skullMarks").textContent=skulls?" "+"#".repeat(skulls):""
 
  const s=getCurrentStreak()
  let fireCount=0
