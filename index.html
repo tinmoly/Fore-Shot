@@ -81,7 +81,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 <div class="stats">
 <p>✅Made: <span id="made">0</span> | ⛔Missed: <span id="missed">0</span></p>
 <p>🚩Make %: <span id="percent">0</span>%</p>
-<p><span id="streakLabel">Streak</span>: <span id="streak">0</span> | 💀Duffs: <span id="duffs">0</span></p>
+<p><span id="streakLabel">Streak</span>: <span id="streak">0</span> | ☠️Duffs: <span id="duffs">0</span></p>
 </div>
 
 <div id="targetBadge" class="badge"></div>
@@ -305,7 +305,7 @@ function updateStats(){
 
  $("streak").textContent=s
  $("streakLabel").textContent=fires+" Streak"
- $("targetBadge").innerHTML='<div class="badge-content"><div class="badge-spacer"></div><div class="badge-copy">🎯'+currentClub+' Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>⛳Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div><button class="duff-btn" onclick="recordDuff()">☠️Duff</button></div>'
+ $("targetBadge").innerHTML='<div class="badge-content"><div class="badge-spacer"></div><div class="badge-copy">🎯'+currentClub+' Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>⛳Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div><button class="duff-btn" onclick="recordDuff()">💀 Duff</button></div>'
 }
 
 function recordMade(){
