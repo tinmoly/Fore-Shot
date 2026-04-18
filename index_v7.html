@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fore!Shot Practice App</title>
+
+<style>
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0b3d2e;color:#fff;margin:0;padding:20px}
+body.flash-green{animation:flashGreen .15s ease-in-out}
+body.flash-red{animation:flashRed .15s ease-in-out}
+
+@keyframes flashGreen{from{background:#0b3d2e}to{background:#145a43}}
+@keyframes flashRed{from{background:#0b3d2e}to{background:#6b2a2a}}
+
+.card{background:#145a43;border-radius:14px;padding:20px;max-width:460px;margin:0 auto;box-shadow:0 10px 25px rgba(0,0,0,.3)}
+h1,h3{text-align:center;margin-bottom:10px}
+
+.pill-row{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px}
+.pill-btn{background:#1c7c5b;border:none;padding:10px 20px;border-radius:999px;font-weight:800;color:#fff;cursor:pointer;white-space:nowrap;font-size:24px}
+.pill-btn.active{background:#2ecc71;color:#000}
+
+.mode-card{margin-bottom:14px;padding:12px;border-radius:12px;background:#0e4f3a}
+.mode-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.mode-copy{font-size:15px;opacity:.9}
+.mode-btn{border:none;border-radius:999px;padding:10px 16px;font-size:16px;font-weight:800;cursor:pointer;background:#8a8a8a;color:#000;box-shadow:0 4px 0 #666}
+.mode-btn.active{background:#2ecc71;box-shadow:0 4px 0 #1e9e54}
+.mode-target{margin-top:10px;padding:10px;border-radius:10px;background:#1c7c5b;font-size:18px;font-weight:800;text-align:center}
+
+.shot-ring{width:285px;height:285px;border-radius:50%;position:relative;margin:10px auto;transform:rotate(45deg)}
+
+.shot-ring::before,.shot-ring::after{content:"";position:absolute;background:#000;opacity:.9;pointer-events:none;z-index:4}
+.shot-ring::before{width:2px;height:100%;left:50%;top:0;transform:translateX(-50%) rotate(45deg)}
+.shot-ring::after{width:2px;height:100%;left:50%;top:0;transform:translateX(-50%) rotate(-45deg)}
+
+.miss-wedge{position:absolute;inset:0;border-radius:50%;background:#E34234;cursor:pointer;-webkit-mask:radial-gradient(circle at center, transparent 0 55px, black 56px);mask:radial-gradient(circle at center, transparent 0 55px, black 56px)}
+.miss-wedge:hover{filter:brightness(1.1)}
+.miss-wedge:active{transform:scale(.97) translateY(3px);filter:brightness(.95)}
+
+button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0,.35)!important}
+
+.miss-topright{clip-path:polygon(50% 50%,0% 0%,100% 0%)}
+.miss-bottomleft{clip-path:polygon(50% 50%,100% 100%,0% 100%)}
+.miss-topleft{clip-path:polygon(50% 50%,0% 100%,0% 0%)}
+.miss-bottomright{clip-path:polygon(50% 50%,100% 0%,100% 100%)}
+
+.made-inner{width:110px;height:110px;border-radius:50%;background:#2ecc71;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#000;box-shadow:3px 0 0 #1e9e54,0 3px 0 #1e9e54,0 10px 20px rgba(0,0,0,.35);border-bottom:3px solid #1e9e54;border-right:3px solid #1e9e54;cursor:pointer;text-align:center;line-height:1.1;position:absolute;top:50%;left:50%;transform:translate(calc(-50% - 4px),-52%) rotate(-45deg);z-index:5}
+.made-inner:active{transform:translate(calc(-50% - 4px),-52%) rotate(-45deg) translateY(3px) scale(.97);box-shadow:1px 0 0 #1e9e54,0 1px 0 #1e9e54,0 6px 12px rgba(0,0,0,.35)}
+
+.stats{text-align:center;font-size:18px;margin-top:20px}
+.stats p{margin:6px 0}
+
+.badge{margin-top:10px;padding:10px;border-radius:10px;background:#0e4f3a;font-size:20px;font-weight:800}
+.badge-content{text-align:center}
+.mishit-row{display:grid;grid-template-columns:1fr 1fr;gap:60px;width:100%;margin-top:10px}
+.mishit-btn{width:100%;color:#000;border:none;border-radius:12px;padding:12px 12px;font-size:20px;font-weight:800;box-shadow:0 5px 0 rgba(0,0,0,.25),0 10px 18px rgba(0,0,0,.25);cursor:pointer}
+.skull-btn{background:#f4a261;box-shadow:0 5px 0 #c57f3d,0 10px 18px rgba(0,0,0,.25)}
+.duff-btn{background:#e9c46a;box-shadow:0 5px 0 #b89445,0 10px 18px rgba(0,0,0,.25)}
+
+.history-card{padding:10px;background:#1c7c5b;border-radius:10px;cursor:pointer}
+.history-wrapper{margin-bottom:10px}
+.accordion{display:none;margin-top:8px;padding:10px;background:#0e4f3a;border-radius:10px}
+.subtle{opacity:.75;font-size:14px;margin-left:6px}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1 id="distanceTitle">PW - 30 Yard Pitch</h1>
+
+<div class="mode-card">
+<div class="mode-row">
+<div>
+<div style="font-size:18px;font-weight:800">Practice Mode</div>
+<div class="mode-copy">Toggle random mode to get a new club and distance after every shot.</div>
+</div>
+<button id="practiceModeBtn" class="mode-btn" onclick="togglePracticeMode()">Manual Mode</button>
+</div>
+<div id="modeTarget" class="mode-target">Current target: PW - 30y</div>
+</div>
+
+<div id="clubRow" class="pill-row"></div>
+<div id="distanceRow" class="pill-row"></div>
+
+<div style="display:flex;flex-direction:column;align-items:center;">
+
+<div class="shot-ring">
+
+<div class="miss-wedge miss-topright" onclick="recordMissed('longRight')"><span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Long<br>Right</span></div>
+<div class="miss-wedge miss-bottomleft" onclick="recordMissed('shortLeft')"><span style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Short<br>Left</span></div>
+<div class="miss-wedge miss-topleft" onclick="recordMissed('longLeft')"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(-90deg);font-weight:800;color:#000;font-size:24px">Long<br>Left</span></div>
+<div class="miss-wedge miss-bottomright" onclick="recordMissed('shortRight')"><span style="position:absolute;right:10px;top:50%;transform:translateY(-50%) rotate(270deg);font-weight:800;color:#000;font-size:24px">Short<br>Right</span></div>
+
+<div class="made-inner" onclick="event.stopPropagation();recordMade();">Made</div>
+
+</div>
+</div>
+
+<div class="mishit-row">
+<button class="mishit-btn duff-btn" onclick="recordDuff()">Duff</button>
+<button class="mishit-btn skull-btn" onclick="recordSkull()">Skull</button>
+</div>
+
+<div class="stats">
+<p>Made: <span id="made">0</span> | Missed: <span id="missed">0</span></p>
+<p>Make %: <span id="percent">0</span>%</p>
+<p>Streak: <span id="streak">0</span> <span id="streakLabel"></span></p>
+<p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
+</div>
+
+<div id="targetBadge" class="badge"><div class="badge-content"></div></div>
+
+<div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
+<button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">New Session</button>
+<button onclick="undoShot()" style="flex:1;background:#8a8a8a;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #666,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">Undo Last Shot</button>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+<h3 style="margin:0">Session History</h3>
+<select id="historyAction" onchange="handleHistoryAction()" style="background:#1c7c5b;color:#fff;border:none;border-radius:8px;padding:6px 8px;font-weight:700">
+<option value="">Actions</option>
+<option value="export">Export All History</option>
+<option value="delete">Clear All History</option>
+</select>
+</div>
+
+<div id="history"><p style="opacity:.8">No sessions yet.</p></div>
+
+</div>
+
+<script>
+const CLUBS=["PW","UW","48 deg","52 deg","54 deg","56 deg","58 deg","60 deg","62 deg"]
+const DISTANCES=[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
+const PGA_PROXIMITY={10:6,15:8,20:10,25:12,30:15,35:18,40:21,45:24,50:27,55:30,60:33,65:36,70:39,75:42,80:45}
+const UP_AND_DOWN={10:67,15:60,20:53,25:46,30:40,35:35,40:30,45:27,50:25,55:23,60:20,65:18,70:16,75:14,80:12}
+const DEFAULT_CLUB="PW"
+const PRACTICE_MODE_KEY="shootingPracticeMode"
+
+let currentClub=DEFAULT_CLUB
+let currentDistance=30
+let stats
+let streaks
+let bestStreaks
+let sessions
+let shotHistory=[]
+let practiceMode="manual"
+
+const $=(id)=>{
+ const el=document.getElementById(id)
+ if(!el) throw new Error("Missing DOM element: "+id)
+ return el
+}
+
+function createMissDir(){
+ return {shortLeft:0,shortRight:0,longLeft:0,longRight:0}
+}
+
+function createStatBucket(){
+ return {made:0,missed:0,duffs:0,skulls:0,missDir:createMissDir()}
+}
+
+function createDistanceMap(factory){
+ const map={}
+ DISTANCES.forEach(d=>{map[d]=factory()})
+ return map
+}
+
+function createClubDistanceMap(factory){
+ const map={}
+ CLUBS.forEach(club=>{map[club]=createDistanceMap(factory)})
+ return map
+}
+
+function hasClubKeys(obj){
+ return !!obj && CLUBS.some(club=>obj[club] && typeof obj[club]==="object")
+}
+
+function migrateLegacyMap(obj,factory){
+ const map=createClubDistanceMap(factory)
+ if(!obj || typeof obj!=="object") return map
+
+ if(hasClubKeys(obj)){
+  CLUBS.forEach(club=>{
+   DISTANCES.forEach(d=>{
+    if(obj[club] && obj[club][d]!=null) map[club][d]=obj[club][d]
+   })
+  })
+  return map
+ }
+
+ DISTANCES.forEach(d=>{
+  if(obj[d]!=null) map[DEFAULT_CLUB][d]=obj[d]
+ })
+ return map
+}
+
+function ensureStatsShape(obj){
+ const map=migrateLegacyMap(obj,createStatBucket)
+ CLUBS.forEach(club=>{
+  DISTANCES.forEach(d=>{
+   const bucket=map[club][d]||{}
+   map[club][d]={
+    made:Number(bucket.made)||0,
+    missed:Number(bucket.missed)||0,
+    duffs:Number(bucket.duffs)||0,
+    skulls:Number(bucket.skulls)||0,
+    missDir:{
+     shortLeft:Number(bucket.missDir && bucket.missDir.shortLeft)||0,
+     shortRight:Number(bucket.missDir && bucket.missDir.shortRight)||0,
+     longLeft:Number(bucket.missDir && bucket.missDir.longLeft)||0,
+     longRight:Number(bucket.missDir && bucket.missDir.longRight)||0
+    }
+   }
+  })
+ })
+ return map
+}
+
+function ensureCounterShape(obj){
+ const map=migrateLegacyMap(obj,()=>0)
+ CLUBS.forEach(club=>{
+  DISTANCES.forEach(d=>{
+   map[club][d]=Number(map[club][d])||0
+  })
+ })
+ return map
+}
+
+function defaultStats(){return ensureStatsShape({})}
+function defaultCounters(){return ensureCounterShape({})}
+
+function loadStats(){try{return ensureStatsShape(JSON.parse(localStorage.getItem("shootingStats")))}catch{return defaultStats()}}
+function saveStats(){localStorage.setItem("shootingStats",JSON.stringify(stats))}
+
+function loadStreaks(){try{return ensureCounterShape(JSON.parse(localStorage.getItem("shootingStreaks")))}catch{return defaultCounters()}}
+function saveStreaks(){localStorage.setItem("shootingStreaks",JSON.stringify(streaks))}
+
+function loadBestStreaks(){try{return ensureCounterShape(JSON.parse(localStorage.getItem("shootingBestStreaks")))}catch{return defaultCounters()}}
+function saveBestStreaks(){localStorage.setItem("shootingBestStreaks",JSON.stringify(bestStreaks))}
+
+function loadPracticeMode(){
+ const stored=localStorage.getItem(PRACTICE_MODE_KEY)
+ return stored==="random" ? "random" : "manual"
+}
+
+function savePracticeMode(){
+ localStorage.setItem(PRACTICE_MODE_KEY,practiceMode)
+}
+
+function normalizeSession(session){
+ const safeSession=session||{}
+ return {
+  date:safeSession.date||new Date().toISOString(),
+  stats:ensureStatsShape(safeSession.stats),
+  bestStreaks:ensureCounterShape(safeSession.bestStreaks),
+  summary:safeSession.summary||summarizeStats(ensureStatsShape(safeSession.stats))
+ }
+}
+
+function loadSessions(){
+ try{
+  return (JSON.parse(localStorage.getItem("shootingSessions"))||[]).map(normalizeSession)
+ }catch{
+  return []
+ }
+}
+function saveSessions(){localStorage.setItem("shootingSessions",JSON.stringify(sessions))}
+
+function getCurrentStats(){return stats[currentClub][currentDistance]}
+function getCurrentStreak(){return streaks[currentClub][currentDistance]||0}
+function getCurrentBestStreak(){return bestStreaks[currentClub][currentDistance]||0}
+function formatPercent(value){return Number.isInteger(value)?value.toString():value.toFixed(1)}
+
+function setTitle(){
+ $("distanceTitle").textContent=currentClub+" - "+currentDistance+" Yard Pitch"
+}
+
+function renderPracticeMode(){
+ const btn=$("practiceModeBtn")
+ const target=$("modeTarget")
+ const isRandom=practiceMode==="random"
+ btn.textContent=isRandom ? "Random Mode On" : "Manual Mode"
+ btn.className="mode-btn"+(isRandom?" active":"")
+ target.textContent=(isRandom ? "Random target: " : "Current target: ")+currentClub+" - "+currentDistance+"y"
+}
+
+function buildClubRow(){
+ const r=$("clubRow")
+ r.innerHTML=""
+ CLUBS.forEach(club=>{
+  const b=document.createElement("button")
+  b.className="pill-btn"+(club===currentClub?" active":"")
+  b.textContent=club
+  b.onclick=()=>setClub(club)
+  r.appendChild(b)
+ })
+}
+
+function buildDistanceRow(){
+ const r=$("distanceRow")
+ r.innerHTML=""
+ DISTANCES.forEach(d=>{
+  const b=document.createElement("button")
+  b.className="pill-btn"+(d===currentDistance?" active":"")
+  b.textContent=d+"y"
+  b.onclick=()=>setDistance(d)
+  r.appendChild(b)
+ })
+}
+
+function syncCurrentSelection(){
+ setTitle()
+ buildClubRow()
+ buildDistanceRow()
+ updateStats()
+ renderPracticeMode()
+}
+
+function setClub(club){
+ currentClub=club
+ syncCurrentSelection()
+}
+
+function setDistance(d){
+ currentDistance=d
+ syncCurrentSelection()
+}
+
+function setTarget(club,distance){
+ currentClub=club
+ currentDistance=distance
+ syncCurrentSelection()
+}
+
+function pickRandomTarget(){
+ const combos=[]
+ CLUBS.forEach(club=>{
+  DISTANCES.forEach(distance=>{
+   if(club!==currentClub || distance!==currentDistance) combos.push({club,distance})
+  })
+ })
+ if(!combos.length) return
+ const next=combos[Math.floor(Math.random()*combos.length)]
+ setTarget(next.club,next.distance)
+}
+
+function togglePracticeMode(){
+ practiceMode=practiceMode==="manual" ? "random" : "manual"
+ savePracticeMode()
+ if(practiceMode==="random") pickRandomTarget()
+ renderPracticeMode()
+}
+
+function advancePracticeTarget(){
+ if(practiceMode==="random") pickRandomTarget()
+}
+
+function updateStats(){
+ const st=getCurrentStats()
+ const made=st.made||0
+ const missed=st.missed||0
+ const duffs=st.duffs||0
+ const skulls=st.skulls||0
+ const total=made+missed
+ const pct=total?Math.round(made/total*100):0
+
+ $("made").textContent=made
+ $("missed").textContent=missed
+ $("percent").textContent=pct
+ $("duffs").textContent=duffs
+ $("duffMarks").textContent=duffs?" "+"x".repeat(duffs):""
+ $("skulls").textContent=skulls
+ $("skullMarks").textContent=skulls?" "+"x".repeat(skulls):""
+
+ const s=getCurrentStreak()
+ let fireCount=0
+ if(s>=10) fireCount=5
+ else if(s>=7) fireCount=4
+ else if(s>=5) fireCount=3
+ else if(s>=3) fireCount=2
+ else if(s>=1) fireCount=1
+
+ let fires=""
+ for(let i=0;i<fireCount;i++){fires+="*"}
+
+ $("streak").textContent=s
+ $("streakLabel").textContent=fires
+ $("targetBadge").innerHTML='<div class="badge-content">Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
+}
+
+function recordMade(){
+ const st=getCurrentStats()
+ st.made++
+ streaks[currentClub][currentDistance]++
+ if(getCurrentStreak()>getCurrentBestStreak()) bestStreaks[currentClub][currentDistance]=getCurrentStreak()
+ shotHistory.push({type:"made",club:currentClub,distance:currentDistance})
+ document.body.classList.remove("flash-red")
+ document.body.classList.add("flash-green")
+ setTimeout(()=>document.body.classList.remove("flash-green"),150)
+ saveStats()
+ saveStreaks()
+ saveBestStreaks()
+ advancePracticeTarget()
+ updateStats()
+}
+
+function recordMissed(dir){
+ const st=getCurrentStats()
+ st.missed++
+ st.missDir[dir]++
+ streaks[currentClub][currentDistance]=0
+ shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir})
+ document.body.classList.remove("flash-green")
+ document.body.classList.add("flash-red")
+ setTimeout(()=>document.body.classList.remove("flash-red"),150)
+ saveStats()
+ saveStreaks()
+ advancePracticeTarget()
+ updateStats()
+}
+
+function recordDuff(){
+ const st=getCurrentStats()
+ st.missed++
+ st.duffs++
+ streaks[currentClub][currentDistance]=0
+ shotHistory.push({type:"duff",club:currentClub,distance:currentDistance})
+ document.body.classList.remove("flash-green")
+ document.body.classList.add("flash-red")
+ setTimeout(()=>document.body.classList.remove("flash-red"),150)
+ saveStats()
+ saveStreaks()
+ advancePracticeTarget()
+ updateStats()
+}
+
+function recordSkull(){
+ const st=getCurrentStats()
+ st.missed++
+ st.skulls++
+ streaks[currentClub][currentDistance]=0
+ shotHistory.push({type:"skull",club:currentClub,distance:currentDistance})
+ document.body.classList.remove("flash-green")
+ document.body.classList.add("flash-red")
+ setTimeout(()=>document.body.classList.remove("flash-red"),150)
+ saveStats()
+ saveStreaks()
+ advancePracticeTarget()
+ updateStats()
+}
+
+function summarizeStats(statsMap){
+ let totalMade=0
+ let totalMissed=0
+ CLUBS.forEach(club=>{
+  DISTANCES.forEach(d=>{
+   totalMade+=statsMap[club][d].made||0
+   totalMissed+=statsMap[club][d].missed||0
+  })
+ })
+ const totalShots=totalMade+totalMissed
+ return {
+  made:totalMade,
+  missed:totalMissed,
+  total:totalShots,
+  pct:totalShots?Math.round(totalMade/totalShots*100):0
+ }
+}
+
+function newSession(){
+ const summary=summarizeStats(stats)
+ sessions.push({
+  date:new Date().toISOString(),
+  stats:JSON.parse(JSON.stringify(stats)),
+  bestStreaks:JSON.parse(JSON.stringify(bestStreaks)),
+  summary:summary
+ })
+ saveSessions()
+ stats=defaultStats()
+ streaks=defaultCounters()
+ bestStreaks=defaultCounters()
+ shotHistory=[]
+ saveStats()
+ saveStreaks()
+ saveBestStreaks()
+ if(practiceMode==="random") pickRandomTarget()
+ updateStats()
+ renderHistory()
+ renderPracticeMode()
+}
+
+function recomputeHistoryFor(club,distance){
+ let streak=0
+ let best=0
+
+ shotHistory.forEach(shot=>{
+  if(shot.club!==club || shot.distance!==distance) return
+  if(shot.type==="made"){
+   streak++
+   if(streak>best) best=streak
+  }else{
+   streak=0
+  }
+ })
+
+ streaks[club][distance]=streak
+ bestStreaks[club][distance]=best
+}
+
+function undoShot(){
+ if(!shotHistory.length) return
+ const last=shotHistory.pop()
+ const st=stats[last.club][last.distance]
+
+ if(last.type==="made" && st.made>0){
+  st.made--
+  if(streaks[last.club][last.distance]>0) streaks[last.club][last.distance]--
+ }
+
+ if(last.type==="missed" && st.missed>0){
+  st.missed--
+  if(last.dir && st.missDir[last.dir]>0) st.missDir[last.dir]--
+ }
+
+ if(last.type==="duff" && st.missed>0){
+  st.missed--
+  if(st.duffs>0) st.duffs--
+ }
+
+ if(last.type==="skull" && st.missed>0){
+  st.missed--
+  if(st.skulls>0) st.skulls--
+ }
+
+ setTarget(last.club,last.distance)
+ recomputeHistoryFor(last.club,last.distance)
+ saveStats()
+ saveStreaks()
+ saveBestStreaks()
+ updateStats()
+ renderPracticeMode()
+}
+
+function handleHistoryAction(){
+ const sel=$("historyAction")
+ const v=sel.value
+ sel.value=""
+ if(v==="delete"){
+  if(confirm("Delete all session history and reset all stats?")){
+   sessions=[]
+   stats=defaultStats()
+   streaks=defaultCounters()
+   bestStreaks=defaultCounters()
+   shotHistory=[]
+   saveSessions()
+   saveStats()
+   saveStreaks()
+   saveBestStreaks()
+   updateStats()
+   renderHistory()
+  }
+ }
+ if(v==="export"){exportHistoryCSV()}
+}
+
+function exportHistoryCSV(){
+ let csv="Session,Date,Club,Yardage,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Skulls,Best Streak\n"
+
+ let grandMade=0
+ let grandMissed=0
+ let grandMiss=createMissDir()
+
+ const fmt=(count,pct)=>count+" ("+pct+"%)"
+
+ sessions.forEach((s,idx)=>{
+  const date=new Date(s.date).toLocaleDateString()
+  let sessionMade=0
+  let sessionMissed=0
+  let sessionMiss=createMissDir()
+
+  CLUBS.forEach(club=>{
+   DISTANCES.forEach(d=>{
+    const st=s.stats && s.stats[club] && s.stats[club][d]
+    if(!st) return
+
+    const made=st.made||0
+    const missed=st.missed||0
+    const duffs=st.duffs||0
+    const skulls=st.skulls||0
+    const total=made+missed
+    if(!total) return
+
+    const missDir=st.missDir||createMissDir()
+    const pct=Math.round(made/total*100)
+
+    sessionMade+=made
+    sessionMissed+=missed
+    sessionMiss.shortLeft+=missDir.shortLeft||0
+    sessionMiss.shortRight+=missDir.shortRight||0
+    sessionMiss.longLeft+=missDir.longLeft||0
+    sessionMiss.longRight+=missDir.longRight||0
+
+    csv+=(idx+1)+","+date+","+club+","+d+","+PGA_PROXIMITY[d]+","+made+","+missed+","+pct+","+formatPercent(UP_AND_DOWN[d])+"%,"+
+         (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
+         duffs+","+skulls+","+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
+   })
+  })
+
+  const totalShots=sessionMade+sessionMissed
+  const totalPct=totalShots?Math.round(sessionMade/totalShots*100):0
+  const sessionDuffs=Object.values(s.stats||{}).reduce((total,clubStats)=>{
+   return total+DISTANCES.reduce((sum,d)=>{
+    return sum+(((clubStats||{})[d]||{}).duffs||0)
+   },0)
+  },0)
+  const sessionSkulls=Object.values(s.stats||{}).reduce((total,clubStats)=>{
+   return total+DISTANCES.reduce((sum,d)=>{
+    return sum+(((clubStats||{})[d]||{}).skulls||0)
+   },0)
+  },0)
+  const totalMiss=sessionMissed
+  const slPct=totalMiss?Math.round(sessionMiss.shortLeft/totalMiss*100):0
+  const srPct=totalMiss?Math.round(sessionMiss.shortRight/totalMiss*100):0
+  const llPct=totalMiss?Math.round(sessionMiss.longLeft/totalMiss*100):0
+  const lrPct=totalMiss?Math.round(sessionMiss.longRight/totalMiss*100):0
+  const duffPct=totalMiss?Math.round(sessionDuffs/totalMiss*100):0
+  const skullPct=totalMiss?Math.round(sessionSkulls/totalMiss*100):0
+
+  csv+=(idx+1)+","+date+",ALL,TOTAL,,"+sessionMade+","+sessionMissed+","+totalPct+",,"+
+       fmt(sessionMiss.shortLeft,slPct)+","+
+       fmt(sessionMiss.shortRight,srPct)+","+
+       fmt(sessionMiss.longLeft,llPct)+","+
+       fmt(sessionMiss.longRight,lrPct)+","+fmt(sessionDuffs,duffPct)+","+fmt(sessionSkulls,skullPct)+",\n"
+
+  grandMade+=sessionMade
+  grandMissed+=sessionMissed
+  grandMiss.shortLeft+=sessionMiss.shortLeft
+  grandMiss.shortRight+=sessionMiss.shortRight
+  grandMiss.longLeft+=sessionMiss.longLeft
+  grandMiss.longRight+=sessionMiss.longRight
+ })
+
+ const gShots=grandMade+grandMissed
+ const gPct=gShots?Math.round(grandMade/gShots*100):0
+ const grandDuffs=sessions.reduce((total,s)=>{
+  return total+Object.values(s.stats||{}).reduce((clubTotal,clubStats)=>{
+   return clubTotal+DISTANCES.reduce((sum,d)=>{
+    return sum+(((clubStats||{})[d]||{}).duffs||0)
+   },0)
+  },0)
+ },0)
+ const grandSkulls=sessions.reduce((total,s)=>{
+  return total+Object.values(s.stats||{}).reduce((clubTotal,clubStats)=>{
+   return clubTotal+DISTANCES.reduce((sum,d)=>{
+    return sum+(((clubStats||{})[d]||{}).skulls||0)
+   },0)
+  },0)
+ },0)
+ const gMissTotal=grandMissed
+ const gSLPct=gMissTotal?Math.round(grandMiss.shortLeft/gMissTotal*100):0
+ const gSRPct=gMissTotal?Math.round(grandMiss.shortRight/gMissTotal*100):0
+ const gLLPct=gMissTotal?Math.round(grandMiss.longLeft/gMissTotal*100):0
+ const gLRPct=gMissTotal?Math.round(grandMiss.longRight/gMissTotal*100):0
+ const gDuffPct=gMissTotal?Math.round(grandDuffs/gMissTotal*100):0
+ const gSkullPct=gMissTotal?Math.round(grandSkulls/gMissTotal*100):0
+
+ csv+="GRAND TOTAL,,ALL,ALL,,"+grandMade+","+grandMissed+","+gPct+",,"+
+      fmt(grandMiss.shortLeft,gSLPct)+","+
+      fmt(grandMiss.shortRight,gSRPct)+","+
+      fmt(grandMiss.longLeft,gLLPct)+","+
+      fmt(grandMiss.longRight,gLRPct)+","+fmt(grandDuffs,gDuffPct)+","+fmt(grandSkulls,gSkullPct)+",\n"
+
+ const blob=new Blob([csv],{type:"text/csv"})
+ const url=URL.createObjectURL(blob)
+ const a=document.createElement("a")
+ a.href=url
+ a.download="foreshot-history.csv"
+ a.click()
+ URL.revokeObjectURL(url)
+}
+
+function deleteSession(index){
+ if(!confirm("Delete this session?")) return
+ sessions.splice(index,1)
+ saveSessions()
+ renderHistory()
+}
+
+function renderHistory(){
+ const h=$("history")
+ h.innerHTML=""
+ if(!sessions.length){
+  h.innerHTML='<p style="opacity:.8">No sessions yet.</p>'
+  return
+ }
+
+ sessions.slice().reverse().forEach((s,i)=>{
+  const idx=sessions.length-1-i
+  const wrap=document.createElement("div")
+  wrap.className="history-wrapper"
+
+  const card=document.createElement("div")
+  card.className="history-card"
+
+  const acc=document.createElement("div")
+  acc.className="accordion"
+
+  card.innerHTML="<strong>Session "+(idx+1)+"</strong><br>"+new Date(s.date).toLocaleDateString()+" - "+s.summary.pct+"% ("+s.summary.total+" shots)"
+  card.onclick=()=>{acc.style.display=acc.style.display==="block"?"none":"block"}
+
+  CLUBS.forEach(club=>{
+   DISTANCES.forEach(d=>{
+    const st=s.stats && s.stats[club] && s.stats[club][d]
+    if(!st) return
+
+    const tot=(st.made||0)+(st.missed||0)
+    if(!tot) return
+
+    const missDir=st.missDir||createMissDir()
+    const pct=Math.round(st.made/tot*100)
+    const earnedStar=pct>UP_AND_DOWN[d]?" *":""
+
+    const row=document.createElement("div")
+    row.innerHTML="<strong>"+club+" - "+d+" yd:</strong> "+st.made+"/"+tot+" ("+pct+"%) - "+PGA_PROXIMITY[d]+"ft"+earnedStar+
+     '<br><span class="subtle">Up and Down: '+formatPercent(UP_AND_DOWN[d])+'%</span>'+
+     '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+'</span>'+
+     '<br><span class="subtle">Duffs: '+(st.duffs||0)+' | Skulls: '+(st.skulls||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
+    acc.appendChild(row)
+   })
+  })
+
+  const delBtn=document.createElement("button")
+  delBtn.textContent="Delete Session"
+  delBtn.onclick=e=>{e.stopPropagation();deleteSession(idx)}
+  delBtn.style="display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;cursor:pointer;"
+
+  acc.appendChild(delBtn)
+  wrap.appendChild(card)
+  wrap.appendChild(acc)
+  h.appendChild(wrap)
+ })
+}
+
+function initApp(){
+ stats=loadStats()
+ streaks=loadStreaks()
+ bestStreaks=loadBestStreaks()
+ sessions=loadSessions()
+ practiceMode=loadPracticeMode()
+ syncCurrentSelection()
+ renderHistory()
+ renderPracticeMode()
+ if(practiceMode==="random") pickRandomTarget()
+}
+
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",initApp)}else{initApp()}
+
+</script>
+
+</body>
+</html>
