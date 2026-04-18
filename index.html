@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0056)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v7.html -->
+<!-- saved from url=(0058)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v7.1.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,16 +68,17 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 
 <div class="card">
 
-<h1 id="distanceTitle">PW - 30 Yard Pitch</h1>
+<h1 id="distanceTitle">48 deg - 60 Yard Pitch</h1>
 
 <div class="mode-card">
 <div class="mode-row">
-<button id="practiceModeBtn" class="mode-btn" onclick="togglePracticeMode()">Manual Mode</button>
+<button id="practiceModeBtn" class="mode-btn active" onclick="togglePracticeMode()">Random Mode On</button>
 </div>
+<div id="modeTarget" class="mode-target">Random target: 48 deg - 60y</div>
 </div>
 
-<div id="clubRow" class="pill-row"><button class="pill-btn active">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48 deg</button><button class="pill-btn">52 deg</button><button class="pill-btn">54 deg</button><button class="pill-btn">56 deg</button><button class="pill-btn">58 deg</button><button class="pill-btn">60 deg</button><button class="pill-btn">62 deg</button></div>
-<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn active">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
+<div id="clubRow" class="pill-row"><button class="pill-btn">PW</button><button class="pill-btn">UW</button><button class="pill-btn active">48 deg</button><button class="pill-btn">52 deg</button><button class="pill-btn">54 deg</button><button class="pill-btn">56 deg</button><button class="pill-btn">58 deg</button><button class="pill-btn">60 deg</button><button class="pill-btn">62 deg</button></div>
+<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn active">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
@@ -105,7 +106,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge"><div class="badge-content">Target: 15 ft<br>Up and Down: 40%</div></div>
+<div id="targetBadge" class="badge"><div class="badge-content">Random totals: 0 shots<br>Current target: 48 deg - 60y (33 ft)</div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
 <button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">New Session</button>
@@ -268,6 +269,47 @@ function getCurrentStreak(){return streaks[currentClub][currentDistance]||0}
 function getCurrentBestStreak(){return bestStreaks[currentClub][currentDistance]||0}
 function formatPercent(value){return Number.isInteger(value)?value.toString():value.toFixed(1)}
 
+function summarizeSessionStats(statsMap){
+ let totalMade=0
+ let totalMissed=0
+ let totalDuffs=0
+ let totalSkulls=0
+
+ CLUBS.forEach(club=>{
+  DISTANCES.forEach(d=>{
+   const bucket=statsMap[club][d]
+   totalMade+=bucket.made||0
+   totalMissed+=bucket.missed||0
+   totalDuffs+=bucket.duffs||0
+   totalSkulls+=bucket.skulls||0
+  })
+ })
+
+ return {
+  made:totalMade,
+  missed:totalMissed,
+  duffs:totalDuffs,
+  skulls:totalSkulls,
+  total:totalMade+totalMissed
+ }
+}
+
+function summarizeShotSequence(history){
+ let streak=0
+ let best=0
+
+ history.forEach(shot=>{
+  if(shot.type==="made"){
+   streak++
+   if(streak>best) best=streak
+  }else{
+   streak=0
+  }
+ })
+
+ return {streak:streak,best:best}
+}
+
 function setTitle(){
  $("distanceTitle").textContent=currentClub+" - "+currentDistance+" Yard Pitch"
 }
@@ -345,6 +387,7 @@ function togglePracticeMode(){
  practiceMode=practiceMode==="manual" ? "random" : "manual"
  savePracticeMode()
  if(practiceMode==="random") pickRandomTarget()
+ updateStats()
  renderPracticeMode()
 }
 
@@ -353,12 +396,15 @@ function advancePracticeTarget(){
 }
 
 function updateStats(){
+ const isRandom=practiceMode==="random"
  const st=getCurrentStats()
- const made=st.made||0
- const missed=st.missed||0
- const duffs=st.duffs||0
- const skulls=st.skulls||0
- const total=made+missed
+ const sessionStats=summarizeSessionStats(stats)
+ const shotSummary=summarizeShotSequence(shotHistory)
+ const made=isRandom ? sessionStats.made : (st.made||0)
+ const missed=isRandom ? sessionStats.missed : (st.missed||0)
+ const duffs=isRandom ? sessionStats.duffs : (st.duffs||0)
+ const skulls=isRandom ? sessionStats.skulls : (st.skulls||0)
+ const total=isRandom ? sessionStats.total : (made+missed)
  const pct=total?Math.round(made/total*100):0
 
  $("made").textContent=made
@@ -369,7 +415,7 @@ function updateStats(){
  $("skulls").textContent=skulls
  $("skullMarks").textContent=skulls?" "+"x".repeat(skulls):""
 
- const s=getCurrentStreak()
+ const s=isRandom ? shotSummary.streak : getCurrentStreak()
  let fireCount=0
  if(s>=10) fireCount=5
  else if(s>=7) fireCount=4
@@ -382,7 +428,11 @@ function updateStats(){
 
  $("streak").textContent=s
  $("streakLabel").textContent=fires
- $("targetBadge").innerHTML='<div class="badge-content">Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
+ if(isRandom){
+  $("targetBadge").innerHTML='<div class="badge-content">Random totals: '+total+' shots<br>Current target: '+currentClub+' - '+currentDistance+'y ('+PGA_PROXIMITY[currentDistance]+' ft)</div>'
+ }else{
+  $("targetBadge").innerHTML='<div class="badge-content">Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
+ }
 }
 
 function recordMade(){
@@ -753,6 +803,7 @@ function initApp(){
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",initApp)}else{initApp()}
 
 </script>
+
 
 
 
