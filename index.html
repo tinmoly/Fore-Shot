@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0056)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v5.html -->
+<!-- saved from url=(0056)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v7.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,13 @@ h1,h3{text-align:center;margin-bottom:10px}
 .pill-row{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px}
 .pill-btn{background:#1c7c5b;border:none;padding:10px 20px;border-radius:999px;font-weight:800;color:#fff;cursor:pointer;white-space:nowrap;font-size:24px}
 .pill-btn.active{background:#2ecc71;color:#000}
+
+.mode-card{margin-bottom:14px;padding:12px;border-radius:12px;background:#0e4f3a}
+.mode-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.mode-copy{font-size:15px;opacity:.9}
+.mode-btn{border:none;border-radius:999px;padding:10px 16px;font-size:16px;font-weight:800;cursor:pointer;background:#8a8a8a;color:#000;box-shadow:0 4px 0 #666}
+.mode-btn.active{background:#2ecc71;box-shadow:0 4px 0 #1e9e54}
+.mode-target{margin-top:10px;padding:10px;border-radius:10px;background:#1c7c5b;font-size:18px;font-weight:800;text-align:center}
 
 .shot-ring{width:285px;height:285px;border-radius:50%;position:relative;margin:10px auto;transform:rotate(45deg)}
 
@@ -57,21 +64,33 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </style>
 </head>
 
-<body class="">
+<body>
 
 <div class="card">
 
 <h1 id="distanceTitle">PW - 30 Yard Pitch</h1>
-<div id="clubRow" class="pill-row"><button class="pill-btn active">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">52°</button><button class="pill-btn">54°</button><button class="pill-btn">56°</button><button class="pill-btn">58°</button><button class="pill-btn">60°</button><button class="pill-btn">62°</button></div>
+
+<div class="mode-card">
+<div class="mode-row">
+<div>
+<div style="font-size:18px;font-weight:800">Practice Mode</div>
+<div class="mode-copy">Toggle random mode to get a new club and distance after every shot.</div>
+</div>
+<button id="practiceModeBtn" class="mode-btn" onclick="togglePracticeMode()">Manual Mode</button>
+</div>
+<div id="modeTarget" class="mode-target">Current target: PW - 30y</div>
+</div>
+
+<div id="clubRow" class="pill-row"><button class="pill-btn active">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48 deg</button><button class="pill-btn">52 deg</button><button class="pill-btn">54 deg</button><button class="pill-btn">56 deg</button><button class="pill-btn">58 deg</button><button class="pill-btn">60 deg</button><button class="pill-btn">62 deg</button></div>
 <div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn active">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
 <div class="shot-ring">
 
-<div class="miss-wedge miss-topright" onclick="recordMissed(&#39;longRight&#39;)"><span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px"> Long<br>Right</span></div>
-<div class="miss-wedge miss-bottomleft" onclick="recordMissed(&#39;shortLeft&#39;)"><span style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Short<br> Left</span></div>
-<div class="miss-wedge miss-topleft" onclick="recordMissed(&#39;longLeft&#39;)"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(-90deg);font-weight:800;color:#000;font-size:24px">Long<br> Left</span></div>
+<div class="miss-wedge miss-topright" onclick="recordMissed(&#39;longRight&#39;)"><span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Long<br>Right</span></div>
+<div class="miss-wedge miss-bottomleft" onclick="recordMissed(&#39;shortLeft&#39;)"><span style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Short<br>Left</span></div>
+<div class="miss-wedge miss-topleft" onclick="recordMissed(&#39;longLeft&#39;)"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(-90deg);font-weight:800;color:#000;font-size:24px">Long<br>Left</span></div>
 <div class="miss-wedge miss-bottomright" onclick="recordMissed(&#39;shortRight&#39;)"><span style="position:absolute;right:10px;top:50%;transform:translateY(-50%) rotate(270deg);font-weight:800;color:#000;font-size:24px">Short<br>Right</span></div>
 
 <div class="made-inner" onclick="event.stopPropagation();recordMade();">Made</div>
@@ -80,30 +99,30 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 
 <div class="mishit-row">
-<button class="mishit-btn duff-btn" onclick="recordDuff()">💩 Duff</button>
-<button class="mishit-btn skull-btn" onclick="recordSkull()">💀 Skull</button>
+<button class="mishit-btn duff-btn" onclick="recordDuff()">Duff</button>
+<button class="mishit-btn skull-btn" onclick="recordSkull()">Skull</button>
 </div>
 
 <div class="stats">
-<p>✅ Made: <span id="made">0</span> | ⛔ Missed: <span id="missed">0</span></p>
-<p>🚩 Make %: <span id="percent">0</span>%</p>
+<p>Made: <span id="made">0</span> | Missed: <span id="missed">0</span></p>
+<p>Make %: <span id="percent">0</span>%</p>
 <p>Streak: <span id="streak">0</span> <span id="streakLabel"></span></p>
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge"><div class="badge-content"></div></div>
+<div id="targetBadge" class="badge"><div class="badge-content">Target: 15 ft<br>Up and Down: 40%</div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
-<button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄️ New Session</button>
-<button onclick="undoShot()" style="flex:1;background:#8a8a8a;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #666,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">↩️ Undo Last Shot</button>
+<button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">New Session</button>
+<button onclick="undoShot()" style="flex:1;background:#8a8a8a;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #666,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">Undo Last Shot</button>
 </div>
 
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
-<h3 style="margin:0">📜Session  History</h3>
+<h3 style="margin:0">Session History</h3>
 <select id="historyAction" onchange="handleHistoryAction()" style="background:#1c7c5b;color:#fff;border:none;border-radius:8px;padding:6px 8px;font-weight:700">
 <option value="">Actions</option>
-<option value="export">📤 Export All History</option>
-<option value="delete">📵 Clear All History</option>
+<option value="export">Export All History</option>
+<option value="delete">Clear All History</option>
 </select>
 </div>
 
@@ -112,11 +131,12 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 
 <script>
-const CLUBS=["PW","UW","48°","52°","54°","56°","58°","60°","62°"]
+const CLUBS=["PW","UW","48 deg","52 deg","54 deg","56 deg","58 deg","60 deg","62 deg"]
 const DISTANCES=[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
 const PGA_PROXIMITY={10:6,15:8,20:10,25:12,30:15,35:18,40:21,45:24,50:27,55:30,60:33,65:36,70:39,75:42,80:45}
 const UP_AND_DOWN={10:67,15:60,20:53,25:46,30:40,35:35,40:30,45:27,50:25,55:23,60:20,65:18,70:16,75:14,80:12}
 const DEFAULT_CLUB="PW"
+const PRACTICE_MODE_KEY="shootingPracticeMode"
 
 let currentClub=DEFAULT_CLUB
 let currentDistance=30
@@ -125,10 +145,11 @@ let streaks
 let bestStreaks
 let sessions
 let shotHistory=[]
+let practiceMode="manual"
 
 const $=(id)=>{
  const el=document.getElementById(id)
- if(!el)throw new Error("Missing DOM element: "+id)
+ if(!el) throw new Error("Missing DOM element: "+id)
  return el
 }
 
@@ -219,6 +240,15 @@ function saveStreaks(){localStorage.setItem("shootingStreaks",JSON.stringify(str
 function loadBestStreaks(){try{return ensureCounterShape(JSON.parse(localStorage.getItem("shootingBestStreaks")))}catch{return defaultCounters()}}
 function saveBestStreaks(){localStorage.setItem("shootingBestStreaks",JSON.stringify(bestStreaks))}
 
+function loadPracticeMode(){
+ const stored=localStorage.getItem(PRACTICE_MODE_KEY)
+ return stored==="random" ? "random" : "manual"
+}
+
+function savePracticeMode(){
+ localStorage.setItem(PRACTICE_MODE_KEY,practiceMode)
+}
+
 function normalizeSession(session){
  const safeSession=session||{}
  return {
@@ -247,6 +277,15 @@ function setTitle(){
  $("distanceTitle").textContent=currentClub+" - "+currentDistance+" Yard Pitch"
 }
 
+function renderPracticeMode(){
+ const btn=$("practiceModeBtn")
+ const target=$("modeTarget")
+ const isRandom=practiceMode==="random"
+ btn.textContent=isRandom ? "Random Mode On" : "Manual Mode"
+ btn.className="mode-btn"+(isRandom?" active":"")
+ target.textContent=(isRandom ? "Random target: " : "Current target: ")+currentClub+" - "+currentDistance+"y"
+}
+
 function buildClubRow(){
  const r=$("clubRow")
  r.innerHTML=""
@@ -271,20 +310,51 @@ function buildDistanceRow(){
  })
 }
 
-function setClub(club){
- currentClub=club
+function syncCurrentSelection(){
  setTitle()
  buildClubRow()
  buildDistanceRow()
  updateStats()
+ renderPracticeMode()
+}
+
+function setClub(club){
+ currentClub=club
+ syncCurrentSelection()
 }
 
 function setDistance(d){
  currentDistance=d
- setTitle()
- buildClubRow()
- buildDistanceRow()
- updateStats()
+ syncCurrentSelection()
+}
+
+function setTarget(club,distance){
+ currentClub=club
+ currentDistance=distance
+ syncCurrentSelection()
+}
+
+function pickRandomTarget(){
+ const combos=[]
+ CLUBS.forEach(club=>{
+  DISTANCES.forEach(distance=>{
+   if(club!==currentClub || distance!==currentDistance) combos.push({club,distance})
+  })
+ })
+ if(!combos.length) return
+ const next=combos[Math.floor(Math.random()*combos.length)]
+ setTarget(next.club,next.distance)
+}
+
+function togglePracticeMode(){
+ practiceMode=practiceMode==="manual" ? "random" : "manual"
+ savePracticeMode()
+ if(practiceMode==="random") pickRandomTarget()
+ renderPracticeMode()
+}
+
+function advancePracticeTarget(){
+ if(practiceMode==="random") pickRandomTarget()
 }
 
 function updateStats(){
@@ -300,9 +370,9 @@ function updateStats(){
  $("missed").textContent=missed
  $("percent").textContent=pct
  $("duffs").textContent=duffs
- $("duffMarks").textContent=duffs?" "+"🧻".repeat(duffs):""
+ $("duffMarks").textContent=duffs?" "+"x".repeat(duffs):""
  $("skulls").textContent=skulls
- $("skullMarks").textContent=skulls?" "+"☠️".repeat(skulls):""
+ $("skullMarks").textContent=skulls?" "+"x".repeat(skulls):""
 
  const s=getCurrentStreak()
  let fireCount=0
@@ -313,11 +383,11 @@ function updateStats(){
  else if(s>=1) fireCount=1
 
  let fires=""
- for(let i=0;i<fireCount;i++){fires+="🔥"}
+ for(let i=0;i<fireCount;i++){fires+="*"}
 
  $("streak").textContent=s
- $("streakLabel").textContent=fires+""
- $("targetBadge").innerHTML='<div class="badge-content">🎯 '+currentClub+' Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>⛳ Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
+ $("streakLabel").textContent=fires
+ $("targetBadge").innerHTML='<div class="badge-content">Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
 }
 
 function recordMade(){
@@ -326,12 +396,13 @@ function recordMade(){
  streaks[currentClub][currentDistance]++
  if(getCurrentStreak()>getCurrentBestStreak()) bestStreaks[currentClub][currentDistance]=getCurrentStreak()
  shotHistory.push({type:"made",club:currentClub,distance:currentDistance})
- document.body.classList.remove('flash-red')
- document.body.classList.add('flash-green')
- setTimeout(()=>document.body.classList.remove('flash-green'),150)
+ document.body.classList.remove("flash-red")
+ document.body.classList.add("flash-green")
+ setTimeout(()=>document.body.classList.remove("flash-green"),150)
  saveStats()
  saveStreaks()
  saveBestStreaks()
+ advancePracticeTarget()
  updateStats()
 }
 
@@ -341,11 +412,12 @@ function recordMissed(dir){
  st.missDir[dir]++
  streaks[currentClub][currentDistance]=0
  shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir})
- document.body.classList.remove('flash-green')
- document.body.classList.add('flash-red')
- setTimeout(()=>document.body.classList.remove('flash-red'),150)
+ document.body.classList.remove("flash-green")
+ document.body.classList.add("flash-red")
+ setTimeout(()=>document.body.classList.remove("flash-red"),150)
  saveStats()
  saveStreaks()
+ advancePracticeTarget()
  updateStats()
 }
 
@@ -355,11 +427,12 @@ function recordDuff(){
  st.duffs++
  streaks[currentClub][currentDistance]=0
  shotHistory.push({type:"duff",club:currentClub,distance:currentDistance})
- document.body.classList.remove('flash-green')
- document.body.classList.add('flash-red')
- setTimeout(()=>document.body.classList.remove('flash-red'),150)
+ document.body.classList.remove("flash-green")
+ document.body.classList.add("flash-red")
+ setTimeout(()=>document.body.classList.remove("flash-red"),150)
  saveStats()
  saveStreaks()
+ advancePracticeTarget()
  updateStats()
 }
 
@@ -369,11 +442,12 @@ function recordSkull(){
  st.skulls++
  streaks[currentClub][currentDistance]=0
  shotHistory.push({type:"skull",club:currentClub,distance:currentDistance})
- document.body.classList.remove('flash-green')
- document.body.classList.add('flash-red')
- setTimeout(()=>document.body.classList.remove('flash-red'),150)
+ document.body.classList.remove("flash-green")
+ document.body.classList.add("flash-red")
+ setTimeout(()=>document.body.classList.remove("flash-red"),150)
  saveStats()
  saveStreaks()
+ advancePracticeTarget()
  updateStats()
 }
 
@@ -411,15 +485,17 @@ function newSession(){
  saveStats()
  saveStreaks()
  saveBestStreaks()
+ if(practiceMode==="random") pickRandomTarget()
  updateStats()
  renderHistory()
+ renderPracticeMode()
 }
 
 function recomputeHistoryFor(club,distance){
  let streak=0
  let best=0
 
- shotHistory.forEach(function(shot){
+ shotHistory.forEach(shot=>{
   if(shot.club!==club || shot.distance!==distance) return
   if(shot.type==="made"){
    streak++
@@ -434,7 +510,7 @@ function recomputeHistoryFor(club,distance){
 }
 
 function undoShot(){
- if(!shotHistory.length)return
+ if(!shotHistory.length) return
  const last=shotHistory.pop()
  const st=stats[last.club][last.distance]
 
@@ -458,11 +534,13 @@ function undoShot(){
   if(st.skulls>0) st.skulls--
  }
 
+ setTarget(last.club,last.distance)
  recomputeHistoryFor(last.club,last.distance)
  saveStats()
  saveStreaks()
  saveBestStreaks()
  updateStats()
+ renderPracticeMode()
 }
 
 function handleHistoryAction(){
@@ -496,14 +574,14 @@ function exportHistoryCSV(){
 
  const fmt=(count,pct)=>count+" ("+pct+"%)"
 
- sessions.forEach(function(s,idx){
+ sessions.forEach((s,idx)=>{
   const date=new Date(s.date).toLocaleDateString()
   let sessionMade=0
   let sessionMissed=0
   let sessionMiss=createMissDir()
 
-  CLUBS.forEach(function(club){
-   DISTANCES.forEach(function(d){
+  CLUBS.forEach(club=>{
+   DISTANCES.forEach(d=>{
     const st=s.stats && s.stats[club] && s.stats[club][d]
     if(!st) return
 
@@ -524,21 +602,21 @@ function exportHistoryCSV(){
     sessionMiss.longLeft+=missDir.longLeft||0
     sessionMiss.longRight+=missDir.longRight||0
 
-    csv += (idx+1)+","+date+","+club+","+d+","+PGA_PROXIMITY[d]+","+made+","+missed+","+pct+","+formatPercent(UP_AND_DOWN[d])+"%,"+
-           (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
-           duffs+","+skulls+","+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
+    csv+=(idx+1)+","+date+","+club+","+d+","+PGA_PROXIMITY[d]+","+made+","+missed+","+pct+","+formatPercent(UP_AND_DOWN[d])+"%,"+
+         (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
+         duffs+","+skulls+","+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
    })
   })
 
   const totalShots=sessionMade+sessionMissed
   const totalPct=totalShots?Math.round(sessionMade/totalShots*100):0
-  const sessionDuffs=Object.values(s.stats||{}).reduce(function(total, clubStats){
-   return total+DISTANCES.reduce(function(sum,d){
+  const sessionDuffs=Object.values(s.stats||{}).reduce((total,clubStats)=>{
+   return total+DISTANCES.reduce((sum,d)=>{
     return sum+(((clubStats||{})[d]||{}).duffs||0)
    },0)
   },0)
-  const sessionSkulls=Object.values(s.stats||{}).reduce(function(total, clubStats){
-   return total+DISTANCES.reduce(function(sum,d){
+  const sessionSkulls=Object.values(s.stats||{}).reduce((total,clubStats)=>{
+   return total+DISTANCES.reduce((sum,d)=>{
     return sum+(((clubStats||{})[d]||{}).skulls||0)
    },0)
   },0)
@@ -550,11 +628,11 @@ function exportHistoryCSV(){
   const duffPct=totalMiss?Math.round(sessionDuffs/totalMiss*100):0
   const skullPct=totalMiss?Math.round(sessionSkulls/totalMiss*100):0
 
-  csv += (idx+1)+","+date+",ALL,TOTAL,,"+sessionMade+","+sessionMissed+","+totalPct+",,"+
-         fmt(sessionMiss.shortLeft,slPct)+","+
-         fmt(sessionMiss.shortRight,srPct)+","+
-         fmt(sessionMiss.longLeft,llPct)+","+
-         fmt(sessionMiss.longRight,lrPct)+","+fmt(sessionDuffs,duffPct)+","+fmt(sessionSkulls,skullPct)+",\n"
+  csv+=(idx+1)+","+date+",ALL,TOTAL,,"+sessionMade+","+sessionMissed+","+totalPct+",,"+
+       fmt(sessionMiss.shortLeft,slPct)+","+
+       fmt(sessionMiss.shortRight,srPct)+","+
+       fmt(sessionMiss.longLeft,llPct)+","+
+       fmt(sessionMiss.longRight,lrPct)+","+fmt(sessionDuffs,duffPct)+","+fmt(sessionSkulls,skullPct)+",\n"
 
   grandMade+=sessionMade
   grandMissed+=sessionMissed
@@ -566,16 +644,16 @@ function exportHistoryCSV(){
 
  const gShots=grandMade+grandMissed
  const gPct=gShots?Math.round(grandMade/gShots*100):0
- const grandDuffs=sessions.reduce(function(total,s){
-  return total+Object.values(s.stats||{}).reduce(function(clubTotal, clubStats){
-   return clubTotal+DISTANCES.reduce(function(sum,d){
+ const grandDuffs=sessions.reduce((total,s)=>{
+  return total+Object.values(s.stats||{}).reduce((clubTotal,clubStats)=>{
+   return clubTotal+DISTANCES.reduce((sum,d)=>{
     return sum+(((clubStats||{})[d]||{}).duffs||0)
    },0)
   },0)
  },0)
- const grandSkulls=sessions.reduce(function(total,s){
-  return total+Object.values(s.stats||{}).reduce(function(clubTotal, clubStats){
-   return clubTotal+DISTANCES.reduce(function(sum,d){
+ const grandSkulls=sessions.reduce((total,s)=>{
+  return total+Object.values(s.stats||{}).reduce((clubTotal,clubStats)=>{
+   return clubTotal+DISTANCES.reduce((sum,d)=>{
     return sum+(((clubStats||{})[d]||{}).skulls||0)
    },0)
   },0)
@@ -588,17 +666,17 @@ function exportHistoryCSV(){
  const gDuffPct=gMissTotal?Math.round(grandDuffs/gMissTotal*100):0
  const gSkullPct=gMissTotal?Math.round(grandSkulls/gMissTotal*100):0
 
- csv += "GRAND TOTAL,,ALL,ALL,,"+grandMade+","+grandMissed+","+gPct+",,"+
-        fmt(grandMiss.shortLeft,gSLPct)+","+
-        fmt(grandMiss.shortRight,gSRPct)+","+
-        fmt(grandMiss.longLeft,gLLPct)+","+
-        fmt(grandMiss.longRight,gLRPct)+","+fmt(grandDuffs,gDuffPct)+","+fmt(grandSkulls,gSkullPct)+",\n"
+ csv+="GRAND TOTAL,,ALL,ALL,,"+grandMade+","+grandMissed+","+gPct+",,"+
+      fmt(grandMiss.shortLeft,gSLPct)+","+
+      fmt(grandMiss.shortRight,gSRPct)+","+
+      fmt(grandMiss.longLeft,gLLPct)+","+
+      fmt(grandMiss.longRight,gLRPct)+","+fmt(grandDuffs,gDuffPct)+","+fmt(grandSkulls,gSkullPct)+",\n"
 
- const blob=new Blob([csv],{type:'text/csv'})
+ const blob=new Blob([csv],{type:"text/csv"})
  const url=URL.createObjectURL(blob)
- const a=document.createElement('a')
+ const a=document.createElement("a")
  a.href=url
- a.download='foreshot-history.csv'
+ a.download="foreshot-history.csv"
  a.click()
  URL.revokeObjectURL(url)
 }
@@ -618,7 +696,7 @@ function renderHistory(){
   return
  }
 
- sessions.slice().reverse().forEach(function(s,i){
+ sessions.slice().reverse().forEach((s,i)=>{
   const idx=sessions.length-1-i
   const wrap=document.createElement("div")
   wrap.className="history-wrapper"
@@ -629,11 +707,11 @@ function renderHistory(){
   const acc=document.createElement("div")
   acc.className="accordion"
 
-  card.innerHTML='<strong>Session '+(idx+1)+'</strong><br>'+new Date(s.date).toLocaleDateString()+' - '+s.summary.pct+'% ('+s.summary.total+' shots)'
-  card.onclick=function(){acc.style.display=acc.style.display==="block"?"none":"block"}
+  card.innerHTML="<strong>Session "+(idx+1)+"</strong><br>"+new Date(s.date).toLocaleDateString()+" - "+s.summary.pct+"% ("+s.summary.total+" shots)"
+  card.onclick=()=>{acc.style.display=acc.style.display==="block"?"none":"block"}
 
-  CLUBS.forEach(function(club){
-   DISTANCES.forEach(function(d){
+  CLUBS.forEach(club=>{
+   DISTANCES.forEach(d=>{
     const st=s.stats && s.stats[club] && s.stats[club][d]
     if(!st) return
 
@@ -642,10 +720,10 @@ function renderHistory(){
 
     const missDir=st.missDir||createMissDir()
     const pct=Math.round(st.made/tot*100)
-    const earnedStar=pct>UP_AND_DOWN[d]?" ⭐":""
+    const earnedStar=pct>UP_AND_DOWN[d]?" *":""
 
     const row=document.createElement("div")
-    row.innerHTML='<strong>'+club+' - '+d+' yd:</strong> '+st.made+'/'+tot+' ('+pct+'%) - '+PGA_PROXIMITY[d]+'ft'+earnedStar+
+    row.innerHTML="<strong>"+club+" - "+d+" yd:</strong> "+st.made+"/"+tot+" ("+pct+"%) - "+PGA_PROXIMITY[d]+"ft"+earnedStar+
      '<br><span class="subtle">Up and Down: '+formatPercent(UP_AND_DOWN[d])+'%</span>'+
      '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+'</span>'+
      '<br><span class="subtle">Duffs: '+(st.duffs||0)+' | Skulls: '+(st.skulls||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
@@ -654,8 +732,8 @@ function renderHistory(){
   })
 
   const delBtn=document.createElement("button")
-  delBtn.innerHTML="🗑️Delete Session"
-  delBtn.onclick=function(e){e.stopPropagation();deleteSession(idx)}
+  delBtn.textContent="Delete Session"
+  delBtn.onclick=e=>{e.stopPropagation();deleteSession(idx)}
   delBtn.style="display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;cursor:pointer;"
 
   acc.appendChild(delBtn)
@@ -670,17 +748,16 @@ function initApp(){
  streaks=loadStreaks()
  bestStreaks=loadBestStreaks()
  sessions=loadSessions()
- setTitle()
- buildClubRow()
- buildDistanceRow()
- updateStats()
+ practiceMode=loadPracticeMode()
+ syncCurrentSelection()
  renderHistory()
+ renderPracticeMode()
+ if(practiceMode==="random") pickRandomTarget()
 }
 
-if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initApp)}else{initApp()}
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",initApp)}else{initApp()}
 
 </script>
-
 
 
 
