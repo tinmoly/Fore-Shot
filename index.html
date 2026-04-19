@@ -428,7 +428,7 @@ function updateStats(){
  $("streak").textContent=s
  $("streakLabel").textContent=fires
  if(isRandom){
-  $("targetBadge").innerHTML='<div class="badge-content">⛳ Random totals: '+total+' shots<br>🎯 Current target:<br>'+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+PGA_PROXIMITY[currentDistance]+' ft)</div>'
+  $("targetBadge").innerHTML='<div class="badge-content">🎯 Current target:<br>'+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+PGA_PROXIMITY[currentDistance]+' ft)<br>⛳ Random totals: '+total+' shots</div>'
  }else{
   $("targetBadge").innerHTML='<div class="badge-content">🎯 Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>⛳ Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
  }
