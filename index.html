@@ -93,8 +93,8 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 
 <div class="mishit-row">
-<button class="mishit-btn duff-btn" onclick="recordDuff()">Duff</button>
-<button class="mishit-btn skull-btn" onclick="recordSkull()">Skull</button>
+<button class="mishit-btn duff-btn" onclick="recordDuff()">💩 Duff</button>
+<button class="mishit-btn skull-btn" onclick="recordSkull()">💀 Skull</button>
 </div>
 
 <div class="stats">
@@ -662,7 +662,7 @@ function exportHistoryCSV(){
     clubSkulls+=skulls
     clubBestStreak=Math.max(clubBestStreak,((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0))
 
-    csv+=(idx+1)+","+date+","+club+","+d+","+PGA_PROXIMITY[d]+","+made+","+missed+","+pct+"%,"+formatPercent(UP_AND_DOWN[d])+"%,"+
+    csv+=(idx+1)+","+date+","+club+","+d+"yd,"+PGA_PROXIMITY[d]+"ft,"+made+","+missed+","+pct+"%,"+formatPercent(UP_AND_DOWN[d])+"%,"+
          (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
          duffs+","+skulls+",,"+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
    })
