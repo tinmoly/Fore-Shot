@@ -804,7 +804,7 @@ function renderHistory(){
 
     const missDir=st.missDir||createMissDir()
     const pct=Math.round(st.made/tot*100)
-    const earnedStar=pct>UP_AND_DOWN[d]?" *":""
+    const earnedStar=pct>UP_AND_DOWN[d]?" ⭐":""
 
     const row=document.createElement("div")
     row.innerHTML="<strong>"+formatClubLabel(club)+" - "+d+" yd:</strong> "+st.made+"/"+tot+" ("+pct+"%) - "+PGA_PROXIMITY[d]+"ft"+earnedStar+
