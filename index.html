@@ -25,7 +25,7 @@ h1,h3{text-align:center;margin-bottom:10px}
 .mode-copy{font-size:15px;opacity:.9}
 .mode-btn{border:none;border-radius:999px;padding:10px 16px;font-size:16px;font-weight:800;cursor:pointer;background:#8a8a8a;color:#000;box-shadow:0 4px 0 #666}
 .mode-btn.active{background:#2ecc71;box-shadow:0 4px 0 #1e9e54}
-.mode-target{margin-top:10px;padding:10px;border-radius:10px;background:#1c7c5b;font-size:18px;font-weight:800;text-align:center}
+.mode-target{margin:10px 0 14px;padding:10px;border-radius:10px;background:#1c7c5b;font-size:24px;font-weight:800;text-align:center}
 
 .shot-ring{width:285px;height:285px;border-radius:50%;position:relative;margin:10px auto;transform:rotate(45deg)}
 
@@ -64,21 +64,19 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </style>
 </head>
 
-<body>
+<body class="">
 
 <div class="card">
-
-<h1 id="distanceTitle">48 deg - 60 Yard Pitch</h1>
 
 <div class="mode-card">
 <div class="mode-row">
 <button id="practiceModeBtn" class="mode-btn active" onclick="togglePracticeMode()">Random Mode On</button>
 </div>
-<div id="modeTarget" class="mode-target">Random target: 48 deg - 60y</div>
 </div>
 
-<div id="clubRow" class="pill-row"><button class="pill-btn">PW</button><button class="pill-btn">UW</button><button class="pill-btn active">48 deg</button><button class="pill-btn">52 deg</button><button class="pill-btn">54 deg</button><button class="pill-btn">56 deg</button><button class="pill-btn">58 deg</button><button class="pill-btn">60 deg</button><button class="pill-btn">62 deg</button></div>
-<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn active">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
+<div id="clubRow" class="pill-row"><button class="pill-btn">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">52°</button><button class="pill-btn">54°</button><button class="pill-btn">56°</button><button class="pill-btn">58°</button><button class="pill-btn">60°</button><button class="pill-btn active">62°</button></div>
+<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn active">75y</button><button class="pill-btn">80y</button></div>
+<div id="modeTarget" class="mode-target">Random target: 62° - 75y</div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
@@ -106,7 +104,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge"><div class="badge-content">Random totals: 0 shots<br>Current target: 48 deg - 60y (33 ft)</div></div>
+<div id="targetBadge" class="badge"><div class="badge-content">Random totals: 0 shots<br>Current target:<br>62° - 75y (42 ft)</div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
 <button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">New Session</button>
@@ -268,6 +266,7 @@ function getCurrentStats(){return stats[currentClub][currentDistance]}
 function getCurrentStreak(){return streaks[currentClub][currentDistance]||0}
 function getCurrentBestStreak(){return bestStreaks[currentClub][currentDistance]||0}
 function formatPercent(value){return Number.isInteger(value)?value.toString():value.toFixed(1)}
+function formatClubLabel(club){return club.replace(/ deg\b/g,String.fromCharCode(176))}
 
 function summarizeSessionStats(statsMap){
  let totalMade=0
@@ -311,16 +310,16 @@ function summarizeShotSequence(history){
 }
 
 function setTitle(){
- $("distanceTitle").textContent=currentClub+" - "+currentDistance+" Yard Pitch"
+ return
 }
 
 function renderPracticeMode(){
  const btn=$("practiceModeBtn")
  const target=$("modeTarget")
  const isRandom=practiceMode==="random"
- btn.textContent=isRandom ? "Random Mode On" : "Manual Mode"
+ btn.textContent=isRandom ? "Random Mode On" : "Manual Mode On"
  btn.className="mode-btn"+(isRandom?" active":"")
- target.textContent=(isRandom ? "Random target: " : "Current target: ")+currentClub+" - "+currentDistance+"y"
+ target.textContent=(isRandom ? "Random target: " : "Current target: ")+formatClubLabel(currentClub)+" - "+currentDistance+"y"
 }
 
 function buildClubRow(){
@@ -329,7 +328,7 @@ function buildClubRow(){
  CLUBS.forEach(club=>{
   const b=document.createElement("button")
   b.className="pill-btn"+(club===currentClub?" active":"")
-  b.textContent=club
+  b.textContent=formatClubLabel(club)
   b.onclick=()=>setClub(club)
   r.appendChild(b)
  })
@@ -429,7 +428,7 @@ function updateStats(){
  $("streak").textContent=s
  $("streakLabel").textContent=fires
  if(isRandom){
-  $("targetBadge").innerHTML='<div class="badge-content">Random totals: '+total+' shots<br>Current target: '+currentClub+' - '+currentDistance+'y ('+PGA_PROXIMITY[currentDistance]+' ft)</div>'
+  $("targetBadge").innerHTML='<div class="badge-content">Random totals: '+total+' shots<br>Current target:<br>'+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+PGA_PROXIMITY[currentDistance]+' ft)</div>'
  }else{
   $("targetBadge").innerHTML='<div class="badge-content">Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
  }
@@ -611,7 +610,7 @@ function handleHistoryAction(){
 }
 
 function exportHistoryCSV(){
- let csv="Session,Date,Club,Yardage,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Skulls,Best Streak\n"
+ let csv="Session,Date,Club,Yardage,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Skulls,Total Mis-Hits,Best Streak\n"
 
  let grandMade=0
  let grandMissed=0
@@ -625,7 +624,14 @@ function exportHistoryCSV(){
   let sessionMissed=0
   let sessionMiss=createMissDir()
 
-  CLUBS.forEach(club=>{
+ CLUBS.forEach(club=>{
+   let clubMade=0
+   let clubMissed=0
+   let clubMiss=createMissDir()
+   let clubDuffs=0
+   let clubSkulls=0
+   let clubBestStreak=0
+
    DISTANCES.forEach(d=>{
     const st=s.stats && s.stats[club] && s.stats[club][d]
     if(!st) return
@@ -646,11 +652,40 @@ function exportHistoryCSV(){
     sessionMiss.shortRight+=missDir.shortRight||0
     sessionMiss.longLeft+=missDir.longLeft||0
     sessionMiss.longRight+=missDir.longRight||0
+    clubMade+=made
+    clubMissed+=missed
+    clubMiss.shortLeft+=missDir.shortLeft||0
+    clubMiss.shortRight+=missDir.shortRight||0
+    clubMiss.longLeft+=missDir.longLeft||0
+    clubMiss.longRight+=missDir.longRight||0
+    clubDuffs+=duffs
+    clubSkulls+=skulls
+    clubBestStreak=Math.max(clubBestStreak,((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0))
 
     csv+=(idx+1)+","+date+","+club+","+d+","+PGA_PROXIMITY[d]+","+made+","+missed+","+pct+","+formatPercent(UP_AND_DOWN[d])+"%,"+
          (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
-         duffs+","+skulls+","+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
+         duffs+","+skulls+",,"+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
    })
+
+   const clubShots=clubMade+clubMissed
+   if(!clubShots) return
+
+   const clubPct=Math.round(clubMade/clubShots*100)
+   const clubMissTotal=clubMissed
+   const clubSlPct=clubMissTotal?Math.round(clubMiss.shortLeft/clubMissTotal*100):0
+   const clubSrPct=clubMissTotal?Math.round(clubMiss.shortRight/clubMissTotal*100):0
+   const clubLlPct=clubMissTotal?Math.round(clubMiss.longLeft/clubMissTotal*100):0
+   const clubLrPct=clubMissTotal?Math.round(clubMiss.longRight/clubMissTotal*100):0
+   const clubDuffPct=clubMissTotal?Math.round(clubDuffs/clubMissTotal*100):0
+   const clubSkullPct=clubMissTotal?Math.round(clubSkulls/clubMissTotal*100):0
+   const clubMisHitTotal=clubDuffs+clubSkulls
+   const clubMisHitPct=clubMissTotal?Math.round(clubMisHitTotal/clubMissTotal*100):0
+
+   csv+=(idx+1)+","+date+","+club+",TOTAL,,"+clubMade+","+clubMissed+","+clubPct+",,"+
+        fmt(clubMiss.shortLeft,clubSlPct)+","+
+        fmt(clubMiss.shortRight,clubSrPct)+","+
+        fmt(clubMiss.longLeft,clubLlPct)+","+
+        fmt(clubMiss.longRight,clubLrPct)+","+fmt(clubDuffs,clubDuffPct)+","+fmt(clubSkulls,clubSkullPct)+","+fmt(clubMisHitTotal,clubMisHitPct)+","+clubBestStreak+"\n"
   })
 
   const totalShots=sessionMade+sessionMissed
@@ -672,12 +707,14 @@ function exportHistoryCSV(){
   const lrPct=totalMiss?Math.round(sessionMiss.longRight/totalMiss*100):0
   const duffPct=totalMiss?Math.round(sessionDuffs/totalMiss*100):0
   const skullPct=totalMiss?Math.round(sessionSkulls/totalMiss*100):0
+  const sessionMisHits=sessionDuffs+sessionSkulls
+  const sessionMisHitPct=totalMiss?Math.round(sessionMisHits/totalMiss*100):0
 
   csv+=(idx+1)+","+date+",ALL,TOTAL,,"+sessionMade+","+sessionMissed+","+totalPct+",,"+
        fmt(sessionMiss.shortLeft,slPct)+","+
        fmt(sessionMiss.shortRight,srPct)+","+
        fmt(sessionMiss.longLeft,llPct)+","+
-       fmt(sessionMiss.longRight,lrPct)+","+fmt(sessionDuffs,duffPct)+","+fmt(sessionSkulls,skullPct)+",\n"
+       fmt(sessionMiss.longRight,lrPct)+","+fmt(sessionDuffs,duffPct)+","+fmt(sessionSkulls,skullPct)+","+fmt(sessionMisHits,sessionMisHitPct)+",\n"
 
   grandMade+=sessionMade
   grandMissed+=sessionMissed
@@ -710,12 +747,14 @@ function exportHistoryCSV(){
  const gLRPct=gMissTotal?Math.round(grandMiss.longRight/gMissTotal*100):0
  const gDuffPct=gMissTotal?Math.round(grandDuffs/gMissTotal*100):0
  const gSkullPct=gMissTotal?Math.round(grandSkulls/gMissTotal*100):0
+ const grandMisHits=grandDuffs+grandSkulls
+ const grandMisHitPct=gMissTotal?Math.round(grandMisHits/gMissTotal*100):0
 
  csv+="GRAND TOTAL,,ALL,ALL,,"+grandMade+","+grandMissed+","+gPct+",,"+
       fmt(grandMiss.shortLeft,gSLPct)+","+
       fmt(grandMiss.shortRight,gSRPct)+","+
       fmt(grandMiss.longLeft,gLLPct)+","+
-      fmt(grandMiss.longRight,gLRPct)+","+fmt(grandDuffs,gDuffPct)+","+fmt(grandSkulls,gSkullPct)+",\n"
+      fmt(grandMiss.longRight,gLRPct)+","+fmt(grandDuffs,gDuffPct)+","+fmt(grandSkulls,gSkullPct)+","+fmt(grandMisHits,grandMisHitPct)+",\n"
 
  const blob=new Blob([csv],{type:"text/csv"})
  const url=URL.createObjectURL(blob)
@@ -768,7 +807,7 @@ function renderHistory(){
     const earnedStar=pct>UP_AND_DOWN[d]?" *":""
 
     const row=document.createElement("div")
-    row.innerHTML="<strong>"+club+" - "+d+" yd:</strong> "+st.made+"/"+tot+" ("+pct+"%) - "+PGA_PROXIMITY[d]+"ft"+earnedStar+
+    row.innerHTML="<strong>"+formatClubLabel(club)+" - "+d+" yd:</strong> "+st.made+"/"+tot+" ("+pct+"%) - "+PGA_PROXIMITY[d]+"ft"+earnedStar+
      '<br><span class="subtle">Up and Down: '+formatPercent(UP_AND_DOWN[d])+'%</span>'+
      '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+'</span>'+
      '<br><span class="subtle">Duffs: '+(st.duffs||0)+' | Skulls: '+(st.skulls||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
