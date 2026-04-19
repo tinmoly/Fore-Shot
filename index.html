@@ -93,8 +93,8 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 
 <div class="mishit-row">
-<button class="mishit-btn duff-btn" onclick="recordDuff()">Duff</button>
-<button class="mishit-btn skull-btn" onclick="recordSkull()">Skull</button>
+<button class="mishit-btn duff-btn" onclick="recordDuff()">💩 Duff</button>
+<button class="mishit-btn skull-btn" onclick="recordSkull()">💀 Skull</button>
 </div>
 
 <div class="stats">
@@ -152,7 +152,7 @@ function createMissDir(){
 }
 
 function createStatBucket(){
- return {made:0,missed:0,duffs:0,skulls:0,missDir:createMissDir()}
+ return {:0,missed:0,duffs:0,skulls:0,missDir:createMissDir()}
 }
 
 function createDistanceMap(factory){
@@ -196,7 +196,7 @@ function ensureStatsShape(obj){
   DISTANCES.forEach(d=>{
    const bucket=map[club][d]||{}
    map[club][d]={
-    made:Number(bucket.made)||0,
+    :Number(bucket.)||0,
     missed:Number(bucket.missed)||0,
     duffs:Number(bucket.duffs)||0,
     skulls:Number(bucket.skulls)||0,
