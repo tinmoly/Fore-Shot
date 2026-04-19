@@ -410,9 +410,9 @@ function updateStats(){
  $("missed").textContent=missed
  $("percent").textContent=pct
  $("duffs").textContent=duffs
- $("duffMarks").textContent=duffs?" "+"x".repeat(duffs):""
+ $("duffMarks").textContent=duffs?" "+"🧻".repeat(duffs):""
  $("skulls").textContent=skulls
- $("skullMarks").textContent=skulls?" "+"x".repeat(skulls):""
+ $("skullMarks").textContent=skulls?" "+"☠️".repeat(skulls):""
 
  const s=isRandom ? shotSummary.streak : getCurrentStreak()
  let fireCount=0
@@ -662,7 +662,7 @@ function exportHistoryCSV(){
     clubSkulls+=skulls
     clubBestStreak=Math.max(clubBestStreak,((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0))
 
-    csv+=(idx+1)+","+date+","+club+","+d+","+PGA_PROXIMITY[d]+","+made+","+missed+","+pct+","+formatPercent(UP_AND_DOWN[d])+"%,"+
+    csv+=(idx+1)+","+date+","+club+","+d+","+PGA_PROXIMITY[d]+","+made+","+missed+","+pct+"%,"+formatPercent(UP_AND_DOWN[d])+"%,"+
          (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
          duffs+","+skulls+",,"+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
    })
@@ -681,7 +681,7 @@ function exportHistoryCSV(){
    const clubMisHitTotal=clubDuffs+clubSkulls
    const clubMisHitPct=clubMissTotal?Math.round(clubMisHitTotal/clubMissTotal*100):0
 
-   csv+=(idx+1)+","+date+","+club+",TOTAL,,"+clubMade+","+clubMissed+","+clubPct+",,"+
+   csv+=(idx+1)+","+date+","+club+",TOTAL,,"+clubMade+","+clubMissed+","+clubPct+"%,,"+
         fmt(clubMiss.shortLeft,clubSlPct)+","+
         fmt(clubMiss.shortRight,clubSrPct)+","+
         fmt(clubMiss.longLeft,clubLlPct)+","+
@@ -710,7 +710,7 @@ function exportHistoryCSV(){
   const sessionMisHits=sessionDuffs+sessionSkulls
   const sessionMisHitPct=totalMiss?Math.round(sessionMisHits/totalMiss*100):0
 
-  csv+=(idx+1)+","+date+",ALL,TOTAL,,"+sessionMade+","+sessionMissed+","+totalPct+",,"+
+  csv+=(idx+1)+","+date+",ALL,TOTAL,,"+sessionMade+","+sessionMissed+","+totalPct+"%,,"+
        fmt(sessionMiss.shortLeft,slPct)+","+
        fmt(sessionMiss.shortRight,srPct)+","+
        fmt(sessionMiss.longLeft,llPct)+","+
@@ -750,7 +750,7 @@ function exportHistoryCSV(){
  const grandMisHits=grandDuffs+grandSkulls
  const grandMisHitPct=gMissTotal?Math.round(grandMisHits/gMissTotal*100):0
 
- csv+="GRAND TOTAL,,ALL,ALL,,"+grandMade+","+grandMissed+","+gPct+",,"+
+ csv+="GRAND TOTAL,,ALL,ALL,,"+grandMade+","+grandMissed+","+gPct+"%,,"+
       fmt(grandMiss.shortLeft,gSLPct)+","+
       fmt(grandMiss.shortRight,gSRPct)+","+
       fmt(grandMiss.longLeft,gLLPct)+","+
@@ -804,7 +804,7 @@ function renderHistory(){
 
     const missDir=st.missDir||createMissDir()
     const pct=Math.round(st.made/tot*100)
-    const earnedStar=pct>UP_AND_DOWN[d]?" *":""
+    const earnedStar=pct>UP_AND_DOWN[d]?" ⭐":""
 
     const row=document.createElement("div")
     row.innerHTML="<strong>"+formatClubLabel(club)+" - "+d+" yd:</strong> "+st.made+"/"+tot+" ("+pct+"%) - "+PGA_PROXIMITY[d]+"ft"+earnedStar+
@@ -816,7 +816,7 @@ function renderHistory(){
   })
 
   const delBtn=document.createElement("button")
-  delBtn.textContent="Delete Session"
+  delBtn.textContent="🗑️ Delete Session"
   delBtn.onclick=e=>{e.stopPropagation();deleteSession(idx)}
   delBtn.style="display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;cursor:pointer;"
 
