@@ -468,7 +468,7 @@ function updateStats(){
   badge.innerHTML='<div class="badge-content">Current Target:<br>🎯 '+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+PGA_PROXIMITY[currentDistance]+' ft)<br><span class="random-total-line">⛳ Total Random Shots: '+total+'</span></div>'
  }else{
   badge.className="badge manual-badge"
-  badge.innerHTML='<div class="badge-content">🎯 Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>⛳ Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%<br><span class="random-total-line">⛳ Total Manual Shots: '+total+'</span></div>'
+  badge.innerHTML='<div class="badge-content">🎯 Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>🎖️ Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%<br><span class="random-total-line">⛳ Total Manual Shots: '+total+'</span></div>'
  }
 }
 
