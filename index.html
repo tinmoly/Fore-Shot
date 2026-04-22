@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0058)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v7.3.html -->
+<!-- saved from url=(0058)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v7.4.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,9 +77,9 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 </div>
 
-<div id="clubRow" class="pill-row"><button class="pill-btn">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">52°</button><button class="pill-btn">54°</button><button class="pill-btn">56°</button><button class="pill-btn">58°</button><button class="pill-btn">60°</button><button class="pill-btn active">62°</button></div>
-<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn active">25y</button><button class="pill-btn">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
-<div id="modeTarget" class="mode-target">Random Shot: 62° - 25y</div>
+<div id="clubRow" class="pill-row"><button class="pill-btn active">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">52°</button><button class="pill-btn">54°</button><button class="pill-btn">56°</button><button class="pill-btn">58°</button><button class="pill-btn">60°</button><button class="pill-btn">62°</button></div>
+<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn">30y</button><button class="pill-btn active">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
+<div id="modeTarget" class="mode-target">Random Shot: PW - 35y</div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
@@ -103,11 +103,11 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 <div class="stats">
 <p>✅ Made: <span id="made">0</span> | ⛔ Missed: <span id="missed">0</span></p>
 <p>🚩 Make %: <span id="percent">0</span>%</p>
-<p>Streak: <span id="streak">0</span> <span id="streakLabel"></span></p>
+<p><span id="streakTitle">Streak</span>: <span id="streak">0</span> <span id="streakLabel"></span></p>
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge random-badge"><div class="badge-content">Current Target:<br>🎯 62° - 25y (12 ft)<br><span class="random-total-line">⛳ Total Random Shots: 0</span></div></div>
+<div id="targetBadge" class="badge random-badge"><div class="badge-content">Current Target:<br>🎯 PW - 35y (18 ft)<br><span class="random-total-line">⛳ Total Random Shots: 0</span></div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
 <button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄️ New Session</button>
@@ -123,7 +123,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </select>
 </div>
 
-<div id="history"><div class="history-wrapper"><div class="history-card"><strong>Session 1</strong><br>4/22/2026 - 58% (12 shots)</div><div class="accordion" style="display: block;"><div><strong>PW - 20 yd:</strong> 1/1 (100%) - 10ft ⭐<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 50 yd:</strong> 0/1 (0%) - 27ft<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>UW - 20 yd:</strong> 1/2 (50%) - 10ft<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 40 yd:</strong> 0/1 (0%) - 21ft<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>UW - 60 yd:</strong> 0/1 (0%) - 33ft<br><span class="subtle">Up and Down: 20%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>48° - 35 yd:</strong> 1/1 (100%) - 18ft ⭐<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 45 yd:</strong> 1/1 (100%) - 24ft ⭐<br><span class="subtle">Up and Down: 27%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 40 yd:</strong> 1/1 (100%) - 21ft ⭐<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 70 yd:</strong> 1/1 (100%) - 39ft ⭐<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 75 yd:</strong> 1/1 (100%) - 42ft ⭐<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 55 yd:</strong> 0/1 (0%) - 30ft<br><span class="subtle">Up and Down: 23%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 24px; font-weight: 800; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; cursor: pointer;">🗑️ Delete Session</button></div></div></div>
+<div id="history"><div class="history-wrapper"><div class="history-card"><strong>Session 2</strong><br>4/22/2026 - 69% (42 shots)</div><div class="accordion" style="display: block;"><div><strong>PW - 10 yd:</strong> 1/1 (100%) - 6ft ⭐<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 15 yd:</strong> 1/1 (100%) - 8ft ⭐<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 10 yd:</strong> 1/1 (100%) - 6ft ⭐<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 40 yd:</strong> 0/1 (0%) - 21ft<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>UW - 50 yd:</strong> 1/1 (100%) - 27ft ⭐<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 55 yd:</strong> 1/1 (100%) - 30ft ⭐<br><span class="subtle">Up and Down: 23%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 65 yd:</strong> 0/1 (0%) - 36ft<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>UW - 75 yd:</strong> 1/1 (100%) - 42ft ⭐<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 80 yd:</strong> 1/1 (100%) - 45ft ⭐<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 15 yd:</strong> 0/1 (0%) - 8ft<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>48° - 35 yd:</strong> 1/1 (100%) - 18ft ⭐<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 70 yd:</strong> 1/1 (100%) - 39ft ⭐<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 10 yd:</strong> 1/1 (100%) - 6ft ⭐<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 40 yd:</strong> 1/1 (100%) - 21ft ⭐<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 45 yd:</strong> 1/1 (100%) - 24ft ⭐<br><span class="subtle">Up and Down: 27%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 70 yd:</strong> 0/1 (0%) - 39ft<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>52° - 75 yd:</strong> 2/2 (100%) - 42ft ⭐<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>52° - 80 yd:</strong> 0/1 (0%) - 45ft<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>54° - 15 yd:</strong> 1/1 (100%) - 8ft ⭐<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 35 yd:</strong> 1/1 (100%) - 18ft ⭐<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 40 yd:</strong> 0/1 (0%) - 21ft<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>54° - 65 yd:</strong> 1/1 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 70 yd:</strong> 1/1 (100%) - 39ft ⭐<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 75 yd:</strong> 0/2 (0%) - 42ft<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>56° - 20 yd:</strong> 0/1 (0%) - 10ft<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>56° - 50 yd:</strong> 1/1 (100%) - 27ft ⭐<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 65 yd:</strong> 2/2 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>58° - 20 yd:</strong> 1/1 (100%) - 10ft ⭐<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 65 yd:</strong> 1/1 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 80 yd:</strong> 0/1 (0%) - 45ft<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>60° - 10 yd:</strong> 0/1 (0%) - 6ft<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>60° - 15 yd:</strong> 1/1 (100%) - 8ft ⭐<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 20 yd:</strong> 1/1 (100%) - 10ft ⭐<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 65 yd:</strong> 1/1 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>62° - 10 yd:</strong> 1/2 (50%) - 6ft<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 1</span></div><div><strong>62° - 35 yd:</strong> 1/2 (50%) - 18ft ⭐<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>62° - 50 yd:</strong> 1/1 (100%) - 27ft ⭐<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 24px; font-weight: 800; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; cursor: pointer;">🗑️ Delete Session</button></div></div><div class="history-wrapper"><div class="history-card"><strong>Session 1</strong><br>4/22/2026 - 87% (31 shots)</div><div class="accordion" style="display: none;"><div><strong>PW - 30 yd:</strong> 17/21 (81%) - 15ft ⭐<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 1</span><br><span class="subtle">Duffs: 1 | Skulls: 1 | Best streak: 5</span></div><div><strong>48° - 30 yd:</strong> 10/10 (100%) - 15ft ⭐<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 10</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 24px; font-weight: 800; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; cursor: pointer;">🗑️ Delete Session</button></div></div></div>
 
 </div>
 
@@ -238,13 +238,14 @@ function loadBestStreaks(){try{return ensureCounterShape(JSON.parse(localStorage
 function saveBestStreaks(){localStorage.setItem("shootingBestStreaks",JSON.stringify(bestStreaks))}
 
 function loadPracticeMode(){
- const stored=localStorage.getItem(PRACTICE_MODE_KEY)
- return stored==="random" ? "random" : "manual"
+ return "manual"
 }
 
 function savePracticeMode(){
  localStorage.setItem(PRACTICE_MODE_KEY,practiceMode)
 }
+
+function getStreakEmojis(v){if(v>=10)return"Flaming Streak";if(v>=7)return"Hot Streak";if(v>=5)return"Strong Streak";if(v>=3)return"Building Streak";if(v>=1)return"Streak";return"Streak"}
 
 function normalizeSession(session){
  const safeSession=session||{}
@@ -296,6 +297,32 @@ function summarizeSessionStats(statsMap){
  }
 }
 
+function summarizeShotResults(history){
+ let made=0
+ let missed=0
+ let duffs=0
+ let skulls=0
+
+ history.forEach(shot=>{
+  if(shot.type==="made"){
+   made++
+   return
+  }
+
+  missed++
+  if(shot.type==="duff") duffs++
+  if(shot.type==="skull") skulls++
+ })
+
+ return {
+  made:made,
+  missed:missed,
+  duffs:duffs,
+  skulls:skulls,
+  total:made+missed
+ }
+}
+
 function summarizeShotSequence(history){
  let streak=0
  let best=0
@@ -310,6 +337,10 @@ function summarizeShotSequence(history){
  })
 
  return {streak:streak,best:best}
+}
+
+function getModeShotHistory(mode){
+ return shotHistory.filter(shot=>shot.mode===mode)
 }
 
 function setTitle(){
@@ -400,14 +431,14 @@ function advancePracticeTarget(){
 function updateStats(){
  const isRandom=practiceMode==="random"
  const badge=$("targetBadge")
- const st=getCurrentStats()
- const sessionStats=summarizeSessionStats(stats)
- const shotSummary=summarizeShotSequence(shotHistory)
- const made=isRandom ? sessionStats.made : (st.made||0)
- const missed=isRandom ? sessionStats.missed : (st.missed||0)
- const duffs=isRandom ? sessionStats.duffs : (st.duffs||0)
- const skulls=isRandom ? sessionStats.skulls : (st.skulls||0)
- const total=isRandom ? sessionStats.total : (made+missed)
+ const modeHistory=getModeShotHistory(practiceMode)
+ const modeStats=summarizeShotResults(modeHistory)
+ const shotSummary=summarizeShotSequence(modeHistory)
+ const made=modeStats.made
+ const missed=modeStats.missed
+ const duffs=modeStats.duffs
+ const skulls=modeStats.skulls
+ const total=modeStats.total
  const pct=total?Math.round(made/total*100):0
 
  $("made").textContent=made
@@ -429,6 +460,7 @@ function updateStats(){
  let fires=""
  for(let i=0;i<fireCount;i++){fires+="🔥"}
 
+ $("streakTitle").textContent=getStreakEmojis(s)
  $("streak").textContent=s
  $("streakLabel").textContent=fires
  if(isRandom){
@@ -436,7 +468,7 @@ function updateStats(){
   badge.innerHTML='<div class="badge-content">Current Target:<br>🎯 '+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+PGA_PROXIMITY[currentDistance]+' ft)<br><span class="random-total-line">⛳ Total Random Shots: '+total+'</span></div>'
  }else{
   badge.className="badge manual-badge"
-  badge.innerHTML='<div class="badge-content">🎯 Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>⛳ Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%</div>'
+  badge.innerHTML='<div class="badge-content">🎯 Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>⛳ Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%<br><span class="random-total-line">⛳ Total Manual Shots: '+total+'</span></div>'
  }
 }
 
@@ -445,7 +477,7 @@ function recordMade(){
  st.made++
  streaks[currentClub][currentDistance]++
  if(getCurrentStreak()>getCurrentBestStreak()) bestStreaks[currentClub][currentDistance]=getCurrentStreak()
- shotHistory.push({type:"made",club:currentClub,distance:currentDistance})
+ shotHistory.push({type:"made",club:currentClub,distance:currentDistance,mode:practiceMode})
  document.body.classList.remove("flash-red")
  document.body.classList.add("flash-green")
  setTimeout(()=>document.body.classList.remove("flash-green"),150)
@@ -461,7 +493,7 @@ function recordMissed(dir){
  st.missed++
  st.missDir[dir]++
  streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir})
+ shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir,mode:practiceMode})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -476,7 +508,7 @@ function recordDuff(){
  st.missed++
  st.duffs++
  streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"duff",club:currentClub,distance:currentDistance})
+ shotHistory.push({type:"duff",club:currentClub,distance:currentDistance,mode:practiceMode})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -491,7 +523,7 @@ function recordSkull(){
  st.missed++
  st.skulls++
  streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"skull",club:currentClub,distance:currentDistance})
+ shotHistory.push({type:"skull",club:currentClub,distance:currentDistance,mode:practiceMode})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -560,8 +592,15 @@ function recomputeHistoryFor(club,distance){
 }
 
 function undoShot(){
- if(!shotHistory.length) return
- const last=shotHistory.pop()
+ let undoIndex=-1
+ for(let i=shotHistory.length-1;i>=0;i--){
+  if((shotHistory[i].mode||"manual")===practiceMode){
+   undoIndex=i
+   break
+  }
+ }
+ if(undoIndex===-1) return
+ const last=shotHistory.splice(undoIndex,1)[0]
  const st=stats[last.club][last.distance]
 
  if(last.type==="made" && st.made>0){
@@ -838,7 +877,8 @@ function initApp(){
  streaks=loadStreaks()
  bestStreaks=loadBestStreaks()
  sessions=loadSessions()
- practiceMode=loadPracticeMode()
+ practiceMode="manual"
+ savePracticeMode()
  syncCurrentSelection()
  renderHistory()
  renderPracticeMode()
