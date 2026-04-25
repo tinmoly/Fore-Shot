@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0058)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v7.4.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fore!Shot Practice App</title>
 
@@ -19,12 +19,18 @@ h1,h3{text-align:center;margin-bottom:10px}
 .pill-row{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px}
 .pill-btn{background:#1c7c5b;border:none;padding:10px 20px;border-radius:999px;font-weight:800;color:#fff;cursor:pointer;white-space:nowrap;font-size:20px}
 .pill-btn.active{background:#2ecc71;color:#000}
+.pill-btn:disabled{cursor:default;opacity:1}
 
 .mode-card{margin-bottom:14px;padding:12px;border-radius:12px;background:#0e4f3a}
 .mode-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;width:100%}
+.mode-row.equal-buttons{flex-wrap:nowrap}
+.mode-row.equal-buttons .mode-btn{flex:1;min-width:0}
 .mode-copy{font-size:15px;opacity:.9}
 .mode-btn{width:100%;display:block;border:none;border-radius:999px;padding:10px 20px;font-size:20px;font-weight:800;cursor:pointer;background:#8a8a8a;color:#000;white-space:nowrap;box-shadow:0 4px 0 #666}
 .mode-btn.active{background:#2ecc71;box-shadow:0 4px 0 #1e9e54}
+.mode-btn.target-set-btn{background:#2ecc71;box-shadow:0 4px 0 #1e9e54}
+.mode-btn.target-set-btn.range-active{background:#1d5b86;color:#fff;box-shadow:0 4px 0 #154462}
+.mode-btn:disabled{cursor:default;opacity:1}
 .mode-target{margin:10px 0 14px;padding:10px;border-radius:10px;background:#1c7c5b;font-size:24px;font-weight:800;text-align:center}
 
 .shot-ring{width:285px;height:285px;border-radius:50%;position:relative;margin:10px auto;transform:rotate(45deg)}
@@ -67,28 +73,29 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </style>
 </head>
 
-<body class="">
+<body>
 
 <div class="card">
 
 <div class="mode-card">
-<div class="mode-row">
-<button id="practiceModeBtn" class="mode-btn active" onclick="togglePracticeMode()">Random Mode On</button>
+<div class="mode-row equal-buttons">
+<button id="practiceModeBtn" class="mode-btn" onclick="togglePracticeMode()">Manual Mode On</button>
+<button id="targetSetBtn" class="mode-btn target-set-btn" onclick="toggleTargetSetMode()">Wedge Mode On</button>
 </div>
 </div>
 
 <div id="clubRow" class="pill-row"><button class="pill-btn active">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">52°</button><button class="pill-btn">54°</button><button class="pill-btn">56°</button><button class="pill-btn">58°</button><button class="pill-btn">60°</button><button class="pill-btn">62°</button></div>
-<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn">30y</button><button class="pill-btn active">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
-<div id="modeTarget" class="mode-target">Random Shot: PW - 35y</div>
+<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn active">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
+<div id="modeTarget" class="mode-target">Current Shot: PW - 30y</div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
 <div class="shot-ring">
 
-<div class="miss-wedge miss-topright" onclick="recordMissed(&#39;longRight&#39;)"><span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Long<br>Right</span></div>
-<div class="miss-wedge miss-bottomleft" onclick="recordMissed(&#39;shortLeft&#39;)"><span style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Short<br>Left</span></div>
-<div class="miss-wedge miss-topleft" onclick="recordMissed(&#39;longLeft&#39;)"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(-90deg);font-weight:800;color:#000;font-size:24px">Long<br>Left</span></div>
-<div class="miss-wedge miss-bottomright" onclick="recordMissed(&#39;shortRight&#39;)"><span style="position:absolute;right:10px;top:50%;transform:translateY(-50%) rotate(270deg);font-weight:800;color:#000;font-size:24px">Short<br>Right</span></div>
+<div class="miss-wedge miss-topright" onclick="recordMissed('longRight')"><span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Long<br>Right</span></div>
+<div class="miss-wedge miss-bottomleft" onclick="recordMissed('shortLeft')"><span style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;color:#000;font-size:24px">Short<br>Left</span></div>
+<div class="miss-wedge miss-topleft" onclick="recordMissed('longLeft')"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(-90deg);font-weight:800;color:#000;font-size:24px">Long<br>Left</span></div>
+<div class="miss-wedge miss-bottomright" onclick="recordMissed('shortRight')"><span style="position:absolute;right:10px;top:50%;transform:translateY(-50%) rotate(270deg);font-weight:800;color:#000;font-size:24px">Short<br>Right</span></div>
 
 <div class="made-inner" onclick="event.stopPropagation();recordMade();">Made</div>
 
@@ -96,58 +103,91 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 
 <div class="mishit-row">
-<button class="mishit-btn duff-btn" onclick="recordDuff()">💩 Duff</button>
-<button class="mishit-btn skull-btn" onclick="recordSkull()">💀 Skull</button>
+<button class="mishit-btn duff-btn" onclick="recordDuff()"># Duff</button>
+<button class="mishit-btn skull-btn" onclick="recordSkull()"># Skull</button>
 </div>
 
 <div class="stats">
-<p>✅ Made: <span id="made">0</span> | ⛔ Missed: <span id="missed">0</span></p>
-<p>🚩 Make %: <span id="percent">0</span>%</p>
+<p># Made: <span id="made">0</span> | # Missed: <span id="missed">0</span></p>
+<p># Make %: <span id="percent">0</span>%</p>
 <p><span id="streakTitle">Streak</span>: <span id="streak">0</span> <span id="streakLabel"></span></p>
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge random-badge"><div class="badge-content">Current Target:<br>🎯 PW - 35y (18 ft)<br><span class="random-total-line">⛳ Total Random Shots: 0</span></div></div>
+<div id="targetBadge" class="badge manual-badge"><div class="badge-content"># Target: 15 ft<br># Up and Down: 40%<br><span class="random-total-line"># Total Manual Shots: 0</span></div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
-<button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄️ New Session</button>
-<button onclick="undoShot()" style="flex:1;background:#8a8a8a;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #666,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">↩️ Undo Last Shot</button>
+<button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;"># New Session</button>
+<button onclick="undoShot()" style="flex:1;background:#8a8a8a;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #666,0 14px 22px rgba(0,0,0,.45);cursor:pointer;"># Undo Last Shot</button>
 </div>
 
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
-<h3 style="margin:0">📜Session History</h3>
+<h3 style="margin:0"># Session History</h3>
 <select id="historyAction" onchange="handleHistoryAction()" style="background:#1c7c5b;color:#fff;border:none;border-radius:8px;padding:6px 8px;font-weight:700">
 <option value="">Actions</option>
-<option value="export">📤 Export All History</option>
-<option value="delete">📵 Clear All History</option>
+<option value="export"># Export All History</option>
+<option value="delete"># Clear All History</option>
 </select>
 </div>
 
-<div id="history"><div class="history-wrapper"><div class="history-card"><strong>Session 2</strong><br>4/22/2026 - 69% (42 shots)</div><div class="accordion" style="display: block;"><div><strong>PW - 10 yd:</strong> 1/1 (100%) - 6ft ⭐<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 15 yd:</strong> 1/1 (100%) - 8ft ⭐<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 10 yd:</strong> 1/1 (100%) - 6ft ⭐<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 40 yd:</strong> 0/1 (0%) - 21ft<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>UW - 50 yd:</strong> 1/1 (100%) - 27ft ⭐<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 55 yd:</strong> 1/1 (100%) - 30ft ⭐<br><span class="subtle">Up and Down: 23%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 65 yd:</strong> 0/1 (0%) - 36ft<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>UW - 75 yd:</strong> 1/1 (100%) - 42ft ⭐<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 80 yd:</strong> 1/1 (100%) - 45ft ⭐<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 15 yd:</strong> 0/1 (0%) - 8ft<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>48° - 35 yd:</strong> 1/1 (100%) - 18ft ⭐<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 70 yd:</strong> 1/1 (100%) - 39ft ⭐<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 10 yd:</strong> 1/1 (100%) - 6ft ⭐<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 40 yd:</strong> 1/1 (100%) - 21ft ⭐<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 45 yd:</strong> 1/1 (100%) - 24ft ⭐<br><span class="subtle">Up and Down: 27%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 70 yd:</strong> 0/1 (0%) - 39ft<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>52° - 75 yd:</strong> 2/2 (100%) - 42ft ⭐<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>52° - 80 yd:</strong> 0/1 (0%) - 45ft<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>54° - 15 yd:</strong> 1/1 (100%) - 8ft ⭐<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 35 yd:</strong> 1/1 (100%) - 18ft ⭐<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 40 yd:</strong> 0/1 (0%) - 21ft<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>54° - 65 yd:</strong> 1/1 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 70 yd:</strong> 1/1 (100%) - 39ft ⭐<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 75 yd:</strong> 0/2 (0%) - 42ft<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>56° - 20 yd:</strong> 0/1 (0%) - 10ft<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>56° - 50 yd:</strong> 1/1 (100%) - 27ft ⭐<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 65 yd:</strong> 2/2 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>58° - 20 yd:</strong> 1/1 (100%) - 10ft ⭐<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 65 yd:</strong> 1/1 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 80 yd:</strong> 0/1 (0%) - 45ft<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>60° - 10 yd:</strong> 0/1 (0%) - 6ft<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>60° - 15 yd:</strong> 1/1 (100%) - 8ft ⭐<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 20 yd:</strong> 1/1 (100%) - 10ft ⭐<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 65 yd:</strong> 1/1 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>62° - 10 yd:</strong> 1/2 (50%) - 6ft<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 1</span></div><div><strong>62° - 35 yd:</strong> 1/2 (50%) - 18ft ⭐<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>62° - 50 yd:</strong> 1/1 (100%) - 27ft ⭐<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 24px; font-weight: 800; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; cursor: pointer;">🗑️ Delete Session</button></div></div><div class="history-wrapper"><div class="history-card"><strong>Session 1</strong><br>4/22/2026 - 87% (31 shots)</div><div class="accordion" style="display: none;"><div><strong>PW - 30 yd:</strong> 17/21 (81%) - 15ft ⭐<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 1</span><br><span class="subtle">Duffs: 1 | Skulls: 1 | Best streak: 5</span></div><div><strong>48° - 30 yd:</strong> 10/10 (100%) - 15ft ⭐<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 10</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 24px; font-weight: 800; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; cursor: pointer;">🗑️ Delete Session</button></div></div></div>
+<div id="history"><p style="opacity:.8">No sessions yet.</p></div>
 
 </div>
 
 <script>
-const CLUBS=["PW","UW","48 deg","52 deg","54 deg","56 deg","58 deg","60 deg","62 deg"]
-const DISTANCES=[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
+const WEDGE_CLUBS=["PW","UW","48 deg","52 deg","54 deg","56 deg","58 deg","60 deg","62 deg"]
+const WEDGE_DISTANCES=[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
+const RANGE_CLUBS=["9i","8i","7i","6i","5i","4i","3i","5h","4h","3h","5w","4w","3w"]
+const RANGE_DISTANCES=Array.from({length:161},(_,i)=>85+i)
+const ALL_CLUBS=Array.from(new Set([...WEDGE_CLUBS,...RANGE_CLUBS]))
+const ALL_DISTANCES=Array.from(new Set([...WEDGE_DISTANCES,...RANGE_DISTANCES])).sort((a,b)=>a-b)
+const MODE_CONFIG={
+ wedge:{clubs:WEDGE_CLUBS,distances:WEDGE_DISTANCES,defaultClub:"PW",defaultDistance:30},
+ range:{clubs:RANGE_CLUBS,distances:RANGE_DISTANCES,defaultClub:"9i",defaultDistance:135}
+}
 const PGA_PROXIMITY={10:6,15:8,20:10,25:12,30:15,35:18,40:21,45:24,50:27,55:30,60:33,65:36,70:39,75:42,80:45}
 const UP_AND_DOWN={10:67,15:60,20:53,25:46,30:40,35:35,40:30,45:27,50:25,55:23,60:20,65:18,70:16,75:14,80:12}
-const DEFAULT_CLUB="PW"
+const DEFAULT_TARGET_SET_MODE="wedge"
+const DEFAULT_CLUB=MODE_CONFIG.wedge.defaultClub
 const PRACTICE_MODE_KEY="shootingPracticeMode"
 
 let currentClub=DEFAULT_CLUB
-let currentDistance=30
+let currentDistance=MODE_CONFIG.wedge.defaultDistance
 let stats
 let streaks
 let bestStreaks
 let sessions
 let shotHistory=[]
 let practiceMode="manual"
+let targetSetMode=DEFAULT_TARGET_SET_MODE
+let modeSelections={
+ wedge:{club:MODE_CONFIG.wedge.defaultClub,distance:MODE_CONFIG.wedge.defaultDistance},
+ range:{club:MODE_CONFIG.range.defaultClub,distance:MODE_CONFIG.range.defaultDistance}
+}
 
 const $=(id)=>{
  const el=document.getElementById(id)
  if(!el) throw new Error("Missing DOM element: "+id)
  return el
+}
+
+function getModeConfig(mode=targetSetMode){return MODE_CONFIG[mode]}
+function getSelectableClubs(mode=targetSetMode){return getModeConfig(mode).clubs}
+function getSelectableDistances(mode=targetSetMode){return getModeConfig(mode).distances}
+function isRangeMode(mode=targetSetMode){return mode==="range"}
+function getActivePracticeMode(){return isRangeMode() ? "random" : practiceMode}
+function getShotTargetMode(shot){return shot.targetSetMode||"wedge"}
+function getModeShotHistory(mode,targetMode=targetSetMode){
+ return shotHistory.filter(shot=>(shot.mode||"manual")===mode && getShotTargetMode(shot)===targetMode)
+}
+function inferTargetSetMode(club,distance){
+ return RANGE_CLUBS.includes(club) || distance>=RANGE_DISTANCES[0] ? "range" : "wedge"
+}
+function getTargetFeet(distance,mode){
+ return mode==="wedge" ? (PGA_PROXIMITY[distance] ?? "") : ""
+}
+function getUpAndDownValue(distance,mode){
+ return mode==="wedge" ? UP_AND_DOWN[distance] : null
 }
 
 function createMissDir(){
@@ -160,18 +200,18 @@ function createStatBucket(){
 
 function createDistanceMap(factory){
  const map={}
- DISTANCES.forEach(d=>{map[d]=factory()})
+ ALL_DISTANCES.forEach(d=>{map[d]=factory()})
  return map
 }
 
 function createClubDistanceMap(factory){
  const map={}
- CLUBS.forEach(club=>{map[club]=createDistanceMap(factory)})
+ ALL_CLUBS.forEach(club=>{map[club]=createDistanceMap(factory)})
  return map
 }
 
 function hasClubKeys(obj){
- return !!obj && CLUBS.some(club=>obj[club] && typeof obj[club]==="object")
+ return !!obj && ALL_CLUBS.some(club=>obj[club] && typeof obj[club]==="object")
 }
 
 function migrateLegacyMap(obj,factory){
@@ -179,15 +219,15 @@ function migrateLegacyMap(obj,factory){
  if(!obj || typeof obj!=="object") return map
 
  if(hasClubKeys(obj)){
-  CLUBS.forEach(club=>{
-   DISTANCES.forEach(d=>{
+  ALL_CLUBS.forEach(club=>{
+   ALL_DISTANCES.forEach(d=>{
     if(obj[club] && obj[club][d]!=null) map[club][d]=obj[club][d]
    })
   })
   return map
  }
 
- DISTANCES.forEach(d=>{
+ WEDGE_DISTANCES.forEach(d=>{
   if(obj[d]!=null) map[DEFAULT_CLUB][d]=obj[d]
  })
  return map
@@ -195,8 +235,8 @@ function migrateLegacyMap(obj,factory){
 
 function ensureStatsShape(obj){
  const map=migrateLegacyMap(obj,createStatBucket)
- CLUBS.forEach(club=>{
-  DISTANCES.forEach(d=>{
+ ALL_CLUBS.forEach(club=>{
+  ALL_DISTANCES.forEach(d=>{
    const bucket=map[club][d]||{}
    map[club][d]={
     made:Number(bucket.made)||0,
@@ -217,8 +257,8 @@ function ensureStatsShape(obj){
 
 function ensureCounterShape(obj){
  const map=migrateLegacyMap(obj,()=>0)
- CLUBS.forEach(club=>{
-  DISTANCES.forEach(d=>{
+ ALL_CLUBS.forEach(club=>{
+  ALL_DISTANCES.forEach(d=>{
    map[club][d]=Number(map[club][d])||0
   })
  })
@@ -272,31 +312,6 @@ function getCurrentBestStreak(){return bestStreaks[currentClub][currentDistance]
 function formatPercent(value){return Number.isInteger(value)?value.toString():value.toFixed(1)}
 function formatClubLabel(club){return club.replace(/ deg\b/g,String.fromCharCode(176))}
 
-function summarizeSessionStats(statsMap){
- let totalMade=0
- let totalMissed=0
- let totalDuffs=0
- let totalSkulls=0
-
- CLUBS.forEach(club=>{
-  DISTANCES.forEach(d=>{
-   const bucket=statsMap[club][d]
-   totalMade+=bucket.made||0
-   totalMissed+=bucket.missed||0
-   totalDuffs+=bucket.duffs||0
-   totalSkulls+=bucket.skulls||0
-  })
- })
-
- return {
-  made:totalMade,
-  missed:totalMissed,
-  duffs:totalDuffs,
-  skulls:totalSkulls,
-  total:totalMade+totalMissed
- }
-}
-
 function summarizeShotResults(history){
  let made=0
  let missed=0
@@ -339,8 +354,22 @@ function summarizeShotSequence(history){
  return {streak:streak,best:best}
 }
 
-function getModeShotHistory(mode){
- return shotHistory.filter(shot=>shot.mode===mode)
+function summarizeStats(statsMap){
+ let totalMade=0
+ let totalMissed=0
+ ALL_CLUBS.forEach(club=>{
+  ALL_DISTANCES.forEach(d=>{
+   totalMade+=statsMap[club][d].made||0
+   totalMissed+=statsMap[club][d].missed||0
+  })
+ })
+ const totalShots=totalMade+totalMissed
+ return {
+  made:totalMade,
+  missed:totalMissed,
+  total:totalShots,
+  pct:totalShots?Math.round(totalMade/totalShots*100):0
+ }
 }
 
 function setTitle(){
@@ -350,16 +379,27 @@ function setTitle(){
 function renderPracticeMode(){
  const btn=$("practiceModeBtn")
  const target=$("modeTarget")
- const isRandom=practiceMode==="random"
+ const targetModeBtn=$("targetSetBtn")
+ const activePracticeMode=getActivePracticeMode()
+ const rangeActive=isRangeMode()
+ const isRandom=activePracticeMode==="random"
+
  btn.textContent=isRandom ? "Random Mode On" : "Manual Mode On"
  btn.className="mode-btn"+(isRandom?" active":"")
- target.textContent=(isRandom ? "Random Shot: " : "Current Shot: ")+formatClubLabel(currentClub)+" - "+currentDistance+"y"
+ btn.disabled=rangeActive
+
+ targetModeBtn.textContent=rangeActive ? "Range Mode On" : "Wedge Mode On"
+ targetModeBtn.className="mode-btn target-set-btn"+(rangeActive?" range-active":"")
+
+ target.textContent=rangeActive
+  ? "Range Shot: "+currentDistance+"y - "+formatClubLabel(currentClub)
+  : (isRandom ? "Random Shot: " : "Current Shot: ")+formatClubLabel(currentClub)+" - "+currentDistance+"y"
 }
 
 function buildClubRow(){
  const r=$("clubRow")
  r.innerHTML=""
- CLUBS.forEach(club=>{
+ getSelectableClubs().forEach(club=>{
   const b=document.createElement("button")
   b.className="pill-btn"+(club===currentClub?" active":"")
   b.textContent=formatClubLabel(club)
@@ -371,7 +411,17 @@ function buildClubRow(){
 function buildDistanceRow(){
  const r=$("distanceRow")
  r.innerHTML=""
- DISTANCES.forEach(d=>{
+
+ if(isRangeMode()){
+  const b=document.createElement("button")
+  b.className="pill-btn active"
+  b.textContent=currentDistance+"y"
+  b.disabled=true
+  r.appendChild(b)
+  return
+ }
+
+ getSelectableDistances().forEach(d=>{
   const b=document.createElement("button")
   b.className="pill-btn"+(d===currentDistance?" active":"")
   b.textContent=d+"y"
@@ -390,24 +440,51 @@ function syncCurrentSelection(){
 
 function setClub(club){
  currentClub=club
+ modeSelections[targetSetMode].club=club
  syncCurrentSelection()
 }
 
 function setDistance(d){
+ if(isRangeMode()) return
  currentDistance=d
+ modeSelections[targetSetMode].distance=d
  syncCurrentSelection()
 }
 
 function setTarget(club,distance){
  currentClub=club
  currentDistance=distance
+ modeSelections[targetSetMode]={club:club,distance:distance}
+ syncCurrentSelection()
+}
+
+function pickRandomRangeDistance(){
+ const distances=getSelectableDistances()
+ if(!distances.length) return
+
+ let next=currentDistance
+ if(distances.length===1){
+  next=distances[0]
+ }else{
+  while(next===currentDistance){
+   next=distances[Math.floor(Math.random()*distances.length)]
+  }
+ }
+
+ currentDistance=next
+ modeSelections.range.distance=next
  syncCurrentSelection()
 }
 
 function pickRandomTarget(){
+ if(isRangeMode()){
+  pickRandomRangeDistance()
+  return
+ }
+
  const combos=[]
- CLUBS.forEach(club=>{
-  DISTANCES.forEach(distance=>{
+ getSelectableClubs().forEach(club=>{
+  getSelectableDistances().forEach(distance=>{
    if(club!==currentClub || distance!==currentDistance) combos.push({club,distance})
   })
  })
@@ -417,21 +494,44 @@ function pickRandomTarget(){
 }
 
 function togglePracticeMode(){
+ if(isRangeMode()) return
  practiceMode=practiceMode==="manual" ? "random" : "manual"
  savePracticeMode()
- if(practiceMode==="random") pickRandomTarget()
+ if(practiceMode==="random"){
+  pickRandomTarget()
+  return
+ }
  updateStats()
  renderPracticeMode()
 }
 
+function toggleTargetSetMode(){
+ if(isRangeMode()){
+  targetSetMode="wedge"
+  currentClub=modeSelections.wedge.club
+  currentDistance=modeSelections.wedge.distance
+  syncCurrentSelection()
+  return
+ }
+
+ targetSetMode="range"
+ const rangeSelection=modeSelections.range
+ currentClub=getSelectableClubs().includes(rangeSelection.club) ? rangeSelection.club : MODE_CONFIG.range.defaultClub
+ currentDistance=getSelectableDistances().includes(rangeSelection.distance) ? rangeSelection.distance : MODE_CONFIG.range.defaultDistance
+ modeSelections.range={club:currentClub,distance:currentDistance}
+ pickRandomTarget()
+}
+
 function advancePracticeTarget(){
- if(practiceMode==="random") pickRandomTarget()
+ if(getActivePracticeMode()==="random") pickRandomTarget()
 }
 
 function updateStats(){
- const isRandom=practiceMode==="random"
+ const activePracticeMode=getActivePracticeMode()
+ const isRandom=activePracticeMode==="random"
+ const rangeActive=isRangeMode()
  const badge=$("targetBadge")
- const modeHistory=getModeShotHistory(practiceMode)
+ const modeHistory=getModeShotHistory(activePracticeMode,targetSetMode)
  const modeStats=summarizeShotResults(modeHistory)
  const shotSummary=summarizeShotSequence(modeHistory)
  const made=modeStats.made
@@ -445,9 +545,9 @@ function updateStats(){
  $("missed").textContent=missed
  $("percent").textContent=pct
  $("duffs").textContent=duffs
- $("duffMarks").textContent=duffs?" "+"🧻".repeat(duffs):""
+ $("duffMarks").textContent=duffs ? " "+"#".repeat(duffs) : ""
  $("skulls").textContent=skulls
- $("skullMarks").textContent=skulls?" "+"☠️".repeat(skulls):""
+ $("skullMarks").textContent=skulls ? " "+"#".repeat(skulls) : ""
 
  const s=isRandom ? shotSummary.streak : getCurrentStreak()
  let fireCount=0
@@ -457,27 +557,29 @@ function updateStats(){
  else if(s>=3) fireCount=2
  else if(s>=1) fireCount=1
 
- let fires=""
- for(let i=0;i<fireCount;i++){fires+="🔥"}
-
  $("streakTitle").textContent=getStreakEmojis(s)
  $("streak").textContent=s
- $("streakLabel").textContent=fires
- if(isRandom){
+ $("streakLabel").textContent="#".repeat(fireCount)
+
+ if(rangeActive){
   badge.className="badge random-badge"
-  badge.innerHTML='<div class="badge-content">Random Target:<br>🎯 '+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+PGA_PROXIMITY[currentDistance]+' ft)<br><span class="random-total-line">⛳ Total Random Shots: '+total+'</span></div>'
+  badge.innerHTML='<div class="badge-content">Current Yardage:<br># '+currentDistance+'y<br># Selected Club: '+formatClubLabel(currentClub)+'<br><span class="random-total-line"># Total Range Shots: '+total+'</span></div>'
+ }else if(isRandom){
+  badge.className="badge random-badge"
+  badge.innerHTML='<div class="badge-content">Current Target:<br># '+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+getTargetFeet(currentDistance,"wedge")+' ft)<br><span class="random-total-line"># Total Random Shots: '+total+'</span></div>'
  }else{
   badge.className="badge manual-badge"
-  badge.innerHTML='<div class="badge-content">🎯 Current Target: '+PGA_PROXIMITY[currentDistance]+' ft<br>🥇 Up and Down: '+formatPercent(UP_AND_DOWN[currentDistance])+'%<br><span class="random-total-line">⛳ Total Manual Shots: '+total+'</span></div>'
+  badge.innerHTML='<div class="badge-content"># Target: '+getTargetFeet(currentDistance,"wedge")+' ft<br># Up and Down: '+formatPercent(getUpAndDownValue(currentDistance,"wedge"))+'%<br><span class="random-total-line"># Total Manual Shots: '+total+'</span></div>'
  }
 }
 
 function recordMade(){
+ const activePracticeMode=getActivePracticeMode()
  const st=getCurrentStats()
  st.made++
  streaks[currentClub][currentDistance]++
  if(getCurrentStreak()>getCurrentBestStreak()) bestStreaks[currentClub][currentDistance]=getCurrentStreak()
- shotHistory.push({type:"made",club:currentClub,distance:currentDistance,mode:practiceMode})
+ shotHistory.push({type:"made",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode})
  document.body.classList.remove("flash-red")
  document.body.classList.add("flash-green")
  setTimeout(()=>document.body.classList.remove("flash-green"),150)
@@ -489,11 +591,12 @@ function recordMade(){
 }
 
 function recordMissed(dir){
+ const activePracticeMode=getActivePracticeMode()
  const st=getCurrentStats()
  st.missed++
  st.missDir[dir]++
  streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir,mode:practiceMode})
+ shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir,mode:activePracticeMode,targetSetMode:targetSetMode})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -504,11 +607,12 @@ function recordMissed(dir){
 }
 
 function recordDuff(){
+ const activePracticeMode=getActivePracticeMode()
  const st=getCurrentStats()
  st.missed++
  st.duffs++
  streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"duff",club:currentClub,distance:currentDistance,mode:practiceMode})
+ shotHistory.push({type:"duff",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -519,11 +623,12 @@ function recordDuff(){
 }
 
 function recordSkull(){
+ const activePracticeMode=getActivePracticeMode()
  const st=getCurrentStats()
  st.missed++
  st.skulls++
  streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"skull",club:currentClub,distance:currentDistance,mode:practiceMode})
+ shotHistory.push({type:"skull",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -531,24 +636,6 @@ function recordSkull(){
  saveStreaks()
  advancePracticeTarget()
  updateStats()
-}
-
-function summarizeStats(statsMap){
- let totalMade=0
- let totalMissed=0
- CLUBS.forEach(club=>{
-  DISTANCES.forEach(d=>{
-   totalMade+=statsMap[club][d].made||0
-   totalMissed+=statsMap[club][d].missed||0
-  })
- })
- const totalShots=totalMade+totalMissed
- return {
-  made:totalMade,
-  missed:totalMissed,
-  total:totalShots,
-  pct:totalShots?Math.round(totalMade/totalShots*100):0
- }
 }
 
 function newSession(){
@@ -567,9 +654,12 @@ function newSession(){
  saveStats()
  saveStreaks()
  saveBestStreaks()
- if(practiceMode==="random") pickRandomTarget()
- updateStats()
  renderHistory()
+ if(getActivePracticeMode()==="random"){
+  pickRandomTarget()
+  return
+ }
+ updateStats()
  renderPracticeMode()
 }
 
@@ -592,14 +682,17 @@ function recomputeHistoryFor(club,distance){
 }
 
 function undoShot(){
+ const activePracticeMode=getActivePracticeMode()
  let undoIndex=-1
  for(let i=shotHistory.length-1;i>=0;i--){
-  if((shotHistory[i].mode||"manual")===practiceMode){
+  const shot=shotHistory[i]
+  if((shot.mode||"manual")===activePracticeMode && getShotTargetMode(shot)===targetSetMode){
    undoIndex=i
    break
   }
  }
  if(undoIndex===-1) return
+
  const last=shotHistory.splice(undoIndex,1)[0]
  const st=stats[last.club][last.distance]
 
@@ -669,7 +762,7 @@ function exportHistoryCSV(){
   let sessionMissed=0
   let sessionMiss=createMissDir()
 
- CLUBS.forEach(club=>{
+  ALL_CLUBS.forEach(club=>{
    let clubMade=0
    let clubMissed=0
    let clubMiss=createMissDir()
@@ -677,7 +770,7 @@ function exportHistoryCSV(){
    let clubSkulls=0
    let clubBestStreak=0
 
-   DISTANCES.forEach(d=>{
+   ALL_DISTANCES.forEach(d=>{
     const st=s.stats && s.stats[club] && s.stats[club][d]
     if(!st) return
 
@@ -688,8 +781,11 @@ function exportHistoryCSV(){
     const total=made+missed
     if(!total) return
 
+    const entryMode=inferTargetSetMode(club,d)
     const missDir=st.missDir||createMissDir()
     const pct=Math.round(made/total*100)
+    const targetFeet=getTargetFeet(d,entryMode)
+    const upAndDown=getUpAndDownValue(d,entryMode)
 
     sessionMade+=made
     sessionMissed+=missed
@@ -707,7 +803,7 @@ function exportHistoryCSV(){
     clubSkulls+=skulls
     clubBestStreak=Math.max(clubBestStreak,((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0))
 
-    csv+=(idx+1)+","+date+","+club+","+d+"yd,"+PGA_PROXIMITY[d]+"ft,"+made+","+missed+","+pct+"%,"+formatPercent(UP_AND_DOWN[d])+"%,"+
+    csv+=(idx+1)+","+date+","+club+","+d+"yd,"+(targetFeet!=="" ? targetFeet+"ft" : "")+","+made+","+missed+","+pct+"%,"+(upAndDown!=null ? formatPercent(upAndDown)+"%" : "")+","+
          (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
          duffs+","+skulls+",,"+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
    })
@@ -736,12 +832,12 @@ function exportHistoryCSV(){
   const totalShots=sessionMade+sessionMissed
   const totalPct=totalShots?Math.round(sessionMade/totalShots*100):0
   const sessionDuffs=Object.values(s.stats||{}).reduce((total,clubStats)=>{
-   return total+DISTANCES.reduce((sum,d)=>{
+   return total+ALL_DISTANCES.reduce((sum,d)=>{
     return sum+(((clubStats||{})[d]||{}).duffs||0)
    },0)
   },0)
   const sessionSkulls=Object.values(s.stats||{}).reduce((total,clubStats)=>{
-   return total+DISTANCES.reduce((sum,d)=>{
+   return total+ALL_DISTANCES.reduce((sum,d)=>{
     return sum+(((clubStats||{})[d]||{}).skulls||0)
    },0)
   },0)
@@ -773,14 +869,14 @@ function exportHistoryCSV(){
  const gPct=gShots?Math.round(grandMade/gShots*100):0
  const grandDuffs=sessions.reduce((total,s)=>{
   return total+Object.values(s.stats||{}).reduce((clubTotal,clubStats)=>{
-   return clubTotal+DISTANCES.reduce((sum,d)=>{
+   return clubTotal+ALL_DISTANCES.reduce((sum,d)=>{
     return sum+(((clubStats||{})[d]||{}).duffs||0)
    },0)
   },0)
  },0)
  const grandSkulls=sessions.reduce((total,s)=>{
   return total+Object.values(s.stats||{}).reduce((clubTotal,clubStats)=>{
-   return clubTotal+DISTANCES.reduce((sum,d)=>{
+   return clubTotal+ALL_DISTANCES.reduce((sum,d)=>{
     return sum+(((clubStats||{})[d]||{}).skulls||0)
    },0)
   },0)
@@ -839,21 +935,26 @@ function renderHistory(){
   card.innerHTML="<strong>Session "+(idx+1)+"</strong><br>"+new Date(s.date).toLocaleDateString()+" - "+s.summary.pct+"% ("+s.summary.total+" shots)"
   card.onclick=()=>{acc.style.display=acc.style.display==="block"?"none":"block"}
 
-  CLUBS.forEach(club=>{
-   DISTANCES.forEach(d=>{
+  ALL_CLUBS.forEach(club=>{
+   ALL_DISTANCES.forEach(d=>{
     const st=s.stats && s.stats[club] && s.stats[club][d]
     if(!st) return
 
     const tot=(st.made||0)+(st.missed||0)
     if(!tot) return
 
+    const rowMode=inferTargetSetMode(club,d)
     const missDir=st.missDir||createMissDir()
     const pct=Math.round(st.made/tot*100)
-    const earnedStar=pct>UP_AND_DOWN[d]?" ⭐":""
+    const upAndDown=getUpAndDownValue(d,rowMode)
+    const targetFeet=getTargetFeet(d,rowMode)
+    const earnedMark=rowMode==="wedge" && pct>upAndDown ? " #" : ""
 
     const row=document.createElement("div")
-    row.innerHTML="<strong>"+formatClubLabel(club)+" - "+d+" yd:</strong> "+st.made+"/"+tot+" ("+pct+"%) - "+PGA_PROXIMITY[d]+"ft"+earnedStar+
-     '<br><span class="subtle">Up and Down: '+formatPercent(UP_AND_DOWN[d])+'%</span>'+
+    row.innerHTML="<strong>"+formatClubLabel(club)+" - "+d+" yd:</strong> "+st.made+"/"+tot+" ("+pct+"%)"+(rowMode==="wedge" ? " - "+targetFeet+"ft"+earnedMark : " - Range Mode")+
+     (rowMode==="wedge"
+      ? '<br><span class="subtle">Up and Down: '+formatPercent(upAndDown)+'%</span>'
+      : '<br><span class="subtle">Range yardage target</span>')+
      '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+'</span>'+
      '<br><span class="subtle">Duffs: '+(st.duffs||0)+' | Skulls: '+(st.skulls||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
     acc.appendChild(row)
@@ -861,9 +962,9 @@ function renderHistory(){
   })
 
   const delBtn=document.createElement("button")
-  delBtn.textContent="🗑️ Delete Session"
+  delBtn.textContent="# Delete Session"
   delBtn.onclick=e=>{e.stopPropagation();deleteSession(idx)}
-  delBtn.style="display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;cursor:pointer;"
+  delBtn.style="display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;cursor:pointer;"
 
   acc.appendChild(delBtn)
   wrap.appendChild(card)
@@ -877,20 +978,17 @@ function initApp(){
  streaks=loadStreaks()
  bestStreaks=loadBestStreaks()
  sessions=loadSessions()
+ practiceMode=loadPracticeMode()
  practiceMode="manual"
+ targetSetMode="wedge"
  savePracticeMode()
  syncCurrentSelection()
  renderHistory()
  renderPracticeMode()
- if(practiceMode==="random") pickRandomTarget()
 }
 
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",initApp)}else{initApp()}
-
 </script>
 
-
-
-
-
-</body></html>
+</body>
+</html>
