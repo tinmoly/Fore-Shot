@@ -108,30 +108,30 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 
 <div class="mishit-row">
-<button class="mishit-btn duff-btn" onclick="recordDuff()"># Duff</button>
-<button class="mishit-btn skull-btn" onclick="recordSkull()"># Skull</button>
+<button class="mishit-btn duff-btn" onclick="recordDuff()">💩 Duff</button>
+<button class="mishit-btn skull-btn" onclick="recordSkull()">💀 Skull</button>
 </div>
 
 <div class="stats">
-<p># Made: <span id="made">0</span> | # Missed: <span id="missed">0</span></p>
-<p># Make %: <span id="percent">0</span>%</p>
+<p>✅ Made: <span id="made">0</span> | ⛔ Missed: <span id="missed">0</span></p>
+<p>🚩 Make %: <span id="percent">0</span>%</p>
 <p><span id="streakTitle">Streak</span>: <span id="streak">0</span> <span id="streakLabel"></span></p>
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge manual-badge"><div class="badge-content"># Target: 15 ft<br># Up and Down: 40%<br><span class="random-total-line"># Total Manual Shots: 0</span></div></div>
+<div id="targetBadge" class="badge manual-badge"><div class="badge-content">🎯 Target: 15 ft<br>🥇 Up and Down: 40%<br><span class="random-total-line">⛳ Total Manual Shots: 0</span></div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
-<button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;"># New Session</button>
-<button onclick="undoShot()" style="flex:1;background:#8a8a8a;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #666,0 14px 22px rgba(0,0,0,.45);cursor:pointer;"># Undo Last Shot</button>
+<button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄️ New Session</button>
+<button onclick="undoShot()" style="flex:1;background:#8a8a8a;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #666,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">↩️ Undo Last Shot</button>
 </div>
 
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
-<h3 style="margin:0"># Session History</h3>
+<h3 style="margin:0">📜Session History</h3>
 <select id="historyAction" onchange="handleHistoryAction()" style="background:#1c7c5b;color:#fff;border:none;border-radius:8px;padding:6px 8px;font-weight:700">
 <option value="">Actions</option>
-<option value="export"># Export All History</option>
-<option value="delete"># Clear All History</option>
+<option value="export">📤 Export All History</option>
+<option value="delete">📵 Clear All History</option>
 </select>
 </div>
 
@@ -721,9 +721,9 @@ function updateStats(){
  $("missed").textContent=missed
  $("percent").textContent=pct
  $("duffs").textContent=duffs
- $("duffMarks").textContent=duffs ? " "+"#".repeat(duffs) : ""
+ $("duffMarks").textContent=duffs ? " "+"🧻".repeat(duffs) : ""
  $("skulls").textContent=skulls
- $("skullMarks").textContent=skulls ? " "+"#".repeat(skulls) : ""
+ $("skullMarks").textContent=skulls ? " "+"☠️".repeat(skulls) : ""
 
  const s=isRandom ? shotSummary.streak : getCurrentStreak()
  let fireCount=0
@@ -735,17 +735,17 @@ function updateStats(){
 
  $("streakTitle").textContent=getStreakEmojis(s)
  $("streak").textContent=s
- $("streakLabel").textContent="#".repeat(fireCount)
+ $("streakLabel").textContent="🔥".repeat(fireCount)
 
  if(rangeActive){
   badge.className="badge random-badge"
-  badge.innerHTML='<div class="badge-content">Current Target:<br># '+formatClubLabel(currentClub)+' - '+currentDistance+'y<br># Wind: '+(rangeWindDirection==="head" ? "Head Wind " : "Tail Wind ")+formatWindSpeed()+'<br><span class="random-total-line"># Total Range Shots: '+total+'</span></div>'
+  badge.innerHTML='<div class="badge-content">Current Target:<br>🎯 '+formatClubLabel(currentClub)+' - '+currentDistance+'y<br>⛅ Wind: '+(rangeWindDirection==="head" ? "Head Wind " : "Tail Wind ")+formatWindSpeed()+'<br><span class="random-total-line">⛳ Total Range Shots: '+total+'</span></div>'
  }else if(isRandom){
   badge.className="badge random-badge"
-  badge.innerHTML='<div class="badge-content">Current Target:<br># '+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+getTargetFeet(currentDistance,"wedge")+' ft)<br><span class="random-total-line"># Total Random Shots: '+total+'</span></div>'
+  badge.innerHTML='<div class="badge-content">Current Target:<br>🎯 '+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+getTargetFeet(currentDistance,"wedge")+' ft)<br><span class="random-total-line">⛳ Total Random Shots: '+total+'</span></div>'
  }else{
   badge.className="badge manual-badge"
-  badge.innerHTML='<div class="badge-content"># Target: '+getTargetFeet(currentDistance,"wedge")+' ft<br># Up and Down: '+formatPercent(getUpAndDownValue(currentDistance,"wedge"))+'%<br><span class="random-total-line"># Total Manual Shots: '+total+'</span></div>'
+  badge.innerHTML='<div class="badge-content">🎯 Target: '+getTargetFeet(currentDistance,"wedge")+' ft<br>🥇 Up and Down: '+formatPercent(getUpAndDownValue(currentDistance,"wedge"))+'%<br><span class="random-total-line">⛳ Total Manual Shots: '+total+'</span></div>'
  }
 }
 
@@ -1135,7 +1135,7 @@ function renderHistory(){
     const pct=Math.round(st.made/tot*100)
     const upAndDown=getUpAndDownValue(d,rowMode)
     const targetFeet=getTargetFeet(d,rowMode)
-    const earnedMark=rowMode==="wedge" && pct>upAndDown ? " #" : ""
+    const earnedMark=rowMode==="wedge" && pct>upAndDown ? " 🏆" : ""
     const windSummary=rowMode==="range" ? getRangeWindSummary(s.shots,club,d) : ""
 
     const row=document.createElement("div")
@@ -1150,7 +1150,7 @@ function renderHistory(){
   })
 
   const delBtn=document.createElement("button")
-  delBtn.textContent="# Delete Session"
+  delBtn.textContent="🗑️ Delete Session"
   delBtn.onclick=e=>{e.stopPropagation();deleteSession(idx)}
   delBtn.style="display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;cursor:pointer;"
 
