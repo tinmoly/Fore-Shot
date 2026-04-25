@@ -20,6 +20,11 @@ h1,h3{text-align:center;margin-bottom:10px}
 .pill-btn{background:#1c7c5b;border:none;padding:10px 20px;border-radius:999px;font-weight:800;color:#fff;cursor:pointer;white-space:nowrap;font-size:20px}
 .pill-btn.active{background:#2ecc71;color:#000}
 .pill-btn:disabled{cursor:default;opacity:1}
+.range-speed{display:flex;align-items:center;gap:6px;background:#1c7c5b;padding:6px;border-radius:999px}
+.range-speed-value{min-width:92px;text-align:center;font-size:18px;font-weight:800}
+.range-speed-btn{border:none;border-radius:999px;background:#2ecc71;color:#000;font-size:22px;font-weight:800;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 #1e9e54}
+.wind-toggle.head-wind{background:#7a1f1f;color:#fff;box-shadow:0 4px 0 #561515}
+.wind-toggle.tail-wind{background:#2ecc71;color:#000;box-shadow:0 4px 0 #1e9e54}
 
 .mode-card{margin-bottom:14px;padding:12px;border-radius:12px;background:#0e4f3a}
 .mode-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;width:100%}
@@ -137,9 +142,35 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 <script>
 const WEDGE_CLUBS=["PW","UW","48 deg","52 deg","54 deg","56 deg","58 deg","60 deg","62 deg"]
 const WEDGE_DISTANCES=[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
-const RANGE_CLUBS=["9i","8i","7i","6i","5i","4i","3i","5h","4h","3h","5w","4w","3w"]
-const RANGE_DISTANCES=Array.from({length:161},(_,i)=>85+i)
-const ALL_CLUBS=Array.from(new Set([...WEDGE_CLUBS,...RANGE_CLUBS]))
+const RANGE_CLUBS=["62 deg","60 deg","58 deg","56 deg","54 deg","52 deg","UW","48 deg","PW","9i","8i","7i","6i","5i","4i","3i","3h","4h","5h","5w","4w","3w","Driver"]
+const RANGE_DISTANCES=Array.from({length:176},(_,i)=>85+i)
+const RANGE_CARRY_YARDAGES={
+ "62 deg":75,
+ "60 deg":80,
+ "58 deg":90,
+ "56 deg":100,
+ "54 deg":105,
+ "52 deg":110,
+ "UW":115,
+ "48 deg":120,
+ "PW":125,
+ "9i":135,
+ "8i":150,
+ "7i":160,
+ "6i":170,
+ "5i":180,
+ "4i":190,
+ "3i":200,
+ "5h":205,
+ "4h":215,
+ "3h":225,
+ "5w":225,
+ "4w":235,
+ "3w":245,
+ "Driver":260
+}
+const RANGE_RECOMMENDATION_WINDOW=10
+const ALL_CLUBS=["62 deg","60 deg","58 deg","56 deg","54 deg","52 deg","UW","48 deg","PW","9i","8i","7i","6i","5i","4i","3i","3h","4h","5h","5w","4w","3w","Driver"]
 const ALL_DISTANCES=Array.from(new Set([...WEDGE_DISTANCES,...RANGE_DISTANCES])).sort((a,b)=>a-b)
 const MODE_CONFIG={
  wedge:{clubs:WEDGE_CLUBS,distances:WEDGE_DISTANCES,defaultClub:"PW",defaultDistance:30},
@@ -160,6 +191,8 @@ let sessions
 let shotHistory=[]
 let practiceMode="manual"
 let targetSetMode=DEFAULT_TARGET_SET_MODE
+let rangeWindDirection="head"
+let rangeWindSpeed=0
 let modeSelections={
  wedge:{club:MODE_CONFIG.wedge.defaultClub,distance:MODE_CONFIG.wedge.defaultDistance},
  range:{club:MODE_CONFIG.range.defaultClub,distance:MODE_CONFIG.range.defaultDistance}
@@ -181,13 +214,114 @@ function getModeShotHistory(mode,targetMode=targetSetMode){
  return shotHistory.filter(shot=>(shot.mode||"manual")===mode && getShotTargetMode(shot)===targetMode)
 }
 function inferTargetSetMode(club,distance){
- return RANGE_CLUBS.includes(club) || distance>=RANGE_DISTANCES[0] ? "range" : "wedge"
+ return distance>=RANGE_DISTANCES[0] ? "range" : "wedge"
 }
 function getTargetFeet(distance,mode){
  return mode==="wedge" ? (PGA_PROXIMITY[distance] ?? "") : ""
 }
 function getUpAndDownValue(distance,mode){
  return mode==="wedge" ? UP_AND_DOWN[distance] : null
+}
+function getSignedWindSpeed(){
+ if(rangeWindSpeed===0) return 0
+ return rangeWindDirection==="head" ? rangeWindSpeed : -rangeWindSpeed
+}
+function formatWindSpeed(){
+ const signed=getSignedWindSpeed()
+ if(signed>0) return "+"+signed+" mph"
+ if(signed<0) return signed+" mph"
+ return "0 mph"
+}
+function getShotWindLabel(shot){
+ const direction=shot && shot.windDirection ? shot.windDirection : "head"
+ const speed=Number(shot && shot.windSpeed) || 0
+ const signed=direction==="head" ? speed : -speed
+ const prefix=signed>0 ? "+" : ""
+ const dirLabel=direction==="head" ? "Head Wind" : "Tail Wind"
+ return dirLabel+" "+prefix+signed+" mph"
+}
+function uniqueValues(values){
+ return Array.from(new Set(values.filter(Boolean)))
+}
+function getRangeWindSummary(shots,club,distance){
+ if(!Array.isArray(shots)) return ""
+ const labels=uniqueValues(shots
+  .filter(shot=>getShotTargetMode(shot)==="range" && shot.club===club && shot.distance===distance)
+  .map(getShotWindLabel))
+ return labels.join(" | ")
+}
+function getRangeWindSummaryForClub(shots,club){
+ if(!Array.isArray(shots)) return ""
+ const labels=uniqueValues(shots
+  .filter(shot=>getShotTargetMode(shot)==="range" && shot.club===club)
+  .map(getShotWindLabel))
+ return labels.join(" | ")
+}
+function getRangeWindSummaryForSession(shots){
+ if(!Array.isArray(shots)) return ""
+ const labels=uniqueValues(shots
+  .filter(shot=>getShotTargetMode(shot)==="range")
+  .map(getShotWindLabel))
+ return labels.join(" | ")
+}
+function getModeLabel(hasRange,hasWedge){
+ if(hasRange && hasWedge) return "Mixed"
+ if(hasRange) return "Range"
+ return "Wedge"
+}
+function bucketHasShots(statsMap,club,distances){
+ return distances.some(d=>{
+  const bucket=statsMap && statsMap[club] && statsMap[club][d]
+  return !!bucket && ((bucket.made||0)+(bucket.missed||0)>0)
+ })
+}
+function getClubRangeModeLabel(statsMap,club){
+ return getModeLabel(
+  bucketHasShots(statsMap,club,RANGE_DISTANCES),
+  bucketHasShots(statsMap,club,WEDGE_DISTANCES)
+ )
+}
+function getSessionRangeModeLabel(statsMap){
+ const hasRange=ALL_CLUBS.some(club=>bucketHasShots(statsMap,club,RANGE_DISTANCES))
+ const hasWedge=ALL_CLUBS.some(club=>bucketHasShots(statsMap,club,WEDGE_DISTANCES))
+ return getModeLabel(hasRange,hasWedge)
+}
+function getRangeEligibleClubs(distance=currentDistance){
+ return RANGE_CLUBS.filter(club=>Math.abs((RANGE_CARRY_YARDAGES[club]||0)-distance)<=RANGE_RECOMMENDATION_WINDOW)
+}
+function getRecommendedRangeClub(distance=currentDistance){
+ const eligible=getRangeEligibleClubs(distance)
+ if(eligible.length){
+  return eligible.slice().sort((a,b)=>{
+   const diffA=Math.abs(RANGE_CARRY_YARDAGES[a]-distance)
+   const diffB=Math.abs(RANGE_CARRY_YARDAGES[b]-distance)
+   if(diffA!==diffB) return diffA-diffB
+   return RANGE_CARRY_YARDAGES[a]-RANGE_CARRY_YARDAGES[b]
+  })[0]
+ }
+
+ return RANGE_CLUBS.slice().sort((a,b)=>{
+  const diffA=Math.abs(RANGE_CARRY_YARDAGES[a]-distance)
+  const diffB=Math.abs(RANGE_CARRY_YARDAGES[b]-distance)
+  if(diffA!==diffB) return diffA-diffB
+  return RANGE_CARRY_YARDAGES[a]-RANGE_CARRY_YARDAGES[b]
+ })[0]
+}
+function getDisplayedRangeClubs(distance=currentDistance){
+ const eligible=getRangeEligibleClubs(distance)
+ return eligible.length ? eligible : [getRecommendedRangeClub(distance)]
+}
+function refreshRangeRecommendation(){
+ if(!isRangeMode()) return
+ syncCurrentSelection()
+}
+function toggleWindDirection(){
+ rangeWindDirection=rangeWindDirection==="head" ? "tail" : "head"
+ refreshRangeRecommendation()
+}
+function adjustWindSpeed(delta){
+ rangeWindSpeed=Math.max(0,Math.min(25,rangeWindSpeed+delta))
+ refreshRangeRecommendation()
 }
 
 function createMissDir(){
@@ -293,6 +427,7 @@ function normalizeSession(session){
   date:safeSession.date||new Date().toISOString(),
   stats:ensureStatsShape(safeSession.stats),
   bestStreaks:ensureCounterShape(safeSession.bestStreaks),
+  shots:Array.isArray(safeSession.shots)?safeSession.shots:[],
   summary:safeSession.summary||summarizeStats(ensureStatsShape(safeSession.stats))
  }
 }
@@ -310,7 +445,10 @@ function getCurrentStats(){return stats[currentClub][currentDistance]}
 function getCurrentStreak(){return streaks[currentClub][currentDistance]||0}
 function getCurrentBestStreak(){return bestStreaks[currentClub][currentDistance]||0}
 function formatPercent(value){return Number.isInteger(value)?value.toString():value.toFixed(1)}
-function formatClubLabel(club){return club.replace(/ deg\b/g,String.fromCharCode(176))}
+function formatClubLabel(club){
+ if(club==="Driver") return "D"
+ return club.replace(/ deg\b/g,String.fromCharCode(176))
+}
 
 function summarizeShotResults(history){
  let made=0
@@ -399,11 +537,22 @@ function renderPracticeMode(){
 function buildClubRow(){
  const r=$("clubRow")
  r.innerHTML=""
- getSelectableClubs().forEach(club=>{
+ const rangeMode=isRangeMode()
+ if(isRangeMode()){
+  const yardageBtn=document.createElement("button")
+  yardageBtn.className="pill-btn active"
+  yardageBtn.textContent=currentDistance+"y"
+  yardageBtn.disabled=true
+  r.appendChild(yardageBtn)
+ }
+
+ const clubs=rangeMode ? getDisplayedRangeClubs() : getSelectableClubs()
+ clubs.forEach((club,index)=>{
   const b=document.createElement("button")
   b.className="pill-btn"+(club===currentClub?" active":"")
   b.textContent=formatClubLabel(club)
   b.onclick=()=>setClub(club)
+  if(rangeMode && index===0) b.style.marginLeft="auto"
   r.appendChild(b)
  })
 }
@@ -413,13 +562,38 @@ function buildDistanceRow(){
  r.innerHTML=""
 
  if(isRangeMode()){
-  const b=document.createElement("button")
-  b.className="pill-btn active"
-  b.textContent=currentDistance+"y"
-  b.disabled=true
-  r.appendChild(b)
+  r.style.justifyContent="center"
+  const windToggle=document.createElement("button")
+  windToggle.className="pill-btn wind-toggle "+(rangeWindDirection==="head" ? "head-wind" : "tail-wind")
+  windToggle.textContent=rangeWindDirection==="head" ? "Head Wind" : "Tail Wind"
+  windToggle.onclick=toggleWindDirection
+  r.appendChild(windToggle)
+
+  const speedWrap=document.createElement("div")
+  speedWrap.className="range-speed"
+
+  const minusBtn=document.createElement("button")
+  minusBtn.className="range-speed-btn"
+  minusBtn.textContent="-"
+  minusBtn.onclick=()=>adjustWindSpeed(-5)
+
+  const speedValue=document.createElement("div")
+  speedValue.className="range-speed-value"
+  speedValue.textContent=formatWindSpeed()
+
+  const plusBtn=document.createElement("button")
+  plusBtn.className="range-speed-btn"
+  plusBtn.textContent="+"
+  plusBtn.onclick=()=>adjustWindSpeed(5)
+
+  speedWrap.appendChild(minusBtn)
+  speedWrap.appendChild(speedValue)
+  speedWrap.appendChild(plusBtn)
+  r.appendChild(speedWrap)
   return
  }
+
+ r.style.justifyContent=""
 
  getSelectableDistances().forEach(d=>{
   const b=document.createElement("button")
@@ -472,7 +646,9 @@ function pickRandomRangeDistance(){
  }
 
  currentDistance=next
+ currentClub=getRecommendedRangeClub(next)
  modeSelections.range.distance=next
+ modeSelections.range.club=currentClub
  syncCurrentSelection()
 }
 
@@ -563,7 +739,7 @@ function updateStats(){
 
  if(rangeActive){
   badge.className="badge random-badge"
-  badge.innerHTML='<div class="badge-content">Current Yardage:<br># '+currentDistance+'y<br># Selected Club: '+formatClubLabel(currentClub)+'<br><span class="random-total-line"># Total Range Shots: '+total+'</span></div>'
+  badge.innerHTML='<div class="badge-content">Current Target:<br># '+formatClubLabel(currentClub)+' - '+currentDistance+'y<br># Wind: '+(rangeWindDirection==="head" ? "Head Wind " : "Tail Wind ")+formatWindSpeed()+'<br><span class="random-total-line"># Total Range Shots: '+total+'</span></div>'
  }else if(isRandom){
   badge.className="badge random-badge"
   badge.innerHTML='<div class="badge-content">Current Target:<br># '+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+getTargetFeet(currentDistance,"wedge")+' ft)<br><span class="random-total-line"># Total Random Shots: '+total+'</span></div>'
@@ -579,7 +755,7 @@ function recordMade(){
  st.made++
  streaks[currentClub][currentDistance]++
  if(getCurrentStreak()>getCurrentBestStreak()) bestStreaks[currentClub][currentDistance]=getCurrentStreak()
- shotHistory.push({type:"made",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode})
+ shotHistory.push({type:"made",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null})
  document.body.classList.remove("flash-red")
  document.body.classList.add("flash-green")
  setTimeout(()=>document.body.classList.remove("flash-green"),150)
@@ -596,7 +772,7 @@ function recordMissed(dir){
  st.missed++
  st.missDir[dir]++
  streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir,mode:activePracticeMode,targetSetMode:targetSetMode})
+ shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -612,7 +788,7 @@ function recordDuff(){
  st.missed++
  st.duffs++
  streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"duff",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode})
+ shotHistory.push({type:"duff",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -628,7 +804,7 @@ function recordSkull(){
  st.missed++
  st.skulls++
  streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"skull",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode})
+ shotHistory.push({type:"skull",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -644,6 +820,7 @@ function newSession(){
   date:new Date().toISOString(),
   stats:JSON.parse(JSON.stringify(stats)),
   bestStreaks:JSON.parse(JSON.stringify(bestStreaks)),
+  shots:JSON.parse(JSON.stringify(shotHistory)),
   summary:summary
  })
  saveSessions()
@@ -748,7 +925,7 @@ function handleHistoryAction(){
 }
 
 function exportHistoryCSV(){
- let csv="Session,Date,Club,Yardage,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Skulls,Total Mis-Hits,Best Streak\n"
+ let csv="Session,Date,Club,Yardage,Mode,Wind,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Skulls,Total Mis-Hits,Best Streak\n"
 
  let grandMade=0
  let grandMissed=0
@@ -786,6 +963,8 @@ function exportHistoryCSV(){
     const pct=Math.round(made/total*100)
     const targetFeet=getTargetFeet(d,entryMode)
     const upAndDown=getUpAndDownValue(d,entryMode)
+    const isRangeEntry=entryMode==="range"
+    const windSummary=isRangeEntry ? getRangeWindSummary(s.shots,club,d) : ""
 
     sessionMade+=made
     sessionMissed+=missed
@@ -803,7 +982,7 @@ function exportHistoryCSV(){
     clubSkulls+=skulls
     clubBestStreak=Math.max(clubBestStreak,((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0))
 
-    csv+=(idx+1)+","+date+","+club+","+d+"yd,"+(targetFeet!=="" ? targetFeet+"ft" : "")+","+made+","+missed+","+pct+"%,"+(upAndDown!=null ? formatPercent(upAndDown)+"%" : "")+","+
+    csv+=(idx+1)+","+date+","+club+","+d+"yd,"+(isRangeEntry ? "Range" : "Wedge")+","+'"'+windSummary.replace(/"/g,'""')+'",'+(targetFeet!=="" ? targetFeet+"ft" : "")+","+made+","+missed+","+pct+"%,"+(upAndDown!=null ? formatPercent(upAndDown)+"%" : "")+","+
          (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
          duffs+","+skulls+",,"+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
    })
@@ -821,8 +1000,10 @@ function exportHistoryCSV(){
    const clubSkullPct=clubMissTotal?Math.round(clubSkulls/clubMissTotal*100):0
    const clubMisHitTotal=clubDuffs+clubSkulls
    const clubMisHitPct=clubMissTotal?Math.round(clubMisHitTotal/clubMissTotal*100):0
+   const clubModeLabel=getClubRangeModeLabel(s.stats,club)
+   const clubWindSummary=clubModeLabel!=="No" ? getRangeWindSummaryForClub(s.shots,club) : ""
 
-   csv+=(idx+1)+","+date+","+club+",TOTAL,,"+clubMade+","+clubMissed+","+clubPct+"%,,"+
+   csv+=(idx+1)+","+date+","+club+",TOTAL,"+clubModeLabel+","+'"'+clubWindSummary.replace(/"/g,'""')+'",,'+clubMade+","+clubMissed+","+clubPct+"%,,"+
         fmt(clubMiss.shortLeft,clubSlPct)+","+
         fmt(clubMiss.shortRight,clubSrPct)+","+
         fmt(clubMiss.longLeft,clubLlPct)+","+
@@ -850,8 +1031,10 @@ function exportHistoryCSV(){
   const skullPct=totalMiss?Math.round(sessionSkulls/totalMiss*100):0
   const sessionMisHits=sessionDuffs+sessionSkulls
   const sessionMisHitPct=totalMiss?Math.round(sessionMisHits/totalMiss*100):0
+  const sessionWindSummary=getRangeWindSummaryForSession(s.shots)
+  const sessionModeLabel=getSessionRangeModeLabel(s.stats)
 
-  csv+=(idx+1)+","+date+",ALL,TOTAL,,"+sessionMade+","+sessionMissed+","+totalPct+"%,,"+
+  csv+=(idx+1)+","+date+",ALL,TOTAL,"+sessionModeLabel+","+'"'+sessionWindSummary.replace(/"/g,'""')+'",,'+sessionMade+","+sessionMissed+","+totalPct+"%,,"+
        fmt(sessionMiss.shortLeft,slPct)+","+
        fmt(sessionMiss.shortRight,srPct)+","+
        fmt(sessionMiss.longLeft,llPct)+","+
@@ -890,8 +1073,12 @@ function exportHistoryCSV(){
  const gSkullPct=gMissTotal?Math.round(grandSkulls/gMissTotal*100):0
  const grandMisHits=grandDuffs+grandSkulls
  const grandMisHitPct=gMissTotal?Math.round(grandMisHits/gMissTotal*100):0
+ const grandWindSummary=uniqueValues(sessions.map(s=>getRangeWindSummaryForSession(s.shots)).filter(Boolean)).join(" | ")
+ const grandHasRange=sessions.some(s=>getSessionRangeModeLabel(s.stats)!=="No")
+ const grandHasWedge=sessions.some(s=>getSessionRangeModeLabel(s.stats)!=="Yes")
+ const grandModeLabel=getModeLabel(grandHasRange,grandHasWedge)
 
- csv+="GRAND TOTAL,,ALL,ALL,,"+grandMade+","+grandMissed+","+gPct+"%,,"+
+ csv+="GRAND TOTAL,,ALL,ALL,"+grandModeLabel+","+'"'+grandWindSummary.replace(/"/g,'""')+'",,'+grandMade+","+grandMissed+","+gPct+"%,,"+
       fmt(grandMiss.shortLeft,gSLPct)+","+
       fmt(grandMiss.shortRight,gSRPct)+","+
       fmt(grandMiss.longLeft,gLLPct)+","+
@@ -949,12 +1136,13 @@ function renderHistory(){
     const upAndDown=getUpAndDownValue(d,rowMode)
     const targetFeet=getTargetFeet(d,rowMode)
     const earnedMark=rowMode==="wedge" && pct>upAndDown ? " #" : ""
+    const windSummary=rowMode==="range" ? getRangeWindSummary(s.shots,club,d) : ""
 
     const row=document.createElement("div")
     row.innerHTML="<strong>"+formatClubLabel(club)+" - "+d+" yd:</strong> "+st.made+"/"+tot+" ("+pct+"%)"+(rowMode==="wedge" ? " - "+targetFeet+"ft"+earnedMark : " - Range Mode")+
      (rowMode==="wedge"
       ? '<br><span class="subtle">Up and Down: '+formatPercent(upAndDown)+'%</span>'
-      : '<br><span class="subtle">Range yardage target</span>')+
+      : '<br><span class="subtle">Wind: '+(windSummary||"Not recorded")+'</span>')+
      '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+'</span>'+
      '<br><span class="subtle">Duffs: '+(st.duffs||0)+' | Skulls: '+(st.skulls||0)+' | Best streak: '+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+'</span>'
     acc.appendChild(row)
