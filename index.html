@@ -1147,7 +1147,7 @@ function renderHistory(){
     const pct=Math.round(st.made/tot*100)
     const upAndDown=getUpAndDownValue(d,rowMode)
     const targetFeet=getTargetFeet(d,rowMode)
-    const earnedMark=rowMode==="wedge" && pct>upAndDown ? "  " : ""
+    const earnedMark=rowMode==="wedge" && pct>upAndDown ? " ⭐" : ""
     const windSummary=rowMode==="range" ? getRangeWindSummary(s.shots,club,d) : ""
 
     const row=document.createElement("div")
