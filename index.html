@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- saved from url=(0057)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v10.html -->
+<!-- saved from url=(0059)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v10.4.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style data-merge-styles="true"></style>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style data-merge-styles="true"></style><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fore!Shot Practice App</title>
 
 <style>
@@ -75,7 +75,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 .accordion{display:none;margin-top:8px;padding:10px;background:#0e4f3a;border-radius:10px}
 .subtle{opacity:.75;font-size:14px;margin-left:6px}
 </style>
-<script id="gopher-installed" style="display:none;"></script></head>
+<script id="gopher-installed" style="display:none;"></script><script id="gopher-installed" style="display:none;"></script></head>
 
 <body class="">
 
@@ -83,14 +83,14 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 
 <div class="mode-card">
 <div class="mode-row equal-buttons">
-<button id="practiceModeBtn" class="mode-btn active" onclick="togglePracticeMode()">Random<br>Mode On</button>
-<button id="targetSetBtn" class="mode-btn target-set-btn" onclick="toggleTargetSetMode()">Wedge<br>Mode On</button>
+<button id="practiceModeBtn" class="mode-btn" onclick="togglePracticeMode()">Manual<br>Mode On</button>
+<button id="targetSetBtn" class="mode-btn target-set-btn range-active" onclick="toggleTargetSetMode()">Range<br>Mode On</button>
 </div>
 </div>
 
-<div id="clubRow" class="pill-row" style=""><button class="pill-btn active">62°</button><button class="pill-btn">60°</button><button class="pill-btn">58°</button><button class="pill-btn">56°</button><button class="pill-btn">54°</button><button class="pill-btn">52°</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">PW</button></div>
-<div id="distanceRow" class="pill-row"><button class="pill-btn active">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
-<div id="modeTarget" class="mode-target">Random Shot: 62° - 10y</div>
+<div id="clubRow" class="pill-row" style="justify-content: center; flex-direction: column; align-items: center; overflow-x: visible;"><div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;"><button class="pill-btn" disabled="">Wind</button><div class="range-speed"><button class="range-speed-btn">-</button><div class="range-speed-value">0 mph</div><button class="range-speed-btn">+</button></div></div><div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;"><button class="pill-btn" disabled="">Temp</button><div class="range-speed range-temp-stepper"><button class="range-speed-btn">-</button><div class="range-speed-value range-temp-value">70°F</div><button class="range-speed-btn">+</button></div></div></div>
+<div id="distanceRow" class="pill-row"><button class="pill-btn">62°</button><button class="pill-btn active">60°</button><button class="pill-btn">58°</button><button class="pill-btn">56°</button><button class="pill-btn">54°</button><button class="pill-btn">52°</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">PW</button><button class="pill-btn">9i</button><button class="pill-btn">8i</button><button class="pill-btn">7i</button><button class="pill-btn">6i</button><button class="pill-btn">5i</button><button class="pill-btn">4i</button><button class="pill-btn">3i</button><button class="pill-btn">5h</button><button class="pill-btn">4h</button><button class="pill-btn">3h</button><button class="pill-btn">4w</button><button class="pill-btn">D</button></div>
+<div id="modeTarget" class="mode-target">Current Shot: 60° - 85y</div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
@@ -118,7 +118,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge random-badge"><div class="badge-content">Current Target:<br>🎯 62° - 10y (6 ft)<br><span class="random-total-line">⛳ Total Random Shots: 0</span></div></div>
+<div id="targetBadge" class="badge random-badge"><div class="badge-content">Current Target:<br>🎯 60° - 85y<br>⛅ 0 mph, 70°F<br><span class="random-total-line">⛳ Total Range Shots: 0</span></div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
 <button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄️ New Session</button>
@@ -134,7 +134,7 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </select>
 </div>
 
-<div id="history"><div class="history-wrapper"><div class="history-card"><strong>Session 1</strong><br>4/26/2026 - 64% (73 shots)</div><div class="accordion" style="display: block;"><div><strong>62° - 10 yd (Wedge):</strong> 0/1 (0%) - 6ft<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>62° - 20 yd (Wedge):</strong> 0/1 (0%) - 10ft<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>62° - 35 yd (Wedge):</strong> 0/1 (0%) - 18ft<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>62° - 45 yd (Wedge):</strong> 1/1 (100%) - 24ft *<br><span class="subtle">Up and Down: 27%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>62° - 75 yd (Wedge):</strong> 1/1 (100%) - 42ft *<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>62° - 80 yd (Wedge):</strong> 1/1 (100%) - 45ft *<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 35 yd (Wedge):</strong> 1/2 (50%) - 18ft *<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 65 yd (Wedge):</strong> 1/1 (100%) - 36ft *<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 80 yd (Wedge):</strong> 1/1 (100%) - 45ft *<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 85 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>58° - 30 yd (Wedge):</strong> 0/1 (0%) - 15ft<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>58° - 75 yd (Wedge):</strong> 1/1 (100%) - 42ft *<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 80 yd (Wedge):</strong> 0/1 (0%) - 45ft<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>58° - 93 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 97 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 70 yd (Wedge):</strong> 1/1 (100%) - 39ft *<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 75 yd (Wedge):</strong> 1/1 (100%) - 42ft *<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 96 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 97 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>54° - 20 yd (Wedge):</strong> 1/1 (100%) - 10ft *<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 45 yd (Wedge):</strong> 1/1 (100%) - 24ft *<br><span class="subtle">Up and Down: 27%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 75 yd (Wedge):</strong> 0/1 (0%) - 42ft<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>52° - 80 yd (Wedge):</strong> 0/1 (0%) - 45ft<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>52° - 103 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 35 yd (Wedge):</strong> 0/1 (0%) - 18ft<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>UW - 40 yd (Wedge):</strong> 0/1 (0%) - 21ft<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>UW - 60 yd (Wedge):</strong> 1/1 (100%) - 33ft *<br><span class="subtle">Up and Down: 20%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 109 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 25 yd (Wedge):</strong> 1/1 (100%) - 12ft *<br><span class="subtle">Up and Down: 46%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 40 yd (Wedge):</strong> 1/1 (100%) - 21ft *<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 55 yd (Wedge):</strong> 0/1 (0%) - 30ft<br><span class="subtle">Up and Down: 23%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>48° - 75 yd (Wedge):</strong> 1/1 (100%) - 42ft *<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 80 yd (Wedge):</strong> 1/1 (100%) - 45ft *<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 114 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 133 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 10 yd (Wedge):</strong> 0/1 (0%) - 6ft<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>PW - 15 yd (Wedge):</strong> 1/1 (100%) - 8ft *<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 70 yd (Wedge):</strong> 0/1 (0%) - 39ft<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>PW - 120 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 121 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>PW - 137 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>9i - 130 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>9i - 136 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>9i - 158 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>8i - 162 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>8i - 163 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>8i - 164 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>7i - 150 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>7i - 176 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>7i - 177 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>6i - 175 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>6i - 192 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>6i - 194 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>5i - 185 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>5i - 196 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>5i - 202 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>5i - 203 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>4i - 171 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>4i - 179 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>4i - 197 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>3i - 218 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>3h - 207 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>3h - 211 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>3h - 213 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>4h - 198 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>4h - 224 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>5h - 233 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>5h - 243 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -20 mph, Temp: 95°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>4w - 217 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>D - 228 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>D - 249 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>D - 256 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 20px; font-weight: 800; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; cursor: pointer;">🗑️ Delete Session</button></div></div></div>
+<div id="history"><div class="history-wrapper"><div class="history-card"><strong>Session 1</strong><br>4/26/2026 - 66% (125 shots)</div><div class="accordion" style="display: block;"><div><strong>62° - 35 yd (Wedge):</strong> 2/2 (100%) - 18ft *<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>62° - 60 yd (Wedge):</strong> 0/1 (0%) - 33ft<br><span class="subtle">Up and Down: 20%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>60° - 10 yd (Wedge):</strong> 1/1 (100%) - 6ft *<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 15 yd (Wedge):</strong> 1/3 (33%) - 8ft<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 20 yd (Wedge):</strong> 1/1 (100%) - 10ft *<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 25 yd (Wedge):</strong> 1/1 (100%) - 12ft *<br><span class="subtle">Up and Down: 46%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 35 yd (Wedge):</strong> 0/1 (0%) - 18ft<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>60° - 40 yd (Wedge):</strong> 1/1 (100%) - 21ft *<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 45 yd (Wedge):</strong> 1/1 (100%) - 24ft *<br><span class="subtle">Up and Down: 27%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 55 yd (Wedge):</strong> 1/1 (100%) - 30ft *<br><span class="subtle">Up and Down: 23%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 65 yd (Wedge):</strong> 1/2 (50%) - 36ft *<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 70 yd (Wedge):</strong> 0/1 (0%) - 39ft<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>60° - 75 yd (Wedge):</strong> 2/2 (100%) - 42ft *<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>60° - 85 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: 0 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 10 yd (Wedge):</strong> 0/1 (0%) - 6ft<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>58° - 25 yd (Wedge):</strong> 1/1 (100%) - 12ft *<br><span class="subtle">Up and Down: 46%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 30 yd (Wedge):</strong> 0/1 (0%) - 15ft<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>58° - 35 yd (Wedge):</strong> 1/1 (100%) - 18ft *<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 40 yd (Wedge):</strong> 0/1 (0%) - 21ft<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>58° - 50 yd (Wedge):</strong> 1/1 (100%) - 27ft *<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 55 yd (Wedge):</strong> 1/1 (100%) - 30ft *<br><span class="subtle">Up and Down: 23%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 70 yd (Wedge):</strong> 1/1 (100%) - 39ft *<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 80 yd (Wedge):</strong> 0/1 (0%) - 45ft<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>58° - 86 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 88 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 89 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 10 yd (Wedge):</strong> 1/1 (100%) - 6ft *<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 15 yd (Wedge):</strong> 0/1 (0%) - 8ft<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>56° - 25 yd (Wedge):</strong> 1/1 (100%) - 12ft *<br><span class="subtle">Up and Down: 46%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 40 yd (Wedge):</strong> 1/1 (100%) - 21ft *<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 75 yd (Wedge):</strong> 0/1 (0%) - 42ft<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>56° - 100 yd (Range):</strong> 1/2 (50%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph | 0 mph, Temp: 55°F | 70°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 15 yd (Wedge):</strong> 0/1 (0%) - 8ft<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>54° - 20 yd (Wedge):</strong> 0/1 (0%) - 10ft<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>54° - 45 yd (Wedge):</strong> 1/1 (100%) - 24ft *<br><span class="subtle">Up and Down: 27%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 55 yd (Wedge):</strong> 0/1 (0%) - 30ft<br><span class="subtle">Up and Down: 23%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>54° - 65 yd (Wedge):</strong> 1/1 (100%) - 36ft *<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 70 yd (Wedge):</strong> 1/1 (100%) - 39ft *<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 97 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>54° - 99 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 15 yd (Wedge):</strong> 1/1 (100%) - 8ft *<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 25 yd (Wedge):</strong> 1/1 (100%) - 12ft *<br><span class="subtle">Up and Down: 46%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 30 yd (Wedge):</strong> 0/1 (0%) - 15ft<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>52° - 35 yd (Wedge):</strong> 1/1 (100%) - 18ft *<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 40 yd (Wedge):</strong> 1/1 (100%) - 21ft *<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 60 yd (Wedge):</strong> 1/1 (100%) - 33ft *<br><span class="subtle">Up and Down: 20%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>52° - 65 yd (Wedge):</strong> 0/2 (0%) - 36ft<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>52° - 70 yd (Wedge):</strong> 0/1 (0%) - 39ft<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>52° - 80 yd (Wedge):</strong> 0/1 (0%) - 45ft<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>UW - 35 yd (Wedge):</strong> 0/1 (0%) - 18ft<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>UW - 45 yd (Wedge):</strong> 0/1 (0%) - 24ft<br><span class="subtle">Up and Down: 27%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>UW - 55 yd (Wedge):</strong> 1/1 (100%) - 30ft *<br><span class="subtle">Up and Down: 23%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 70 yd (Wedge):</strong> 1/2 (50%) - 39ft *<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 109 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 115 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>48° - 20 yd (Wedge):</strong> 2/2 (100%) - 10ft *<br><span class="subtle">Up and Down: 53%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>48° - 25 yd (Wedge):</strong> 1/1 (100%) - 12ft *<br><span class="subtle">Up and Down: 46%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 40 yd (Wedge):</strong> 2/2 (100%) - 21ft *<br><span class="subtle">Up and Down: 30%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>48° - 45 yd (Wedge):</strong> 1/1 (100%) - 24ft *<br><span class="subtle">Up and Down: 27%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 50 yd (Wedge):</strong> 1/1 (100%) - 27ft *<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 65 yd (Wedge):</strong> 1/1 (100%) - 36ft *<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 70 yd (Wedge):</strong> 0/1 (0%) - 39ft<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>48° - 80 yd (Wedge):</strong> 1/1 (100%) - 45ft *<br><span class="subtle">Up and Down: 12%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 111 yd (Range):</strong> 2/3 (67%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>48° - 116 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>PW - 15 yd (Wedge):</strong> 0/1 (0%) - 8ft<br><span class="subtle">Up and Down: 60%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>PW - 25 yd (Wedge):</strong> 1/1 (100%) - 12ft *<br><span class="subtle">Up and Down: 46%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 30 yd (Wedge):</strong> 1/1 (100%) - 15ft *<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 35 yd (Wedge):</strong> 1/1 (100%) - 18ft *<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 50 yd (Wedge):</strong> 1/1 (100%) - 27ft *<br><span class="subtle">Up and Down: 25%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 119 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>PW - 133 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>9i - 127 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>9i - 136 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>9i - 140 yd (Range):</strong> 1/2 (50%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>8i - 136 yd (Range):</strong> 2/2 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>8i - 138 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>8i - 139 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>8i - 143 yd (Range):</strong> 1/2 (50%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 1</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>8i - 148 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>7i - 149 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>7i - 162 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 1 | Skulls: 0 | Best streak: 0</span></div><div><strong>6i - 158 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>6i - 163 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>6i - 167 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>5i - 166 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>5i - 170 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>5i - 171 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>4i - 186 yd (Range):</strong> 2/2 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 2</span></div><div><strong>3i - 185 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>3i - 197 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 1 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>3h - 208 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>3h - 209 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>3h - 223 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>4h - 194 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>4h - 200 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>4h - 209 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 1 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>5h - 187 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>5h - 205 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>4w - 230 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>4w - 237 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>D - 230 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 1 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 0</span></div><div><strong>D - 243 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>D - 246 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>D - 247 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>D - 248 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Tail Wind -5 mph, Temp: 55°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>D - 250 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>D - 252 yd (Range):</strong> 0/1 (0%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 0</span></div><div><strong>D - 254 yd (Range):</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +15 mph, Temp: 70°F</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 20px; font-weight: 800; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; cursor: pointer;">🗑️ Delete Session</button></div></div></div>
 
 </div>
 
@@ -1233,19 +1233,27 @@ function handleHistoryAction(){
 }
 
 function exportHistoryCSV(){
- let csv="Session,Date,Club,Yardage,Mode,Wind,Temp,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Skulls,Total Mis-Hits,Best Streak\n"
+ const rows=[["Session","Date","Club","Yardage","Mode","Wind","Temp","Target ft","Made","Missed","Make %","Up and Down %","S-Left","S-Right","L-Left","L-Right","Duffs","Skulls","Total Mis-Hits","Best Streak"]]
+ const csvEscape=value=>{
+  const text=String(value ?? "")
+  return /[",\n]/.test(text) ? '"'+text.replace(/"/g,'""')+'"' : text
+ }
+ const pushRow=values=>rows.push(values.map(csvEscape).join(","))
+ const fmt=(count,pct)=>count+" ("+pct+"%)"
 
  let grandMade=0
  let grandMissed=0
  let grandMiss=createMissDir()
-
- const fmt=(count,pct)=>count+" ("+pct+"%)"
+ let grandDuffs=0
+ let grandSkulls=0
 
  sessions.forEach((s,idx)=>{
   const date=new Date(s.date).toLocaleDateString()
   let sessionMade=0
   let sessionMissed=0
   let sessionMiss=createMissDir()
+  let sessionDuffs=0
+  let sessionSkulls=0
 
   ALL_CLUBS.forEach(club=>{
    let clubMade=0
@@ -1255,44 +1263,67 @@ function exportHistoryCSV(){
    let clubSkulls=0
    let clubBestStreak=0
 
-   ALL_DISTANCES.forEach(d=>{
-    const st=s.stats && s.stats[club] && s.stats[club][d]
-    if(!st) return
+   TARGET_SET_MODES.forEach(targetMode=>{
+    ALL_DISTANCES.forEach(d=>{
+     const st=s.stats && s.stats[targetMode] && s.stats[targetMode][club] && s.stats[targetMode][club][d]
+     if(!st) return
 
-    const made=st.made||0
-    const missed=st.missed||0
-    const duffs=st.duffs||0
-    const skulls=st.skulls||0
-    const total=made+missed
-    if(!total) return
+     const made=st.made||0
+     const missed=st.missed||0
+     const duffs=st.duffs||0
+     const skulls=st.skulls||0
+     const total=made+missed
+     if(!total) return
 
-    const entryMode=inferTargetSetMode(club,d)
-    const missDir=st.missDir||createMissDir()
-    const pct=Math.round(made/total*100)
-    const targetFeet=getTargetFeet(d,entryMode)
-    const upAndDown=getUpAndDownValue(d,entryMode)
-    const isRangeEntry=entryMode==="range"
-    const windSummary=isRangeEntry ? getRangeWindSummary(s.shots,club,d) : ""
+     const missDir=st.missDir||createMissDir()
+     const pct=Math.round(made/total*100)
+     const targetFeet=getTargetFeet(d,targetMode)
+     const upAndDown=getUpAndDownValue(d,targetMode)
+     const windSummary=targetMode==="range" ? getRangeWindSummary(s.shots,club,d) : ""
+     const tempSummary=targetMode==="range" ? getRangeTempSummary(s.shots,club,d) : ""
+     const bestStreak=((s.bestStreaks && s.bestStreaks[targetMode] && s.bestStreaks[targetMode][club] && s.bestStreaks[targetMode][club][d])||0)
 
-    sessionMade+=made
-    sessionMissed+=missed
-    sessionMiss.shortLeft+=missDir.shortLeft||0
-    sessionMiss.shortRight+=missDir.shortRight||0
-    sessionMiss.longLeft+=missDir.longLeft||0
-    sessionMiss.longRight+=missDir.longRight||0
-    clubMade+=made
-    clubMissed+=missed
-    clubMiss.shortLeft+=missDir.shortLeft||0
-    clubMiss.shortRight+=missDir.shortRight||0
-    clubMiss.longLeft+=missDir.longLeft||0
-    clubMiss.longRight+=missDir.longRight||0
-    clubDuffs+=duffs
-    clubSkulls+=skulls
-    clubBestStreak=Math.max(clubBestStreak,((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0))
+     sessionMade+=made
+     sessionMissed+=missed
+     sessionMiss.shortLeft+=missDir.shortLeft||0
+     sessionMiss.shortRight+=missDir.shortRight||0
+     sessionMiss.longLeft+=missDir.longLeft||0
+     sessionMiss.longRight+=missDir.longRight||0
+     sessionDuffs+=duffs
+     sessionSkulls+=skulls
+     clubMade+=made
+     clubMissed+=missed
+     clubMiss.shortLeft+=missDir.shortLeft||0
+     clubMiss.shortRight+=missDir.shortRight||0
+     clubMiss.longLeft+=missDir.longLeft||0
+     clubMiss.longRight+=missDir.longRight||0
+     clubDuffs+=duffs
+     clubSkulls+=skulls
+     clubBestStreak=Math.max(clubBestStreak,bestStreak)
 
-    csv+=(idx+1)+","+date+","+club+","+d+"yd,"+(isRangeEntry ? "Range" : "Wedge")+","+'"'+windSummary.replace(/"/g,'""')+'",'+(targetFeet!=="" ? targetFeet+"ft" : "")+","+made+","+missed+","+pct+"%,"+(upAndDown!=null ? formatPercent(upAndDown)+"%" : "")+","+
-         (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
-         duffs+","+skulls+",,"+((s.bestStreaks && s.bestStreaks[club] && s.bestStreaks[club][d])||0)+"\n"
+     pushRow([
+      idx+1,
+      date,
+      formatClubLabel(club),
+      d+"yd",
+      targetMode==="range" ? "Range" : "Wedge",
+      windSummary,
+      tempSummary,
+      targetFeet!=="" ? targetFeet+"ft" : "",
+      made,
+      missed,
+      pct+"%",
+      upAndDown!=null ? formatPercent(upAndDown)+"%" : "",
+      missDir.shortLeft||0,
+      missDir.shortRight||0,
+      missDir.longLeft||0,
+      missDir.longRight||0,
+      duffs,
+      skulls,
+      duffs+skulls,
+      bestStreak
+     ])
+    })
    })
 
    const clubShots=clubMade+clubMissed
@@ -1308,28 +1339,33 @@ function exportHistoryCSV(){
    const clubSkullPct=clubMissTotal?Math.round(clubSkulls/clubMissTotal*100):0
    const clubMisHitTotal=clubDuffs+clubSkulls
    const clubMisHitPct=clubMissTotal?Math.round(clubMisHitTotal/clubMissTotal*100):0
-   const clubModeLabel=getClubRangeModeLabel(s.stats,club)
-   const clubWindSummary=clubModeLabel!=="No" ? getRangeWindSummaryForClub(s.shots,club) : ""
 
-   csv+=(idx+1)+","+date+","+club+",TOTAL,"+clubModeLabel+","+'"'+clubWindSummary.replace(/"/g,'""')+'",,'+clubMade+","+clubMissed+","+clubPct+"%,,"+
-        fmt(clubMiss.shortLeft,clubSlPct)+","+
-        fmt(clubMiss.shortRight,clubSrPct)+","+
-        fmt(clubMiss.longLeft,clubLlPct)+","+
-        fmt(clubMiss.longRight,clubLrPct)+","+fmt(clubDuffs,clubDuffPct)+","+fmt(clubSkulls,clubSkullPct)+","+fmt(clubMisHitTotal,clubMisHitPct)+","+clubBestStreak+"\n"
+   pushRow([
+    idx+1,
+    date,
+    formatClubLabel(club),
+    "TOTAL",
+    getClubRangeModeLabel(s.stats,club),
+    "",
+    "",
+    "",
+    clubMade,
+    clubMissed,
+    clubPct+"%",
+    "",
+    fmt(clubMiss.shortLeft,clubSlPct),
+    fmt(clubMiss.shortRight,clubSrPct),
+    fmt(clubMiss.longLeft,clubLlPct),
+    fmt(clubMiss.longRight,clubLrPct),
+    fmt(clubDuffs,clubDuffPct),
+    fmt(clubSkulls,clubSkullPct),
+    fmt(clubMisHitTotal,clubMisHitPct),
+    clubBestStreak
+   ])
   })
 
   const totalShots=sessionMade+sessionMissed
   const totalPct=totalShots?Math.round(sessionMade/totalShots*100):0
-  const sessionDuffs=Object.values(s.stats||{}).reduce((total,clubStats)=>{
-   return total+ALL_DISTANCES.reduce((sum,d)=>{
-    return sum+(((clubStats||{})[d]||{}).duffs||0)
-   },0)
-  },0)
-  const sessionSkulls=Object.values(s.stats||{}).reduce((total,clubStats)=>{
-   return total+ALL_DISTANCES.reduce((sum,d)=>{
-    return sum+(((clubStats||{})[d]||{}).skulls||0)
-   },0)
-  },0)
   const totalMiss=sessionMissed
   const slPct=totalMiss?Math.round(sessionMiss.shortLeft/totalMiss*100):0
   const srPct=totalMiss?Math.round(sessionMiss.shortRight/totalMiss*100):0
@@ -1339,14 +1375,29 @@ function exportHistoryCSV(){
   const skullPct=totalMiss?Math.round(sessionSkulls/totalMiss*100):0
   const sessionMisHits=sessionDuffs+sessionSkulls
   const sessionMisHitPct=totalMiss?Math.round(sessionMisHits/totalMiss*100):0
-  const sessionWindSummary=getRangeWindSummaryForSession(s.shots)
-  const sessionModeLabel=getSessionRangeModeLabel(s.stats)
 
-  csv+=(idx+1)+","+date+",ALL,TOTAL,"+sessionModeLabel+","+'"'+sessionWindSummary.replace(/"/g,'""')+'",,'+sessionMade+","+sessionMissed+","+totalPct+"%,,"+
-       fmt(sessionMiss.shortLeft,slPct)+","+
-       fmt(sessionMiss.shortRight,srPct)+","+
-       fmt(sessionMiss.longLeft,llPct)+","+
-       fmt(sessionMiss.longRight,lrPct)+","+fmt(sessionDuffs,duffPct)+","+fmt(sessionSkulls,skullPct)+","+fmt(sessionMisHits,sessionMisHitPct)+",\n"
+  pushRow([
+   idx+1,
+   date,
+   "ALL",
+   "TOTAL",
+   getSessionRangeModeLabel(s.stats),
+   "",
+   "",
+   "",
+   sessionMade,
+   sessionMissed,
+   totalPct+"%",
+   "",
+   fmt(sessionMiss.shortLeft,slPct),
+   fmt(sessionMiss.shortRight,srPct),
+   fmt(sessionMiss.longLeft,llPct),
+   fmt(sessionMiss.longRight,lrPct),
+   fmt(sessionDuffs,duffPct),
+   fmt(sessionSkulls,skullPct),
+   fmt(sessionMisHits,sessionMisHitPct),
+   ""
+  ])
 
   grandMade+=sessionMade
   grandMissed+=sessionMissed
@@ -1354,24 +1405,12 @@ function exportHistoryCSV(){
   grandMiss.shortRight+=sessionMiss.shortRight
   grandMiss.longLeft+=sessionMiss.longLeft
   grandMiss.longRight+=sessionMiss.longRight
+  grandDuffs+=sessionDuffs
+  grandSkulls+=sessionSkulls
  })
 
  const gShots=grandMade+grandMissed
  const gPct=gShots?Math.round(grandMade/gShots*100):0
- const grandDuffs=sessions.reduce((total,s)=>{
-  return total+Object.values(s.stats||{}).reduce((clubTotal,clubStats)=>{
-   return clubTotal+ALL_DISTANCES.reduce((sum,d)=>{
-    return sum+(((clubStats||{})[d]||{}).duffs||0)
-   },0)
-  },0)
- },0)
- const grandSkulls=sessions.reduce((total,s)=>{
-  return total+Object.values(s.stats||{}).reduce((clubTotal,clubStats)=>{
-   return clubTotal+ALL_DISTANCES.reduce((sum,d)=>{
-    return sum+(((clubStats||{})[d]||{}).skulls||0)
-   },0)
-  },0)
- },0)
  const gMissTotal=grandMissed
  const gSLPct=gMissTotal?Math.round(grandMiss.shortLeft/gMissTotal*100):0
  const gSRPct=gMissTotal?Math.round(grandMiss.shortRight/gMissTotal*100):0
@@ -1380,18 +1419,34 @@ function exportHistoryCSV(){
  const gDuffPct=gMissTotal?Math.round(grandDuffs/gMissTotal*100):0
  const gSkullPct=gMissTotal?Math.round(grandSkulls/gMissTotal*100):0
  const grandMisHits=grandDuffs+grandSkulls
- const grandMisHitPct=gMissTotal?Math.round(grandMisHits/gMissTotal*100):0
- const grandWindSummary=uniqueValues(sessions.map(s=>getRangeWindSummaryForSession(s.shots)).filter(Boolean)).join(" | ")
- const grandHasRange=sessions.some(s=>getSessionRangeModeLabel(s.stats)!=="No")
- const grandHasWedge=sessions.some(s=>getSessionRangeModeLabel(s.stats)!=="Yes")
- const grandModeLabel=getModeLabel(grandHasRange,grandHasWedge)
+ const gMisHitPct=gMissTotal?Math.round(grandMisHits/gMissTotal*100):0
+ const grandHasRange=sessions.some(s=>hasRangeLabel(getSessionRangeModeLabel(s.stats)))
+ const grandHasWedge=sessions.some(s=>hasWedgeLabel(getSessionRangeModeLabel(s.stats)))
 
- csv+="GRAND TOTAL,,ALL,ALL,"+grandModeLabel+","+'"'+grandWindSummary.replace(/"/g,'""')+'",,'+grandMade+","+grandMissed+","+gPct+"%,,"+
-      fmt(grandMiss.shortLeft,gSLPct)+","+
-      fmt(grandMiss.shortRight,gSRPct)+","+
-      fmt(grandMiss.longLeft,gLLPct)+","+
-      fmt(grandMiss.longRight,gLRPct)+","+fmt(grandDuffs,gDuffPct)+","+fmt(grandSkulls,gSkullPct)+","+fmt(grandMisHits,grandMisHitPct)+",\n"
+ pushRow([
+  "GRAND TOTAL",
+  "",
+  "ALL",
+  "ALL",
+  getModeLabel(grandHasRange,grandHasWedge),
+  "",
+  "",
+  "",
+  grandMade,
+  grandMissed,
+  gPct+"%",
+  "",
+  fmt(grandMiss.shortLeft,gSLPct),
+  fmt(grandMiss.shortRight,gSRPct),
+  fmt(grandMiss.longLeft,gLLPct),
+  fmt(grandMiss.longRight,gLRPct),
+  fmt(grandDuffs,gDuffPct),
+  fmt(grandSkulls,gSkullPct),
+  fmt(grandMisHits,gMisHitPct),
+  ""
+ ])
 
+ const csv=rows.join("\n")+"\n"
  const blob=new Blob([csv],{type:"text/csv"})
  const url=URL.createObjectURL(blob)
  const a=document.createElement("a")
@@ -1738,6 +1793,8 @@ function initApp(){
 
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",initApp)}else{initApp()}
 </script>
+
+
 
 
 
