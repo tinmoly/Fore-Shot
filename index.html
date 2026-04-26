@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0058)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v8.1.html -->
+<!-- saved from url=(0057)file:///G:/My%20Drive/Golf/Fore!Shot%20App/index_v10.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style data-merge-styles="true"></style>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +22,7 @@ h1,h3{text-align:center;margin-bottom:10px}
 .pill-btn:disabled{cursor:default;opacity:1}
 .range-speed{display:flex;align-items:center;gap:2px;background:#1c7c5b;padding:6px;border-radius:999px}
 .range-speed-value{min-width:74px;text-align:center;font-size:18px;font-weight:800}
+.range-temp-value{min-width:84px}
 .range-speed-btn{border:none;border-radius:999px;background:#2ecc71;color:#000;font-size:22px;font-weight:800;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 #1e9e54}
 .wind-toggle{white-space:normal;line-height:1.15;text-align:center}
 .wind-toggle.head-wind{background:#7a1f1f;color:#fff;box-shadow:0 4px 0 #561515}
@@ -85,14 +86,14 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 
 <div class="mode-card">
 <div class="mode-row equal-buttons">
-<button id="practiceModeBtn" class="mode-btn" onclick="togglePracticeMode()">Manual<br>Mode On</button>
-<button id="targetSetBtn" class="mode-btn target-set-btn" onclick="toggleTargetSetMode()">Wedge<br>Mode On</button>
+<button id="practiceModeBtn" class="mode-btn active" onclick="togglePracticeMode()">Random<br>Mode On</button>
+<button id="targetSetBtn" class="mode-btn target-set-btn range-active" onclick="toggleTargetSetMode()">Range<br>Mode On</button>
 </div>
 </div>
 
-<div id="clubRow" class="pill-row" style=""><button class="pill-btn active">PW</button><button class="pill-btn">UW</button><button class="pill-btn">48°</button><button class="pill-btn">52°</button><button class="pill-btn">54°</button><button class="pill-btn">56°</button><button class="pill-btn">58°</button><button class="pill-btn">60°</button><button class="pill-btn">62°</button></div>
-<div id="distanceRow" class="pill-row"><button class="pill-btn">10y</button><button class="pill-btn">15y</button><button class="pill-btn">20y</button><button class="pill-btn">25y</button><button class="pill-btn active">30y</button><button class="pill-btn">35y</button><button class="pill-btn">40y</button><button class="pill-btn">45y</button><button class="pill-btn">50y</button><button class="pill-btn">55y</button><button class="pill-btn">60y</button><button class="pill-btn">65y</button><button class="pill-btn">70y</button><button class="pill-btn">75y</button><button class="pill-btn">80y</button></div>
-<div id="modeTarget" class="mode-target">Current Shot: PW - 30y</div>
+<div id="clubRow" class="pill-row" style="justify-content: center; flex-direction: column; align-items: center; overflow-x: visible;"><div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;"><button class="pill-btn wind-toggle head-wind">Head Wind</button><div class="range-speed"><button class="range-speed-btn">-</button><div class="range-speed-value">0 mph</div><button class="range-speed-btn">+</button></div></div><div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;"><button class="pill-btn" disabled="">Temp.</button><div class="range-speed"><button class="range-speed-btn">-</button><div class="range-speed-value range-temp-value">70°F</div><button class="range-speed-btn">+</button></div></div></div>
+<div id="distanceRow" class="pill-row"><button class="pill-btn active" disabled="">122y</button><button class="pill-btn active" style="margin-left: auto;">48°</button></div>
+<div id="modeTarget" class="mode-target">Range Shot: 48° - 122y</div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
@@ -114,13 +115,13 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 
 <div class="stats">
-<p>✅ Made: <span id="made">0</span> | ⛔ Missed: <span id="missed">0</span></p>
-<p>🚩 Make %: <span id="percent">0</span>%</p>
-<p><span id="streakTitle">Streak</span>: <span id="streak">0</span> <span id="streakLabel"></span></p>
+<p>✅ Made: <span id="made">3</span> | ⛔ Missed: <span id="missed">0</span></p>
+<p>🚩 Make %: <span id="percent">100</span>%</p>
+<p><span id="streakTitle">Building Streak</span>: <span id="streak">3</span> <span id="streakLabel">🔥🔥</span></p>
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge manual-badge"><div class="badge-content">🎯 Target: 15 ft<br>🥇 Up and Down: 40%<br><span class="random-total-line">⛳ Total Manual Shots: 0</span></div></div>
+<div id="targetBadge" class="badge random-badge"><div class="badge-content">Current Target:<br>🎯 48° - 122y<br>⛅ Head Wind 0 mph, 70°F<br><span class="random-total-line">⛳ Total Range Shots: 3</span></div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
 <button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄️ New Session</button>
@@ -136,15 +137,18 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </select>
 </div>
 
-<div id="history"><div class="history-wrapper"><div class="history-card"><strong>Session 1</strong><br>4/25/2026 - 95% (22 shots)</div><div class="accordion"><div><strong>62° - 10 yd:</strong> 1/1 (100%) - 6ft ⭐<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>62° - 30 yd:</strong> 1/1 (100%) - 15ft ⭐<br><span class="subtle">Up and Down: 40%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>60° - 65 yd:</strong> 1/1 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 25 yd:</strong> 1/1 (100%) - 12ft ⭐<br><span class="subtle">Up and Down: 46%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>58° - 60 yd:</strong> 1/1 (100%) - 33ft ⭐<br><span class="subtle">Up and Down: 20%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 25 yd:</strong> 1/1 (100%) - 12ft ⭐<br><span class="subtle">Up and Down: 46%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>56° - 35 yd:</strong> 1/1 (100%) - 18ft ⭐<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 10 yd:</strong> 1/1 (100%) - 6ft ⭐<br><span class="subtle">Up and Down: 67%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 35 yd:</strong> 1/1 (100%) - 18ft ⭐<br><span class="subtle">Up and Down: 35%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>UW - 70 yd:</strong> 1/1 (100%) - 39ft ⭐<br><span class="subtle">Up and Down: 16%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 65 yd:</strong> 1/1 (100%) - 36ft ⭐<br><span class="subtle">Up and Down: 18%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>48° - 75 yd:</strong> 1/1 (100%) - 42ft ⭐<br><span class="subtle">Up and Down: 14%</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>7i - 162 yd:</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind 0 mph</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>7i - 164 yd:</strong> 1/2 (50%) - Range Mode<br><span class="subtle">Wind: Head Wind 0 mph</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 1 | Best streak: 1</span></div><div><strong>6i - 173 yd:</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind 0 mph</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>5i - 172 yd:</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>4i - 192 yd:</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind 0 mph</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>3h - 223 yd:</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind 0 mph</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>5h - 201 yd:</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind 0 mph</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>4w - 218 yd:</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind +10 mph</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><div><strong>D - 255 yd:</strong> 1/1 (100%) - Range Mode<br><span class="subtle">Wind: Head Wind 0 mph</span><br><span class="subtle">Misses - L-Left: 0 | L-Right: 0 | S-Left: 0 | S-Right: 0</span><br><span class="subtle">Duffs: 0 | Skulls: 0 | Best streak: 1</span></div><button style="display: block; width: 100%; margin-top: 10px; background: rgb(227, 66, 52); color: rgb(0, 0, 0); padding: 6px 10px; font-size: 24px; font-weight: 800; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; cursor: pointer;">🗑️ Delete Session</button></div></div></div>
+<div id="history"><p style="opacity:.8">No sessions yet.</p></div>
 
 </div>
 
 <script>
-const WEDGE_CLUBS=["PW","UW","48 deg","52 deg","54 deg","56 deg","58 deg","60 deg","62 deg"]
+const WEDGE_CLUBS=["62 deg","60 deg","58 deg","56 deg","54 deg","52 deg","UW","48 deg","PW"]
 const WEDGE_DISTANCES=[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
 const RANGE_CLUBS=["62 deg","60 deg","58 deg","56 deg","54 deg","52 deg","UW","48 deg","PW","9i","8i","7i","6i","5i","4i","3i","3h","4h","5h","4w","Driver"]
+const RANGE_MANUAL_CLUBS=["62 deg","60 deg","58 deg","56 deg","54 deg","52 deg","UW","48 deg","PW","9i","8i","7i","6i","5i","4i","3i","5h","4h","3h","4w","Driver"]
 const RANGE_DISTANCES=Array.from({length:176},(_,i)=>85+i)
+const RANGE_DISTANCE_MIN=RANGE_DISTANCES[0]
+const RANGE_DISTANCE_MAX=RANGE_DISTANCES[RANGE_DISTANCES.length-1]
 const RANGE_CARRY_YARDAGES={
  "62 deg":80,
  "60 deg":85,
@@ -175,7 +179,16 @@ const RANGE_WIND_ADJUSTMENTS={
  iron:{head:0.025,tail:0.015},
  woodHybrid:{head:0.03,tail:0.025}
 }
-const ALL_DISTANCES=Array.from(new Set([...WEDGE_DISTANCES,...RANGE_DISTANCES])).sort((a,b)=>a-b)
+const RANGE_DEFAULT_TEMP=70
+const RANGE_TEMP_MIN=50
+const RANGE_TEMP_MAX=100
+const RANGE_TEMP_STEP=5
+const RANGE_TEMP_ADJUSTMENTS={
+ wedge:0.007,
+ iron:0.01,
+ woodHybrid:0.013
+}
+const ALL_DISTANCES=Array.from({length:RANGE_DISTANCE_MAX-WEDGE_DISTANCES[0]+1},(_,i)=>WEDGE_DISTANCES[0]+i)
 const MODE_CONFIG={
  wedge:{clubs:WEDGE_CLUBS,distances:WEDGE_DISTANCES,defaultClub:"PW",defaultDistance:30},
  range:{clubs:RANGE_CLUBS,distances:RANGE_DISTANCES,defaultClub:"9i",defaultDistance:135}
@@ -183,6 +196,7 @@ const MODE_CONFIG={
 const PGA_PROXIMITY={10:6,15:8,20:10,25:12,30:15,35:18,40:21,45:24,50:27,55:30,60:33,65:36,70:39,75:42,80:45}
 const UP_AND_DOWN={10:67,15:60,20:53,25:46,30:40,35:35,40:30,45:27,50:25,55:23,60:20,65:18,70:16,75:14,80:12}
 const DEFAULT_TARGET_SET_MODE="wedge"
+const TARGET_SET_MODES=["wedge","range"]
 const DEFAULT_CLUB=MODE_CONFIG.wedge.defaultClub
 const PRACTICE_MODE_KEY="shootingPracticeMode"
 
@@ -197,9 +211,13 @@ let practiceMode="manual"
 let targetSetMode=DEFAULT_TARGET_SET_MODE
 let rangeWindDirection="head"
 let rangeWindSpeed=0
+let rangeTemperature=RANGE_DEFAULT_TEMP
 let modeSelections={
- wedge:{club:MODE_CONFIG.wedge.defaultClub,distance:MODE_CONFIG.wedge.defaultDistance},
- range:{club:MODE_CONFIG.range.defaultClub,distance:MODE_CONFIG.range.defaultDistance}
+ wedge:{club:MODE_CONFIG.wedge.defaultClub,distance:MODE_CONFIG.wedge.defaultDistance}
+}
+let rangeSelections={
+ random:{club:MODE_CONFIG.range.defaultClub,distance:MODE_CONFIG.range.defaultDistance},
+ manual:{club:MODE_CONFIG.range.defaultClub,distance:MODE_CONFIG.range.defaultDistance}
 }
 
 const $=(id)=>{
@@ -212,13 +230,13 @@ function getModeConfig(mode=targetSetMode){return MODE_CONFIG[mode]}
 function getSelectableClubs(mode=targetSetMode){return getModeConfig(mode).clubs}
 function getSelectableDistances(mode=targetSetMode){return getModeConfig(mode).distances}
 function isRangeMode(mode=targetSetMode){return mode==="range"}
-function getActivePracticeMode(){return isRangeMode() ? "random" : practiceMode}
+function getActivePracticeMode(){return practiceMode}
 function getShotTargetMode(shot){return shot.targetSetMode||"wedge"}
+function inferLegacyTargetSetMode(club,distance){
+ return distance>=RANGE_DISTANCES[0] ? "range" : "wedge"
+}
 function getModeShotHistory(mode,targetMode=targetSetMode){
  return shotHistory.filter(shot=>(shot.mode||"manual")===mode && getShotTargetMode(shot)===targetMode)
-}
-function inferTargetSetMode(club,distance){
- return distance>=RANGE_DISTANCES[0] ? "range" : "wedge"
 }
 function getTargetFeet(distance,mode){
  return mode==="wedge" ? (PGA_PROXIMITY[distance] ?? "") : ""
@@ -236,6 +254,9 @@ function formatWindSpeed(){
  if(signed<0) return signed+" mph"
  return "0 mph"
 }
+function formatRangeTemperature(){
+ return rangeTemperature+String.fromCharCode(176)+"F"
+}
 function getShotWindLabel(shot){
  const direction=shot && shot.windDirection ? shot.windDirection : "head"
  const speed=Number(shot && shot.windSpeed) || 0
@@ -243,6 +264,11 @@ function getShotWindLabel(shot){
  const prefix=signed>0 ? "+" : ""
  const dirLabel=direction==="head" ? "Head Wind" : "Tail Wind"
  return dirLabel+" "+prefix+signed+" mph"
+}
+function getShotTempLabel(shot){
+ const temperature=Number(shot && shot.temperature)
+ if(!Number.isFinite(temperature) || temperature<=0) return ""
+ return temperature+String.fromCharCode(176)+"F"
 }
 function uniqueValues(values){
  return Array.from(new Set(values.filter(Boolean)))
@@ -268,11 +294,34 @@ function getRangeWindSummaryForSession(shots){
   .map(getShotWindLabel))
  return labels.join(" | ")
 }
+function getRangeTempSummary(shots,club,distance){
+ if(!Array.isArray(shots)) return ""
+ const labels=uniqueValues(shots
+  .filter(shot=>getShotTargetMode(shot)==="range" && shot.club===club && shot.distance===distance)
+  .map(getShotTempLabel))
+ return labels.join(" | ")
+}
+function getRangeTempSummaryForClub(shots,club){
+ if(!Array.isArray(shots)) return ""
+ const labels=uniqueValues(shots
+  .filter(shot=>getShotTargetMode(shot)==="range" && shot.club===club)
+  .map(getShotTempLabel))
+ return labels.join(" | ")
+}
+function getRangeTempSummaryForSession(shots){
+ if(!Array.isArray(shots)) return ""
+ const labels=uniqueValues(shots
+  .filter(shot=>getShotTargetMode(shot)==="range")
+  .map(getShotTempLabel))
+ return labels.join(" | ")
+}
 function getModeLabel(hasRange,hasWedge){
  if(hasRange && hasWedge) return "Mixed"
  if(hasRange) return "Range"
  return "Wedge"
 }
+function hasRangeLabel(label){return label==="Range" || label==="Mixed"}
+function hasWedgeLabel(label){return label==="Wedge" || label==="Mixed"}
 function getRangeClubCategory(club){
  if(["62 deg","60 deg","58 deg","56 deg","54 deg","52 deg","UW","48 deg","PW"].includes(club)) return "wedge"
  if(["9i","8i","7i","6i","5i","4i","3i"].includes(club)) return "iron"
@@ -280,34 +329,54 @@ function getRangeClubCategory(club){
 }
 function getAdjustedRangeCarry(club){
  const baseCarry=RANGE_CARRY_YARDAGES[club]||0
- if(!baseCarry || !rangeWindSpeed) return baseCarry
+ if(!baseCarry) return baseCarry
 
  const category=getRangeClubCategory(club)
- const steps=rangeWindSpeed/5
- const rates=RANGE_WIND_ADJUSTMENTS[category]
- if(!rates) return baseCarry
+ let adjustedCarry=baseCarry
 
- if(rangeWindDirection==="head"){
-  return Math.max(0,baseCarry*(1-rates.head*steps))
+ if(rangeWindSpeed){
+  const steps=rangeWindSpeed/5
+  const windRates=RANGE_WIND_ADJUSTMENTS[category]
+  if(windRates){
+   if(rangeWindDirection==="head"){
+    adjustedCarry=Math.max(0,adjustedCarry*(1-windRates.head*steps))
+   }else{
+    adjustedCarry=adjustedCarry*(1+windRates.tail*steps)
+   }
+  }
  }
 
- return baseCarry*(1+rates.tail*steps)
+ if(rangeTemperature!==RANGE_DEFAULT_TEMP){
+  const tempSteps=(rangeTemperature-RANGE_DEFAULT_TEMP)/RANGE_TEMP_STEP
+  const tempRate=RANGE_TEMP_ADJUSTMENTS[category]||0
+  adjustedCarry=adjustedCarry*(1+tempRate*tempSteps)
+ }
+
+ return Math.max(0,adjustedCarry)
 }
-function bucketHasShots(statsMap,club,distances){
+function clampRangeDistance(distance){
+ return Math.max(RANGE_DISTANCE_MIN,Math.min(RANGE_DISTANCE_MAX,Math.round(distance)))
+}
+function getManualRangeTargetDistance(club=currentClub){
+ const adjustedCarry=getAdjustedRangeCarry(club)
+ const fallbackCarry=RANGE_CARRY_YARDAGES[club]||MODE_CONFIG.range.defaultDistance
+ return Math.round(adjustedCarry||fallbackCarry)
+}
+function bucketHasShots(statsMap,targetMode,club,distances){
  return distances.some(d=>{
-  const bucket=statsMap && statsMap[club] && statsMap[club][d]
+  const bucket=statsMap && statsMap[targetMode] && statsMap[targetMode][club] && statsMap[targetMode][club][d]
   return !!bucket && ((bucket.made||0)+(bucket.missed||0)>0)
  })
 }
 function getClubRangeModeLabel(statsMap,club){
  return getModeLabel(
-  bucketHasShots(statsMap,club,RANGE_DISTANCES),
-  bucketHasShots(statsMap,club,WEDGE_DISTANCES)
+  bucketHasShots(statsMap,"range",club,ALL_DISTANCES),
+  bucketHasShots(statsMap,"wedge",club,ALL_DISTANCES)
  )
 }
 function getSessionRangeModeLabel(statsMap){
- const hasRange=ALL_CLUBS.some(club=>bucketHasShots(statsMap,club,RANGE_DISTANCES))
- const hasWedge=ALL_CLUBS.some(club=>bucketHasShots(statsMap,club,WEDGE_DISTANCES))
+ const hasRange=ALL_CLUBS.some(club=>bucketHasShots(statsMap,"range",club,ALL_DISTANCES))
+ const hasWedge=ALL_CLUBS.some(club=>bucketHasShots(statsMap,"wedge",club,ALL_DISTANCES))
  return getModeLabel(hasRange,hasWedge)
 }
 function getRangeEligibleClubs(distance=currentDistance){
@@ -337,11 +406,18 @@ function getDisplayedRangeClubs(distance=currentDistance){
 }
 function refreshRangeRecommendation(){
  if(!isRangeMode()) return
+ if(getActivePracticeMode()==="manual"){
+  currentDistance=getManualRangeTargetDistance(currentClub)
+  rangeSelections.manual={club:currentClub,distance:currentDistance}
+  syncCurrentSelection()
+  return
+ }
  const eligible=getRangeEligibleClubs(currentDistance)
  if(eligible.length===1){
   currentClub=eligible[0]
-  modeSelections.range.club=currentClub
+  rangeSelections.random.club=currentClub
  }
+ rangeSelections.random.distance=currentDistance
  syncCurrentSelection()
 }
 function toggleWindDirection(){
@@ -350,6 +426,10 @@ function toggleWindDirection(){
 }
 function adjustWindSpeed(delta){
  rangeWindSpeed=Math.max(0,Math.min(25,rangeWindSpeed+delta))
+ refreshRangeRecommendation()
+}
+function adjustRangeTemperature(delta){
+ rangeTemperature=Math.max(RANGE_TEMP_MIN,Math.min(RANGE_TEMP_MAX,rangeTemperature+delta))
  refreshRangeRecommendation()
 }
 
@@ -373,46 +453,72 @@ function createClubDistanceMap(factory){
  return map
 }
 
+function createModeMap(factory){
+ const map={}
+ TARGET_SET_MODES.forEach(mode=>{map[mode]=createClubDistanceMap(factory)})
+ return map
+}
+
+function hasModeKeys(obj){
+ return !!obj && TARGET_SET_MODES.some(mode=>obj[mode] && typeof obj[mode]==="object")
+}
+
 function hasClubKeys(obj){
  return !!obj && ALL_CLUBS.some(club=>obj[club] && typeof obj[club]==="object")
 }
 
 function migrateLegacyMap(obj,factory){
- const map=createClubDistanceMap(factory)
+ const map=createModeMap(factory)
  if(!obj || typeof obj!=="object") return map
+
+ if(hasModeKeys(obj)){
+  TARGET_SET_MODES.forEach(mode=>{
+   ALL_CLUBS.forEach(club=>{
+    ALL_DISTANCES.forEach(d=>{
+     if(obj[mode] && obj[mode][club] && obj[mode][club][d]!=null) map[mode][club][d]=obj[mode][club][d]
+    })
+   })
+  })
+  return map
+ }
 
  if(hasClubKeys(obj)){
   ALL_CLUBS.forEach(club=>{
    ALL_DISTANCES.forEach(d=>{
-    if(obj[club] && obj[club][d]!=null) map[club][d]=obj[club][d]
+    if(obj[club] && obj[club][d]!=null){
+     const mode=inferLegacyTargetSetMode(club,d)
+     map[mode][club][d]=obj[club][d]
+    }
    })
   })
   return map
  }
 
  WEDGE_DISTANCES.forEach(d=>{
-  if(obj[d]!=null) map[DEFAULT_CLUB][d]=obj[d]
+  if(obj[d]!=null) map.wedge[DEFAULT_CLUB][d]=obj[d]
  })
  return map
 }
 
 function ensureStatsShape(obj){
  const map=migrateLegacyMap(obj,createStatBucket)
- ALL_CLUBS.forEach(club=>{
-  ALL_DISTANCES.forEach(d=>{
-   const bucket=map[club][d]||{}
-   map[club][d]={
-    made:Number(bucket.made)||0,
-    missed:Number(bucket.missed)||0,
-    duffs:Number(bucket.duffs)||0,
-    skulls:Number(bucket.skulls)||0,
-    missDir:{
-     shortLeft:Number(bucket.missDir && bucket.missDir.shortLeft)||0,
-     shortRight:Number(bucket.missDir && bucket.missDir.shortRight)||0,
-     longLeft:Number(bucket.missDir && bucket.missDir.longLeft)||0,
-     longRight:Number(bucket.missDir && bucket.missDir.longRight)||0
+ TARGET_SET_MODES.forEach(mode=>{
+  ALL_CLUBS.forEach(club=>{
+   ALL_DISTANCES.forEach(d=>{
+    const bucket=map[mode][club][d]||{}
+    map[mode][club][d]={
+     made:Number(bucket.made)||0,
+     missed:Number(bucket.missed)||0,
+     duffs:Number(bucket.duffs)||0,
+     skulls:Number(bucket.skulls)||0,
+     missDir:{
+      shortLeft:Number(bucket.missDir && bucket.missDir.shortLeft)||0,
+      shortRight:Number(bucket.missDir && bucket.missDir.shortRight)||0,
+      longLeft:Number(bucket.missDir && bucket.missDir.longLeft)||0,
+      longRight:Number(bucket.missDir && bucket.missDir.longRight)||0
+     }
     }
-   }
+   })
   })
  })
  return map
@@ -420,9 +526,11 @@ function ensureStatsShape(obj){
 
 function ensureCounterShape(obj){
  const map=migrateLegacyMap(obj,()=>0)
- ALL_CLUBS.forEach(club=>{
-  ALL_DISTANCES.forEach(d=>{
-   map[club][d]=Number(map[club][d])||0
+ TARGET_SET_MODES.forEach(mode=>{
+  ALL_CLUBS.forEach(club=>{
+   ALL_DISTANCES.forEach(d=>{
+    map[mode][club][d]=Number(map[mode][club][d])||0
+   })
   })
  })
  return map
@@ -470,9 +578,10 @@ function loadSessions(){
 }
 function saveSessions(){localStorage.setItem("shootingSessions",JSON.stringify(sessions))}
 
-function getCurrentStats(){return stats[currentClub][currentDistance]}
-function getCurrentStreak(){return streaks[currentClub][currentDistance]||0}
-function getCurrentBestStreak(){return bestStreaks[currentClub][currentDistance]||0}
+function getStatsBucket(statsMap,mode,club,distance){return statsMap[mode][club][distance]}
+function getCurrentStats(){return getStatsBucket(stats,targetSetMode,currentClub,currentDistance)}
+function getCurrentStreak(){return streaks[targetSetMode][currentClub][currentDistance]||0}
+function getCurrentBestStreak(){return bestStreaks[targetSetMode][currentClub][currentDistance]||0}
 function formatPercent(value){return Number.isInteger(value)?value.toString():value.toFixed(1)}
 function formatClubLabel(club){
  if(club==="Driver") return "D"
@@ -524,10 +633,12 @@ function summarizeShotSequence(history){
 function summarizeStats(statsMap){
  let totalMade=0
  let totalMissed=0
- ALL_CLUBS.forEach(club=>{
-  ALL_DISTANCES.forEach(d=>{
-   totalMade+=statsMap[club][d].made||0
-   totalMissed+=statsMap[club][d].missed||0
+ TARGET_SET_MODES.forEach(mode=>{
+  ALL_CLUBS.forEach(club=>{
+   ALL_DISTANCES.forEach(d=>{
+    totalMade+=statsMap[mode][club][d].made||0
+    totalMissed+=statsMap[mode][club][d].missed||0
+   })
   })
  })
  const totalShots=totalMade+totalMissed
@@ -553,13 +664,12 @@ function renderPracticeMode(){
 
  btn.innerHTML=isRandom ? "Random<br>Mode On" : "Manual<br>Mode On"
  btn.className="mode-btn"+(isRandom?" active":"")
- btn.disabled=rangeActive
 
  targetModeBtn.innerHTML=rangeActive ? "Range<br>Mode On" : "Wedge<br>Mode On"
  targetModeBtn.className="mode-btn target-set-btn"+(rangeActive?" range-active":"")
 
  target.textContent=rangeActive
-  ? "Range Shot: "+currentDistance+"y - "+formatClubLabel(currentClub)
+  ? (isRandom ? "Range Shot: " : "Current Shot: ")+formatClubLabel(currentClub)+" - "+currentDistance+"y"
   : (isRandom ? "Random Shot: " : "Current Shot: ")+formatClubLabel(currentClub)+" - "+currentDistance+"y"
 }
 
@@ -569,12 +679,23 @@ function buildClubRow(){
  const rangeMode=isRangeMode()
  if(rangeMode){
   r.style.justifyContent="center"
+  r.style.flexDirection="column"
+  r.style.alignItems="center"
+  r.style.overflowX="visible"
+
+  const windRow=document.createElement("div")
+  windRow.style.display="flex"
+  windRow.style.gap="8px"
+  windRow.style.alignItems="center"
+  windRow.style.justifyContent="center"
+  windRow.style.flexWrap="wrap"
+  windRow.style.width="100%"
 
   const windToggle=document.createElement("button")
   windToggle.className="pill-btn wind-toggle "+(rangeWindDirection==="head" ? "head-wind" : "tail-wind")
   windToggle.textContent=rangeWindDirection==="head" ? "Head Wind" : "Tail Wind"
   windToggle.onclick=toggleWindDirection
-  r.appendChild(windToggle)
+  windRow.appendChild(windToggle)
 
   const speedWrap=document.createElement("div")
   speedWrap.className="range-speed"
@@ -596,11 +717,53 @@ function buildClubRow(){
   speedWrap.appendChild(minusBtn)
   speedWrap.appendChild(speedValue)
   speedWrap.appendChild(plusBtn)
-  r.appendChild(speedWrap)
+  windRow.appendChild(speedWrap)
+
+  const tempRow=document.createElement("div")
+  tempRow.style.display="flex"
+  tempRow.style.gap="8px"
+  tempRow.style.alignItems="center"
+  tempRow.style.justifyContent="center"
+  tempRow.style.flexWrap="wrap"
+  tempRow.style.width="100%"
+
+  const tempLabel=document.createElement("button")
+  tempLabel.className="pill-btn"
+  tempLabel.textContent="Temp."
+  tempLabel.disabled=true
+  tempRow.appendChild(tempLabel)
+
+  const tempWrap=document.createElement("div")
+  tempWrap.className="range-speed"
+
+  const tempMinusBtn=document.createElement("button")
+  tempMinusBtn.className="range-speed-btn"
+  tempMinusBtn.textContent="-"
+  tempMinusBtn.onclick=()=>adjustRangeTemperature(-RANGE_TEMP_STEP)
+
+  const tempValue=document.createElement("div")
+  tempValue.className="range-speed-value range-temp-value"
+  tempValue.textContent=formatRangeTemperature()
+
+  const tempPlusBtn=document.createElement("button")
+  tempPlusBtn.className="range-speed-btn"
+  tempPlusBtn.textContent="+"
+  tempPlusBtn.onclick=()=>adjustRangeTemperature(RANGE_TEMP_STEP)
+
+  tempWrap.appendChild(tempMinusBtn)
+  tempWrap.appendChild(tempValue)
+  tempWrap.appendChild(tempPlusBtn)
+  tempRow.appendChild(tempWrap)
+
+  r.appendChild(windRow)
+  r.appendChild(tempRow)
   return
  }
 
- r.style.justifyContent=""
+  r.style.justifyContent=""
+  r.style.flexDirection=""
+  r.style.alignItems=""
+  r.style.overflowX=""
  getSelectableClubs().forEach(club=>{
   const b=document.createElement("button")
   b.className="pill-btn"+(club===currentClub?" active":"")
@@ -615,6 +778,18 @@ function buildDistanceRow(){
  r.innerHTML=""
 
  if(isRangeMode()){
+  if(getActivePracticeMode()==="manual"){
+   r.style.justifyContent=""
+   RANGE_MANUAL_CLUBS.forEach(club=>{
+    const b=document.createElement("button")
+    b.className="pill-btn"+(club===currentClub?" active":"")
+    b.textContent=formatClubLabel(club)
+    b.onclick=()=>setClub(club)
+    r.appendChild(b)
+   })
+   return
+  }
+
   r.style.justifyContent=""
   const yardageBtn=document.createElement("button")
   yardageBtn.className="pill-btn active"
@@ -655,21 +830,39 @@ function syncCurrentSelection(){
 
 function setClub(club){
  currentClub=club
- modeSelections[targetSetMode].club=club
+ if(isRangeMode()){
+  if(getActivePracticeMode()==="manual"){
+   currentDistance=getManualRangeTargetDistance(club)
+   rangeSelections.manual={club:club,distance:currentDistance}
+  }else{
+   rangeSelections.random.club=club
+  }
+ }else{
+  modeSelections.wedge.club=club
+ }
  syncCurrentSelection()
 }
 
 function setDistance(d){
  if(isRangeMode()) return
  currentDistance=d
- modeSelections[targetSetMode].distance=d
+ modeSelections.wedge.distance=d
  syncCurrentSelection()
 }
 
 function setTarget(club,distance){
  currentClub=club
  currentDistance=distance
- modeSelections[targetSetMode]={club:club,distance:distance}
+ if(isRangeMode()){
+  if(getActivePracticeMode()==="manual"){
+   currentDistance=getManualRangeTargetDistance(club)
+   rangeSelections.manual={club:club,distance:currentDistance}
+  }else{
+   rangeSelections.random={club:club,distance:distance}
+  }
+ }else{
+  modeSelections.wedge={club:club,distance:distance}
+ }
  syncCurrentSelection()
 }
 
@@ -688,8 +881,8 @@ function pickRandomRangeDistance(){
 
  currentDistance=next
  currentClub=getRecommendedRangeClub(next)
- modeSelections.range.distance=next
- modeSelections.range.club=currentClub
+ rangeSelections.random.distance=next
+ rangeSelections.random.club=currentClub
  syncCurrentSelection()
 }
 
@@ -711,9 +904,22 @@ function pickRandomTarget(){
 }
 
 function togglePracticeMode(){
- if(isRangeMode()) return
  practiceMode=practiceMode==="manual" ? "random" : "manual"
  savePracticeMode()
+ if(isRangeMode()){
+  if(practiceMode==="random"){
+   pickRandomTarget()
+   return
+  }
+
+  const manualSelection=rangeSelections.manual
+  currentClub=RANGE_CLUBS.includes(manualSelection.club) ? manualSelection.club : MODE_CONFIG.range.defaultClub
+  currentDistance=getManualRangeTargetDistance(currentClub)
+  rangeSelections.manual={club:currentClub,distance:currentDistance}
+  syncCurrentSelection()
+  return
+ }
+
  if(practiceMode==="random"){
   pickRandomTarget()
   return
@@ -732,10 +938,19 @@ function toggleTargetSetMode(){
  }
 
  targetSetMode="range"
- const rangeSelection=modeSelections.range
- currentClub=getSelectableClubs().includes(rangeSelection.club) ? rangeSelection.club : MODE_CONFIG.range.defaultClub
- currentDistance=getSelectableDistances().includes(rangeSelection.distance) ? rangeSelection.distance : MODE_CONFIG.range.defaultDistance
- modeSelections.range={club:currentClub,distance:currentDistance}
+ if(getActivePracticeMode()==="manual"){
+  const manualSelection=rangeSelections.manual
+  currentClub=RANGE_CLUBS.includes(manualSelection.club) ? manualSelection.club : MODE_CONFIG.range.defaultClub
+  currentDistance=getManualRangeTargetDistance(currentClub)
+  rangeSelections.manual={club:currentClub,distance:currentDistance}
+  syncCurrentSelection()
+  return
+ }
+
+ const randomSelection=rangeSelections.random
+ currentClub=RANGE_CLUBS.includes(randomSelection.club) ? randomSelection.club : MODE_CONFIG.range.defaultClub
+ currentDistance=getSelectableDistances().includes(randomSelection.distance) ? randomSelection.distance : MODE_CONFIG.range.defaultDistance
+ rangeSelections.random={club:currentClub,distance:currentDistance}
  pickRandomTarget()
 }
 
@@ -780,7 +995,7 @@ function updateStats(){
 
  if(rangeActive){
   badge.className="badge random-badge"
-  badge.innerHTML='<div class="badge-content">Current Target:<br>🎯 '+formatClubLabel(currentClub)+' - '+currentDistance+'y<br>⛅ Wind: '+(rangeWindDirection==="head" ? "Head Wind " : "Tail Wind ")+formatWindSpeed()+'<br><span class="random-total-line">⛳ Total Range Shots: '+total+'</span></div>'
+  badge.innerHTML='<div class="badge-content">Current Target:<br>🎯 '+formatClubLabel(currentClub)+' - '+currentDistance+'y<br>⛅ '+(rangeWindDirection==="head" ? "Head Wind " : "Tail Wind ")+formatWindSpeed()+', '+formatRangeTemperature()+'<br><span class="random-total-line">⛳ Total Range Shots: '+total+'</span></div>'
  }else if(isRandom){
   badge.className="badge random-badge"
   badge.innerHTML='<div class="badge-content">Current Target:<br>🎯 '+formatClubLabel(currentClub)+' - '+currentDistance+'y ('+getTargetFeet(currentDistance,"wedge")+' ft)<br><span class="random-total-line">⛳ Total Random Shots: '+total+'</span></div>'
@@ -794,9 +1009,9 @@ function recordMade(){
  const activePracticeMode=getActivePracticeMode()
  const st=getCurrentStats()
  st.made++
- streaks[currentClub][currentDistance]++
- if(getCurrentStreak()>getCurrentBestStreak()) bestStreaks[currentClub][currentDistance]=getCurrentStreak()
- shotHistory.push({type:"made",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null})
+ streaks[targetSetMode][currentClub][currentDistance]++
+ if(getCurrentStreak()>getCurrentBestStreak()) bestStreaks[targetSetMode][currentClub][currentDistance]=getCurrentStreak()
+ shotHistory.push({type:"made",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null,temperature:isRangeMode()?rangeTemperature:null})
  document.body.classList.remove("flash-red")
  document.body.classList.add("flash-green")
  setTimeout(()=>document.body.classList.remove("flash-green"),150)
@@ -812,8 +1027,8 @@ function recordMissed(dir){
  const st=getCurrentStats()
  st.missed++
  st.missDir[dir]++
- streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null})
+ streaks[targetSetMode][currentClub][currentDistance]=0
+ shotHistory.push({type:"missed",club:currentClub,distance:currentDistance,dir:dir,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null,temperature:isRangeMode()?rangeTemperature:null})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -828,8 +1043,8 @@ function recordDuff(){
  const st=getCurrentStats()
  st.missed++
  st.duffs++
- streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"duff",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null})
+ streaks[targetSetMode][currentClub][currentDistance]=0
+ shotHistory.push({type:"duff",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null,temperature:isRangeMode()?rangeTemperature:null})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -844,8 +1059,8 @@ function recordSkull(){
  const st=getCurrentStats()
  st.missed++
  st.skulls++
- streaks[currentClub][currentDistance]=0
- shotHistory.push({type:"skull",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null})
+ streaks[targetSetMode][currentClub][currentDistance]=0
+ shotHistory.push({type:"skull",club:currentClub,distance:currentDistance,mode:activePracticeMode,targetSetMode:targetSetMode,windDirection:isRangeMode()?rangeWindDirection:null,windSpeed:isRangeMode()?rangeWindSpeed:null,temperature:isRangeMode()?rangeTemperature:null})
  document.body.classList.remove("flash-green")
  document.body.classList.add("flash-red")
  setTimeout(()=>document.body.classList.remove("flash-red"),150)
@@ -881,12 +1096,12 @@ function newSession(){
  renderPracticeMode()
 }
 
-function recomputeHistoryFor(club,distance){
+function recomputeHistoryFor(targetMode,club,distance){
  let streak=0
  let best=0
 
  shotHistory.forEach(shot=>{
-  if(shot.club!==club || shot.distance!==distance) return
+  if(getShotTargetMode(shot)!==targetMode || shot.club!==club || shot.distance!==distance) return
   if(shot.type==="made"){
    streak++
    if(streak>best) best=streak
@@ -895,8 +1110,8 @@ function recomputeHistoryFor(club,distance){
   }
  })
 
- streaks[club][distance]=streak
- bestStreaks[club][distance]=best
+ streaks[targetMode][club][distance]=streak
+ bestStreaks[targetMode][club][distance]=best
 }
 
 function undoShot(){
@@ -912,11 +1127,12 @@ function undoShot(){
  if(undoIndex===-1) return
 
  const last=shotHistory.splice(undoIndex,1)[0]
- const st=stats[last.club][last.distance]
+ const shotTargetMode=getShotTargetMode(last)
+ const st=stats[shotTargetMode][last.club][last.distance]
 
  if(last.type==="made" && st.made>0){
   st.made--
-  if(streaks[last.club][last.distance]>0) streaks[last.club][last.distance]--
+  if(streaks[shotTargetMode][last.club][last.distance]>0) streaks[shotTargetMode][last.club][last.distance]--
  }
 
  if(last.type==="missed" && st.missed>0){
@@ -935,7 +1151,7 @@ function undoShot(){
  }
 
  setTarget(last.club,last.distance)
- recomputeHistoryFor(last.club,last.distance)
+ recomputeHistoryFor(shotTargetMode,last.club,last.distance)
  saveStats()
  saveStreaks()
  saveBestStreaks()
@@ -966,7 +1182,7 @@ function handleHistoryAction(){
 }
 
 function exportHistoryCSV(){
- let csv="Session,Date,Club,Yardage,Mode,Wind,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Skulls,Total Mis-Hits,Best Streak\n"
+ let csv="Session,Date,Club,Yardage,Mode,Wind,Temp,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Skulls,Total Mis-Hits,Best Streak\n"
 
  let grandMade=0
  let grandMissed=0
@@ -1202,6 +1418,237 @@ function renderHistory(){
  })
 }
 
+function exportHistoryCSV(){
+ let csv="Session,Date,Club,Yardage,Mode,Wind,Target ft,Made,Missed,Make %,Up and Down %,S-Left,S-Right,L-Left,L-Right,Duffs,Skulls,Total Mis-Hits,Best Streak\n"
+
+ let grandMade=0
+ let grandMissed=0
+ let grandMiss=createMissDir()
+
+ const fmt=(count,pct)=>count+" ("+pct+"%)"
+
+ sessions.forEach((s,idx)=>{
+  const date=new Date(s.date).toLocaleDateString()
+  let sessionMade=0
+  let sessionMissed=0
+  let sessionMiss=createMissDir()
+  let sessionDuffs=0
+  let sessionSkulls=0
+
+  ALL_CLUBS.forEach(club=>{
+   let clubMade=0
+   let clubMissed=0
+   let clubMiss=createMissDir()
+   let clubDuffs=0
+   let clubSkulls=0
+   let clubBestStreak=0
+
+   TARGET_SET_MODES.forEach(targetMode=>{
+    ALL_DISTANCES.forEach(d=>{
+     const st=s.stats && s.stats[targetMode] && s.stats[targetMode][club] && s.stats[targetMode][club][d]
+     if(!st) return
+
+     const made=st.made||0
+     const missed=st.missed||0
+     const duffs=st.duffs||0
+     const skulls=st.skulls||0
+     const total=made+missed
+     if(!total) return
+
+     const missDir=st.missDir||createMissDir()
+     const pct=Math.round(made/total*100)
+     const targetFeet=getTargetFeet(d,targetMode)
+     const upAndDown=getUpAndDownValue(d,targetMode)
+     const windSummary=targetMode==="range" ? getRangeWindSummary(s.shots,club,d) : ""
+     const tempSummary=targetMode==="range" ? getRangeTempSummary(s.shots,club,d) : ""
+     const bestStreak=((s.bestStreaks && s.bestStreaks[targetMode] && s.bestStreaks[targetMode][club] && s.bestStreaks[targetMode][club][d])||0)
+
+     sessionMade+=made
+     sessionMissed+=missed
+     sessionMiss.shortLeft+=missDir.shortLeft||0
+     sessionMiss.shortRight+=missDir.shortRight||0
+     sessionMiss.longLeft+=missDir.longLeft||0
+     sessionMiss.longRight+=missDir.longRight||0
+     sessionDuffs+=duffs
+     sessionSkulls+=skulls
+     clubMade+=made
+     clubMissed+=missed
+     clubMiss.shortLeft+=missDir.shortLeft||0
+     clubMiss.shortRight+=missDir.shortRight||0
+     clubMiss.longLeft+=missDir.longLeft||0
+     clubMiss.longRight+=missDir.longRight||0
+     clubDuffs+=duffs
+     clubSkulls+=skulls
+     clubBestStreak=Math.max(clubBestStreak,bestStreak)
+
+     csv+=(idx+1)+","+date+","+club+","+d+"yd,"+(targetMode==="range" ? "Range" : "Wedge")+","+'"'+windSummary.replace(/"/g,'""')+'",'+'"'+tempSummary.replace(/"/g,'""')+'",'+(targetFeet!=="" ? targetFeet+"ft" : "")+","+made+","+missed+","+pct+"%,"+(upAndDown!=null ? formatPercent(upAndDown)+"%" : "")+","+
+          (missDir.shortLeft||0)+","+(missDir.shortRight||0)+","+(missDir.longLeft||0)+","+(missDir.longRight||0)+","+
+          duffs+","+skulls+",,"+bestStreak+"\n"
+    })
+   })
+
+   const clubShots=clubMade+clubMissed
+   if(!clubShots) return
+
+   const clubPct=Math.round(clubMade/clubShots*100)
+   const clubMissTotal=clubMissed
+   const clubSlPct=clubMissTotal?Math.round(clubMiss.shortLeft/clubMissTotal*100):0
+   const clubSrPct=clubMissTotal?Math.round(clubMiss.shortRight/clubMissTotal*100):0
+   const clubLlPct=clubMissTotal?Math.round(clubMiss.longLeft/clubMissTotal*100):0
+   const clubLrPct=clubMissTotal?Math.round(clubMiss.longRight/clubMissTotal*100):0
+   const clubDuffPct=clubMissTotal?Math.round(clubDuffs/clubMissTotal*100):0
+   const clubSkullPct=clubMissTotal?Math.round(clubSkulls/clubMissTotal*100):0
+   const clubMisHitTotal=clubDuffs+clubSkulls
+   const clubMisHitPct=clubMissTotal?Math.round(clubMisHitTotal/clubMissTotal*100):0
+   const clubModeLabel=getClubRangeModeLabel(s.stats,club)
+   csv+=(idx+1)+","+date+","+club+",TOTAL,"+clubModeLabel+",,,,"+clubMade+","+clubMissed+","+clubPct+"%,,"+
+        fmt(clubMiss.shortLeft,clubSlPct)+","+
+        fmt(clubMiss.shortRight,clubSrPct)+","+
+        fmt(clubMiss.longLeft,clubLlPct)+","+
+        fmt(clubMiss.longRight,clubLrPct)+","+fmt(clubDuffs,clubDuffPct)+","+fmt(clubSkulls,clubSkullPct)+","+fmt(clubMisHitTotal,clubMisHitPct)+","+clubBestStreak+"\n"
+  })
+
+  const totalShots=sessionMade+sessionMissed
+  const totalPct=totalShots?Math.round(sessionMade/totalShots*100):0
+  const totalMiss=sessionMissed
+  const slPct=totalMiss?Math.round(sessionMiss.shortLeft/totalMiss*100):0
+  const srPct=totalMiss?Math.round(sessionMiss.shortRight/totalMiss*100):0
+  const llPct=totalMiss?Math.round(sessionMiss.longLeft/totalMiss*100):0
+  const lrPct=totalMiss?Math.round(sessionMiss.longRight/totalMiss*100):0
+  const duffPct=totalMiss?Math.round(sessionDuffs/totalMiss*100):0
+  const skullPct=totalMiss?Math.round(sessionSkulls/totalMiss*100):0
+  const sessionMisHits=sessionDuffs+sessionSkulls
+  const sessionMisHitPct=totalMiss?Math.round(sessionMisHits/totalMiss*100):0
+  const sessionModeLabel=getSessionRangeModeLabel(s.stats)
+
+  csv+=(idx+1)+","+date+",ALL,TOTAL,"+sessionModeLabel+",,,,"+sessionMade+","+sessionMissed+","+totalPct+"%,,"+
+       fmt(sessionMiss.shortLeft,slPct)+","+
+       fmt(sessionMiss.shortRight,srPct)+","+
+       fmt(sessionMiss.longLeft,llPct)+","+
+       fmt(sessionMiss.longRight,lrPct)+","+fmt(sessionDuffs,duffPct)+","+fmt(sessionSkulls,skullPct)+","+fmt(sessionMisHits,sessionMisHitPct)+",\n"
+
+  grandMade+=sessionMade
+  grandMissed+=sessionMissed
+  grandMiss.shortLeft+=sessionMiss.shortLeft
+  grandMiss.shortRight+=sessionMiss.shortRight
+  grandMiss.longLeft+=sessionMiss.longLeft
+  grandMiss.longRight+=sessionMiss.longRight
+ })
+
+ const gShots=grandMade+grandMissed
+ const gPct=gShots?Math.round(grandMade/gShots*100):0
+ const grandDuffs=sessions.reduce((total,s)=>{
+  return total+TARGET_SET_MODES.reduce((modeTotal,targetMode)=>{
+   return modeTotal+ALL_CLUBS.reduce((clubTotal,club)=>{
+    return clubTotal+ALL_DISTANCES.reduce((sum,d)=>{
+     const bucket=((((s.stats||{})[targetMode]||{})[club]||{})[d]||{})
+     return sum+(bucket.duffs||0)
+    },0)
+   },0)
+  },0)
+ },0)
+ const grandSkulls=sessions.reduce((total,s)=>{
+  return total+TARGET_SET_MODES.reduce((modeTotal,targetMode)=>{
+   return modeTotal+ALL_CLUBS.reduce((clubTotal,club)=>{
+    return clubTotal+ALL_DISTANCES.reduce((sum,d)=>{
+     const bucket=((((s.stats||{})[targetMode]||{})[club]||{})[d]||{})
+     return sum+(bucket.skulls||0)
+    },0)
+   },0)
+  },0)
+ },0)
+ const gMissTotal=grandMissed
+ const gSLPct=gMissTotal?Math.round(grandMiss.shortLeft/gMissTotal*100):0
+ const gSRPct=gMissTotal?Math.round(grandMiss.shortRight/gMissTotal*100):0
+ const gLLPct=gMissTotal?Math.round(grandMiss.longLeft/gMissTotal*100):0
+ const gLRPct=gMissTotal?Math.round(grandMiss.longRight/gMissTotal*100):0
+ const gDuffPct=gMissTotal?Math.round(grandDuffs/gMissTotal*100):0
+ const gSkullPct=gMissTotal?Math.round(grandSkulls/gMissTotal*100):0
+ const grandMisHits=grandDuffs+grandSkulls
+ const grandMisHitPct=gMissTotal?Math.round(grandMisHits/gMissTotal*100):0
+ const grandHasRange=sessions.some(s=>hasRangeLabel(getSessionRangeModeLabel(s.stats)))
+ const grandHasWedge=sessions.some(s=>hasWedgeLabel(getSessionRangeModeLabel(s.stats)))
+ const grandModeLabel=getModeLabel(grandHasRange,grandHasWedge)
+
+ csv+="GRAND TOTAL,,ALL,ALL,"+grandModeLabel+",,,,"+grandMade+","+grandMissed+","+gPct+"%,,"+
+      fmt(grandMiss.shortLeft,gSLPct)+","+
+      fmt(grandMiss.shortRight,gSRPct)+","+
+      fmt(grandMiss.longLeft,gLLPct)+","+
+      fmt(grandMiss.longRight,gLRPct)+","+fmt(grandDuffs,gDuffPct)+","+fmt(grandSkulls,gSkullPct)+","+fmt(grandMisHits,grandMisHitPct)+",\n"
+
+ const blob=new Blob([csv],{type:"text/csv"})
+ const url=URL.createObjectURL(blob)
+ const a=document.createElement("a")
+ a.href=url
+ a.download="foreshot-history.csv"
+ a.click()
+ URL.revokeObjectURL(url)
+}
+
+function renderHistory(){
+ const h=$("history")
+ h.innerHTML=""
+ if(!sessions.length){
+  h.innerHTML='<p style="opacity:.8">No sessions yet.</p>'
+  return
+ }
+
+ sessions.slice().reverse().forEach((s,i)=>{
+  const idx=sessions.length-1-i
+  const wrap=document.createElement("div")
+  wrap.className="history-wrapper"
+
+  const card=document.createElement("div")
+  card.className="history-card"
+
+  const acc=document.createElement("div")
+  acc.className="accordion"
+
+  card.innerHTML="<strong>Session "+(idx+1)+"</strong><br>"+new Date(s.date).toLocaleDateString()+" - "+s.summary.pct+"% ("+s.summary.total+" shots)"
+  card.onclick=()=>{acc.style.display=acc.style.display==="block"?"none":"block"}
+
+  ALL_CLUBS.forEach(club=>{
+   TARGET_SET_MODES.forEach(targetMode=>{
+    ALL_DISTANCES.forEach(d=>{
+     const st=s.stats && s.stats[targetMode] && s.stats[targetMode][club] && s.stats[targetMode][club][d]
+     if(!st) return
+
+     const tot=(st.made||0)+(st.missed||0)
+     if(!tot) return
+
+     const missDir=st.missDir||createMissDir()
+     const pct=Math.round(st.made/tot*100)
+     const upAndDown=getUpAndDownValue(d,targetMode)
+     const targetFeet=getTargetFeet(d,targetMode)
+     const earnedMark=targetMode==="wedge" && pct>upAndDown ? " *" : ""
+     const windSummary=targetMode==="range" ? getRangeWindSummary(s.shots,club,d) : ""
+     const tempSummary=targetMode==="range" ? getRangeTempSummary(s.shots,club,d) : ""
+     const bestStreak=((s.bestStreaks && s.bestStreaks[targetMode] && s.bestStreaks[targetMode][club] && s.bestStreaks[targetMode][club][d])||0)
+
+     const row=document.createElement("div")
+     row.innerHTML="<strong>"+formatClubLabel(club)+" - "+d+" yd ("+(targetMode==="range" ? "Range" : "Wedge")+"):</strong> "+st.made+"/"+tot+" ("+pct+"%)"+(targetMode==="wedge" ? " - "+targetFeet+"ft"+earnedMark : " - Range Mode")+
+      (targetMode==="wedge"
+       ? '<br><span class="subtle">Up and Down: '+formatPercent(upAndDown)+'%</span>'
+       : '<br><span class="subtle">Wind: '+(windSummary||"Not recorded")+', Temp: '+(tempSummary||"Not recorded")+'</span>')+
+      '<br><span class="subtle">Misses - L-Left: '+(missDir.longLeft||0)+' | L-Right: '+(missDir.longRight||0)+' | S-Left: '+(missDir.shortLeft||0)+' | S-Right: '+(missDir.shortRight||0)+'</span>'+
+      '<br><span class="subtle">Duffs: '+(st.duffs||0)+' | Skulls: '+(st.skulls||0)+' | Best streak: '+bestStreak+'</span>'
+     acc.appendChild(row)
+    })
+   })
+  })
+
+  const delBtn=document.createElement("button")
+  delBtn.textContent="Delete Session"
+  delBtn.onclick=e=>{e.stopPropagation();deleteSession(idx)}
+  delBtn.style="display:block;width:100%;margin-top:10px;background:#E34234;color:#000;padding:6px 10px;font-size:24px;font-weight:800;border:none;border-radius:12px;cursor:pointer;"
+
+  acc.appendChild(delBtn)
+  wrap.appendChild(card)
+  wrap.appendChild(acc)
+  h.appendChild(wrap)
+ })
+}
+
 function initApp(){
  stats=loadStats()
  streaks=loadStreaks()
@@ -1218,6 +1665,8 @@ function initApp(){
 
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",initApp)}else{initApp()}
 </script>
+
+
 
 
 
