@@ -22,9 +22,10 @@ h1,h3{text-align:center;margin-bottom:10px}
 .pill-btn:disabled{cursor:default;opacity:1}
 .range-speed{display:flex;align-items:center;gap:2px;background:#1c7c5b;padding:6px;border-radius:999px}
 .range-speed-value{min-width:74px;text-align:center;font-size:18px;font-weight:800}
-.range-temp-value{min-width:84px}
+.range-temp-value{min-width:68px}
+.range-temp-stepper{gap:0;padding:6px 4px}
 .range-speed-btn{border:none;border-radius:999px;background:#2ecc71;color:#000;font-size:22px;font-weight:800;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 #1e9e54}
-.wind-toggle{white-space:normal;line-height:1.15;text-align:center}
+.wind-toggle{white-space:normal;line-height:1.15;text-align:center;padding:10px 14px}
 .wind-toggle.head-wind{background:#7a1f1f;color:#fff;box-shadow:0 4px 0 #561515}
 .wind-toggle.tail-wind{background:#2ecc71;color:#000;box-shadow:0 4px 0 #1e9e54}
 
@@ -33,10 +34,10 @@ h1,h3{text-align:center;margin-bottom:10px}
 .mode-row.equal-buttons{flex-wrap:nowrap}
 .mode-row.equal-buttons .mode-btn{flex:1;min-width:0}
 .mode-copy{font-size:15px;opacity:.9}
-.mode-btn{width:100%;display:block;border:none;border-radius:999px;padding:10px 20px;font-size:20px;font-weight:800;cursor:pointer;background:#8a8a8a;color:#000;white-space:normal;line-height:1.15;text-align:center;box-shadow:0 4px 0 #666}
+.mode-btn{width:100%;display:block;border:none;border-radius:12px;padding:10px 20px;font-size:20px;font-weight:800;cursor:pointer;background:#8a8a8a;color:#000;white-space:normal;line-height:1.15;text-align:center;box-shadow:0 4px 0 #666}
 .mode-btn.active{background:#2ecc71;box-shadow:0 4px 0 #1e9e54}
 .mode-btn.target-set-btn{background:#2ecc71;box-shadow:0 4px 0 #1e9e54}
-.mode-btn.target-set-btn.range-active{background:#1d5b86;color:#fff;box-shadow:0 4px 0 #154462}
+.mode-btn.target-set-btn.range-active{background:#1d5b86;color:#fff;box-shadow:0 5px 0 #154462}
 .mode-btn:disabled{cursor:default;opacity:1}
 .mode-target{margin:10px 0 14px;padding:10px;border-radius:10px;background:#1c7c5b;font-size:24px;font-weight:800;text-align:center}
 
@@ -91,9 +92,9 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 </div>
 
-<div id="clubRow" class="pill-row" style="justify-content: center; flex-direction: column; align-items: center; overflow-x: visible;"><div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;"><button class="pill-btn wind-toggle head-wind">Head Wind</button><div class="range-speed"><button class="range-speed-btn">-</button><div class="range-speed-value">0 mph</div><button class="range-speed-btn">+</button></div></div><div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;"><button class="pill-btn" disabled="">Temp.</button><div class="range-speed"><button class="range-speed-btn">-</button><div class="range-speed-value range-temp-value">70°F</div><button class="range-speed-btn">+</button></div></div></div>
-<div id="distanceRow" class="pill-row"><button class="pill-btn active" disabled="">122y</button><button class="pill-btn active" style="margin-left: auto;">48°</button></div>
-<div id="modeTarget" class="mode-target">Range Shot: 48° - 122y</div>
+<div id="clubRow" class="pill-row" style="justify-content: center; flex-direction: column; align-items: center; overflow-x: visible;"><div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;"><button class="pill-btn wind-toggle head-wind">Head Wind</button><div class="range-speed"><button class="range-speed-btn">-</button><div class="range-speed-value">0 mph</div><button class="range-speed-btn">+</button></div></div><div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%;"><button class="pill-btn" disabled="">Temp</button><div class="range-speed range-temp-stepper"><button class="range-speed-btn">-</button><div class="range-speed-value range-temp-value">70°F</div><button class="range-speed-btn">+</button></div></div></div>
+<div id="distanceRow" class="pill-row"><button class="pill-btn active" disabled="">233y</button><button class="pill-btn active" style="margin-left: auto;">4w</button></div>
+<div id="modeTarget" class="mode-target">Range Shot: 4w - 233y</div>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
 
@@ -115,13 +116,13 @@ button:active{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 rgba(0,0,0
 </div>
 
 <div class="stats">
-<p>✅ Made: <span id="made">3</span> | ⛔ Missed: <span id="missed">0</span></p>
-<p>🚩 Make %: <span id="percent">100</span>%</p>
-<p><span id="streakTitle">Building Streak</span>: <span id="streak">3</span> <span id="streakLabel">🔥🔥</span></p>
+<p>✅ Made: <span id="made">0</span> | ⛔ Missed: <span id="missed">0</span></p>
+<p>🚩 Make %: <span id="percent">0</span>%</p>
+<p><span id="streakTitle">Streak</span>: <span id="streak">0</span> <span id="streakLabel"></span></p>
 <p>Duffs: <span id="duffs">0</span><span id="duffMarks"></span> | Skulls: <span id="skulls">0</span><span id="skullMarks"></span></p>
 </div>
 
-<div id="targetBadge" class="badge random-badge"><div class="badge-content">Current Target:<br>🎯 48° - 122y<br>⛅ Head Wind 0 mph, 70°F<br><span class="random-total-line">⛳ Total Range Shots: 3</span></div></div>
+<div id="targetBadge" class="badge random-badge"><div class="badge-content">Current Target:<br>🎯 4w - 233y<br>⛅ Head Wind 0 mph, 70°F<br><span class="random-total-line">⛳ Total Range Shots: 0</span></div></div>
 
 <div style="display:flex;justify-content:space-between;gap:16px;margin-top:10px;width:100%;">
 <button onclick="newSession()" style="flex:1;background:#0096FF;color:#000;padding:6px 10px;font-size:20px;font-weight:800;border:none;border-radius:12px;box-shadow:0 6px 0 #0074c7,0 14px 22px rgba(0,0,0,.45);cursor:pointer;">🔄️ New Session</button>
@@ -729,12 +730,12 @@ function buildClubRow(){
 
   const tempLabel=document.createElement("button")
   tempLabel.className="pill-btn"
-  tempLabel.textContent="Temp."
+  tempLabel.textContent="Temp"
   tempLabel.disabled=true
   tempRow.appendChild(tempLabel)
 
   const tempWrap=document.createElement("div")
-  tempWrap.className="range-speed"
+  tempWrap.className="range-speed range-temp-stepper"
 
   const tempMinusBtn=document.createElement("button")
   tempMinusBtn.className="range-speed-btn"
