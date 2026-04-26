@@ -1726,7 +1726,7 @@ function renderHistory(){
      const pct=Math.round(st.made/tot*100)
      const upAndDown=getUpAndDownValue(d,targetMode)
      const targetFeet=getTargetFeet(d,targetMode)
-     const earnedMark=targetMode==="wedge" && pct>upAndDown ? " *" : ""
+     const earnedMark=targetMode==="wedge" && pct>upAndDown ? " ⭐" : ""
      const windSummary=targetMode==="range" ? getRangeWindSummary(s.shots,club,d) : ""
      const tempSummary=targetMode==="range" ? getRangeTempSummary(s.shots,club,d) : ""
      const bestStreak=((s.bestStreaks && s.bestStreaks[targetMode] && s.bestStreaks[targetMode][club] && s.bestStreaks[targetMode][club][d])||0)
